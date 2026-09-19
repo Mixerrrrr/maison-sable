@@ -329,7 +329,7 @@ const state = {
 };
 
 const $ = s => document.querySelector(s);
-const svg = $("#petals"), art = $("#art");
+const svg = $("#petals"), art = $("#art"), ticket = document.querySelector(".ticket");
 const NS = "http://www.w3.org/2000/svg";
 const fmt = n => "฿" + n.toLocaleString("en-US");
 
@@ -439,14 +439,16 @@ function openPetal(i){
   g.classList.add("on");
 
   /* Sit the field just beyond the petal, pushed away from the centre of the
-     flower, so the bloom itself stays visible while you write. */
-  const r = g.getBoundingClientRect(), a = art.getBoundingClientRect();
-  const cx = r.left + r.width / 2 - a.left;
-  const cy = r.top + r.height / 2 - a.top;
-  const fx = a.width * 700 / 1254, fy = a.height * 690 / 1254;
+     flower, so the bloom stays visible while you write. It floats over the
+     whole slip — the drawing column alone is too narrow to hold it. */
+  const r = g.getBoundingClientRect(), a = art.getBoundingClientRect(), t = ticket.getBoundingClientRect();
+  const cx = r.left + r.width / 2 - t.left;
+  const cy = r.top + r.height / 2 - t.top;
+  const fx = a.left + a.width * 700 / 1254 - t.left;
+  const fy = a.top + a.height * 690 / 1254 - t.top;
   const d = Math.hypot(cx - fx, cy - fy) || 1;
-  const outX = cx + (cx - fx) / d * 74;
-  const outY = cy + (cy - fy) / d * 74;
+  const outX = cx + (cx - fx) / d * 96;
+  const outY = cy + (cy - fy) / d * 96;
 
   pop = document.createElement("div");
   pop.className = "pop";
@@ -458,11 +460,11 @@ function openPetal(i){
       '<button type="button" class="clr">Clear</button>' +
       '<button type="button" class="go">Done</button>' +
     '</div>';
-  art.appendChild(pop);
+  ticket.appendChild(pop);
 
-  const w = 206, h = pop.offsetHeight || 112, pad = 4;
-  pop.style.left = Math.max(w / 2 + pad, Math.min(a.width - w / 2 - pad, outX)) + "px";
-  pop.style.top  = Math.max(h / 2 + pad, Math.min(a.height - h / 2 - pad, outY)) + "px";
+  const w = pop.offsetWidth || 206, h = pop.offsetHeight || 112, pad = 10;
+  pop.style.left = Math.max(w / 2 + pad, Math.min(t.width - w / 2 - pad, outX)) + "px";
+  pop.style.top  = Math.max(h / 2 + pad, Math.min(t.height - h / 2 - pad, outY)) + "px";
 
   const input = pop.querySelector("#popin");
   input.value = state.petals[i];
