@@ -28,7 +28,7 @@ button,input,textarea,select{font:inherit;color:inherit}
 
 .masthead{text-align:center;margin-bottom:26px}
 .masthead h1{font-family:"Cormorant Garamond",serif;font-size:clamp(28px,5.5vw,40px);letter-spacing:.1em;line-height:1}
-.masthead p{margin:12px auto 0;max-width:46ch;color:var(--ink-soft);font-size:14px}
+.masthead p{margin:12px auto 0;max-width:54ch;color:var(--ink-soft);font-size:14px}
 .masthead p .th{font-family:"Noto Serif Thai",serif;display:block;font-size:13px;color:var(--ink-mute);margin-top:3px}
 .rulewing{display:flex;align-items:center;justify-content:center;gap:12px;margin-top:14px;color:var(--rose-soft)}
 .rulewing i{display:block;height:1px;width:min(120px,18vw);background:currentColor}
@@ -63,10 +63,8 @@ button,input,textarea,select{font:inherit;color:inherit}
 .artnote{text-align:center;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-mute);font-family:"Cormorant Garamond",serif}
 
 /* popover */
-.pop{position:absolute;z-index:9;transform:translate(-50%,-100%);background:var(--card);
-  border:1px solid var(--rule-2);box-shadow:0 14px 34px -18px rgba(74,59,54,.5);padding:10px;width:230px}
-.pop::after{content:"";position:absolute;left:50%;bottom:-6px;width:10px;height:10px;background:var(--card);
-  border-right:1px solid var(--rule-2);border-bottom:1px solid var(--rule-2);transform:translateX(-50%) rotate(45deg)}
+.pop{position:absolute;z-index:9;transform:translate(-50%,-50%);background:var(--card);
+  border:1px solid var(--rule-2);box-shadow:0 16px 40px -20px rgba(74,59,54,.55);padding:10px;width:206px}
 .pop .cap{font-family:"Cormorant Garamond",serif;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-mute);margin-bottom:6px}
 .pop input{width:100%;border:0;border-bottom:1px solid var(--rule-2);background:transparent;padding:4px 2px;font-size:15px}
 .pop input:focus{outline:none;border-bottom-color:var(--rose)}
@@ -440,9 +438,15 @@ function openPetal(i){
   const g = svg.querySelector('.petal[data-i="' + i + '"]');
   g.classList.add("on");
 
+  /* Sit the field just beyond the petal, pushed away from the centre of the
+     flower, so the bloom itself stays visible while you write. */
   const r = g.getBoundingClientRect(), a = art.getBoundingClientRect();
   const cx = r.left + r.width / 2 - a.left;
-  const cy = r.top - a.top;
+  const cy = r.top + r.height / 2 - a.top;
+  const fx = a.width * 700 / 1254, fy = a.height * 690 / 1254;
+  const d = Math.hypot(cx - fx, cy - fy) || 1;
+  const outX = cx + (cx - fx) / d * 74;
+  const outY = cy + (cy - fy) / d * 74;
 
   pop = document.createElement("div");
   pop.className = "pop";
@@ -456,9 +460,9 @@ function openPetal(i){
     '</div>';
   art.appendChild(pop);
 
-  const w = 230, pad = 6;
-  pop.style.left = Math.max(w / 2 + pad, Math.min(a.width - w / 2 - pad, cx)) + "px";
-  pop.style.top = Math.max(96, cy - 8) + "px";
+  const w = 206, h = pop.offsetHeight || 112, pad = 4;
+  pop.style.left = Math.max(w / 2 + pad, Math.min(a.width - w / 2 - pad, outX)) + "px";
+  pop.style.top  = Math.max(h / 2 + pad, Math.min(a.height - h / 2 - pad, outY)) + "px";
 
   const input = pop.querySelector("#popin");
   input.value = state.petals[i];
