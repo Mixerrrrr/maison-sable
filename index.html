@@ -56,7 +56,7 @@ button,input,textarea,select{font:inherit;color:inherit}
 .petal:hover .guide,.petal:focus-visible .guide{opacity:1;stroke:var(--rose-soft)}
 .petal.on .guide{opacity:1;stroke:var(--rose)}
 .ptext{fill:var(--rose);dominant-baseline:middle;text-anchor:middle;pointer-events:none;white-space:pre}
-.phint{fill:var(--rule-2);font-family:"Jost",sans-serif;font-size:30px;letter-spacing:.24em;
+.phint{fill:var(--rule);font-family:"Jost",sans-serif;font-size:25px;letter-spacing:.26em;
   text-anchor:middle;dominant-baseline:middle;pointer-events:none;text-transform:uppercase}
 .petal:hover .phint{fill:var(--rose-soft)}
 .petal.on .phint,.petal:not(.empty) .phint{opacity:0}
@@ -485,7 +485,11 @@ function openPetal(i){
   });
   pop.querySelector(".go").addEventListener("click", closePop);
 
-  setTimeout(() => input.focus({preventScroll:true}), 20);
+  input.focus({preventScroll:true});
+  requestAnimationFrame(() => {
+    if (document.activeElement !== input) input.focus({preventScroll:true});
+    input.setSelectionRange(input.value.length, input.value.length);
+  });
 }
 
 document.addEventListener("pointerdown", e => {
