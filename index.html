@@ -1,861 +1,683 @@
-<title>Petal Tattoo Studio</title>
+<title>Maison Sablé</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500&family=Charmonman:wght@400;700&family=Mitr:wght@200;300;400&family=Special+Elite&family=Noto+Serif+Thai:wght@300;400&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Jost:wght@300;400&family=Charmonman:wght@400;700&family=Mitr:wght@200;300&family=Special+Elite&family=Noto+Serif+Thai:wght@300;400&display=swap">
 <style>
+/* A deliberately single-theme page: a printed paper order slip. */
 :root{
-  --paper:#F2F1ED; --paper-2:#FBFAF8; --line:#DDDAD2; --line-2:#C7C2B6;
-  --ink:#1C1B18; --ink-soft:#57544C; --ink-mute:#8B8779;
-  --kraft:#9B5E3C; --kraft-deep:#6F4128; --blush:#C87E95;
-  --field:#FFFFFF; --shadow:0 1px 2px rgba(28,27,24,.06),0 8px 24px -16px rgba(28,27,24,.3);
-}
-@media (prefers-color-scheme:dark){ :root:not([data-theme="light"]){
-  --paper:#15140F; --paper-2:#1D1C17; --line:#302E26; --line-2:#413E33;
-  --ink:#F1EFE7; --ink-soft:#B6B1A2; --ink-mute:#847F70;
-  --kraft:#CC8E62; --kraft-deep:#E0A97D; --blush:#E09BB0;
-  --field:#232219; --shadow:0 1px 2px rgba(0,0,0,.4),0 10px 28px -18px rgba(0,0,0,.85);
-}}
-:root[data-theme="dark"]{
-  --paper:#15140F; --paper-2:#1D1C17; --line:#302E26; --line-2:#413E33;
-  --ink:#F1EFE7; --ink-soft:#B6B1A2; --ink-mute:#847F70;
-  --kraft:#CC8E62; --kraft-deep:#E0A97D; --blush:#E09BB0;
-  --field:#232219; --shadow:0 1px 2px rgba(0,0,0,.4),0 10px 28px -18px rgba(0,0,0,.85);
+  --paper:#EFEAE4;
+  --card:#FCFAF7;
+  --card-2:#F3E9E4;
+  --rose:#9E6B5C;
+  --rose-soft:#C9A294;
+  --rule:#E2D2CA;
+  --rule-2:#D8C4BA;
+  --ink:#4A3B36;
+  --ink-soft:#7C6A63;
+  --ink-mute:#A08D85;
+  --shadow:0 1px 1px rgba(74,59,54,.04),0 22px 50px -30px rgba(74,59,54,.45);
 }
 *{box-sizing:border-box}
 body{margin:0;background:var(--paper);color:var(--ink);
-  font-family:"Jost","Noto Serif Thai",system-ui,sans-serif;font-weight:300;font-size:15px;line-height:1.55;
-  -webkit-font-smoothing:antialiased}
-h1,h2{margin:0;font-weight:400;text-wrap:balance}
-button,input,select,textarea{font:inherit;color:inherit}
-.eyebrow{font-size:10.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-mute);margin:0 0 10px}
-.th{font-family:"Noto Serif Thai",serif;font-size:12.5px;color:var(--ink-mute);letter-spacing:0}
-.lab .th{font-size:11px}
+  font-family:"Jost","Noto Serif Thai",system-ui,sans-serif;font-weight:300;font-size:15px;line-height:1.6}
+h1{margin:0;font-weight:400}
+button,input,textarea,select{font:inherit;color:inherit}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 
-.topbar{position:sticky;top:env(safe-area-inset-top,0px);z-index:40;
-  background:color-mix(in srgb,var(--paper) 90%,transparent);backdrop-filter:blur(10px);
-  border-bottom:1px solid var(--line)}
-.topbar-in{max-width:1180px;margin:0 auto;padding:13px 20px;display:flex;align-items:center;gap:16px;justify-content:space-between}
-.mark{font-family:"Cormorant Garamond",serif;font-size:21px;letter-spacing:.07em;line-height:1}
-.themebtn{border:1px solid var(--line-2);background:transparent;border-radius:999px;padding:7px 14px;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;cursor:pointer;color:var(--ink-soft)}
-.themebtn:hover{border-color:var(--ink-mute);color:var(--ink)}
+.page{max-width:1140px;margin:0 auto;padding-inline:20px;padding-block:34px 60px}
 
-.wrap{max-width:1180px;margin:0 auto;padding-inline:20px;padding-block:30px 60px}
-.lede{max-width:58ch;margin-bottom:26px}
-.lede h1{font-family:"Cormorant Garamond",serif;font-size:clamp(31px,6vw,46px);line-height:1.04;letter-spacing:-.005em}
-.lede h1 em{font-style:italic;color:var(--kraft)}
-.lede p.sub{margin:12px 0 0;color:var(--ink-soft);max-width:54ch}
-.lede p.sub .th{display:block;margin-top:4px}
+.masthead{text-align:center;margin-bottom:26px}
+.masthead h1{font-family:"Cormorant Garamond",serif;font-size:clamp(28px,5.5vw,40px);letter-spacing:.1em;line-height:1}
+.masthead p{margin:12px auto 0;max-width:46ch;color:var(--ink-soft);font-size:14px}
+.masthead p .th{font-family:"Noto Serif Thai",serif;display:block;font-size:13px;color:var(--ink-mute);margin-top:3px}
+.rulewing{display:flex;align-items:center;justify-content:center;gap:12px;margin-top:14px;color:var(--rose-soft)}
+.rulewing i{display:block;height:1px;width:min(120px,18vw);background:currentColor}
+.star{font-style:normal;font-size:12px}
 
-.cols{display:grid;grid-template-columns:minmax(0,1fr) 370px;gap:26px;align-items:start}
-@media (max-width:920px){.cols{grid-template-columns:1fr;gap:18px}}
+/* ---------- the ticket ---------- */
+.ticket{background:var(--card);box-shadow:var(--shadow);
+  clip-path:polygon(14px 0,calc(100% - 14px) 0,100% 14px,100% calc(100% - 14px),calc(100% - 14px) 100%,14px 100%,0 calc(100% - 14px),0 14px);
+  display:grid;grid-template-columns:34px minmax(0,1.04fr) minmax(0,1fr) minmax(0,.6fr);position:relative}
+.rail{border-right:1px solid var(--rule);display:flex;align-items:center;justify-content:center;padding-block:20px}
+.rail span{writing-mode:vertical-rl;transform:rotate(180deg);font-family:"Cormorant Garamond",serif;
+  font-size:10.5px;letter-spacing:.34em;text-transform:uppercase;color:var(--rose-soft);white-space:nowrap}
 
-.stagewrap{position:sticky;top:calc(env(safe-area-inset-top,0px) + 60px)}
-@media (max-width:920px){.stagewrap{position:static}}
-.stage{position:relative;container-type:inline-size;aspect-ratio:2/3;max-width:100%;
-  background:var(--paper-2);border:1px solid var(--line);overflow:hidden;isolation:isolate;
-  box-shadow:var(--shadow);touch-action:none}
-.stage img.photo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;user-select:none;-webkit-user-drag:none}
-.layer{position:absolute;left:0;top:0;transform-origin:50% 50%;cursor:grab;touch-action:none;
-  padding:3px;outline:1px dashed transparent;outline-offset:1px}
-.layer.sel{outline-color:color-mix(in srgb,var(--kraft) 80%,transparent)}
-.layer:active{cursor:grabbing}
-.ink{mix-blend-mode:multiply;filter:blur(.2px);white-space:pre;display:block;line-height:1.1}
-.ink img{display:block;width:100%;height:auto;pointer-events:none}
-.hint{position:absolute;left:12px;bottom:12px;z-index:5;background:color-mix(in srgb,var(--paper-2) 80%,transparent);
-  backdrop-filter:blur(6px);border:1px solid var(--line);padding:6px 11px;border-radius:999px;
-  font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-soft);pointer-events:none;transition:opacity .5s}
-.stagebar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:12px}
-.stagebar .spacer{flex:1}
+/* writing surface */
+.artcol{padding:22px 16px 18px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.art{position:relative;isolation:isolate;touch-action:manipulation}
+.art::before{content:"";position:absolute;inset:0;z-index:0;border-radius:50%;
+  background:radial-gradient(circle at 56% 56%,var(--bloom,#EDE9DF) 0%,rgba(0,0,0,0) 62%);opacity:.85}
+.art img.lineart{position:relative;z-index:1;display:block;width:100%;height:auto;mix-blend-mode:multiply;user-select:none;-webkit-user-drag:none}
+.art svg{position:absolute;inset:0;z-index:2;width:100%;height:100%;overflow:visible}
+.petal{cursor:text;outline:none}
+.hit{fill:transparent}
+.guide{stroke:var(--rule-2);stroke-width:2.2;stroke-dasharray:7 11;stroke-linecap:round;opacity:0}
+.petal.empty .guide{opacity:.85}
+.petal:hover .guide,.petal:focus-visible .guide{opacity:1;stroke:var(--rose-soft)}
+.petal.on .guide{opacity:1;stroke:var(--rose)}
+.ptext{fill:var(--rose);dominant-baseline:middle;text-anchor:middle;pointer-events:none;white-space:pre}
+.phint{fill:var(--rule-2);font-family:"Jost",sans-serif;font-size:30px;letter-spacing:.24em;
+  text-anchor:middle;dominant-baseline:middle;pointer-events:none;text-transform:uppercase}
+.petal:hover .phint{fill:var(--rose-soft)}
+.petal.on .phint,.petal:not(.empty) .phint{opacity:0}
+.artnote{text-align:center;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-mute);font-family:"Cormorant Garamond",serif}
 
-.rail{display:flex;flex-direction:column;gap:14px;min-width:0}
-.card{background:var(--paper-2);border:1px solid var(--line);padding:16px 16px 18px}
-.card > h2{display:flex;align-items:baseline;gap:9px;font-size:11px;letter-spacing:.22em;text-transform:uppercase;
-  color:var(--ink-mute);padding-bottom:12px;margin-bottom:15px;border-bottom:1px solid var(--line)}
-.card > h2 b{font-family:"Cormorant Garamond",serif;font-weight:400;font-size:17px;letter-spacing:.04em;color:var(--ink);text-transform:none}
-.row{display:flex;flex-direction:column;gap:7px;margin-bottom:15px}
-.row:last-child{margin-bottom:0}
-.lab{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-mute);display:flex;justify-content:space-between;align-items:baseline;gap:8px}
-.lab var{font-style:normal;font-variant-numeric:tabular-nums;color:var(--ink-soft);letter-spacing:.04em}
-input[type=text],textarea,select{width:100%;background:var(--field);border:1px solid var(--line-2);border-radius:0;padding:9px 11px;font-size:14px}
-textarea{resize:vertical;min-height:64px}
-input[type=text]:focus,textarea:focus,select:focus,input[type=file]:focus-visible{outline:2px solid color-mix(in srgb,var(--kraft) 55%,transparent);outline-offset:1px;border-color:var(--kraft)}
-input[type=range]{width:100%;accent-color:var(--kraft);margin:0}
-input[type=range]:focus-visible{outline:2px solid var(--kraft);outline-offset:3px}
-.chips{display:flex;flex-wrap:wrap;gap:6px}
-.chip{border:1px solid var(--line-2);background:transparent;border-radius:999px;padding:6px 12px;font-size:12.5px;cursor:pointer;color:var(--ink-soft);transition:.15s}
-.chip:hover{border-color:var(--ink-mute);color:var(--ink)}
-.chip[aria-pressed=true]{background:var(--ink);color:var(--paper-2);border-color:var(--ink)}
-.chip.ghost[aria-pressed=true]{background:transparent;color:var(--kraft);border-color:var(--kraft)}
-.swatches{display:flex;gap:9px;flex-wrap:wrap}
-.sw{width:30px;height:30px;border-radius:50%;border:1px solid var(--line-2);cursor:pointer;padding:0;position:relative}
-.sw[aria-pressed=true]::after{content:"";position:absolute;inset:-4px;border:1px solid var(--kraft);border-radius:50%}
-.btn{border:1px solid var(--ink);background:var(--ink);color:var(--paper-2);border-radius:0;padding:10px 16px;
-  font-size:11px;letter-spacing:.18em;text-transform:uppercase;cursor:pointer;transition:.15s}
-.btn:hover{background:var(--kraft-deep);border-color:var(--kraft-deep);color:#FBFAF8}
-.btn.sec{background:transparent;color:var(--ink-soft);border-color:var(--line-2)}
-.btn.sec:hover{background:transparent;color:var(--ink);border-color:var(--ink-mute)}
-.btn.wide{width:100%}
-.tabs{display:flex;border:1px solid var(--line-2);overflow:hidden;margin-bottom:15px}
-.tabs button{flex:1;border:0;background:transparent;padding:9px 6px;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;cursor:pointer;color:var(--ink-mute)}
-.tabs button[aria-selected=true]{background:var(--ink);color:var(--paper-2)}
-.photopick{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;align-items:start}
-.pick{position:relative;padding:0;border:1px solid var(--line-2);background:none;cursor:pointer;display:block;overflow:hidden}
-.pick .thumb{display:block;aspect-ratio:2/3;overflow:hidden}
-.pick img{width:100%;height:100%;object-fit:cover;display:block}
-.pick .cap{display:block;font-size:9px;letter-spacing:.11em;text-transform:uppercase;color:var(--ink-mute);
-  padding:5px 3px;text-align:center;border-top:1px solid var(--line);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.pick[aria-pressed=true]{border-color:var(--kraft);box-shadow:0 0 0 1px var(--kraft)}
-.pick[aria-pressed=true] .cap{color:var(--kraft)}
-.pick .del{position:absolute;top:5px;right:5px;width:21px;height:21px;border-radius:50%;
-  background:rgba(20,19,16,.72);color:#FBFAF8;font-size:14px;line-height:1;display:grid;place-items:center;cursor:pointer}
-.pick .del:hover{background:var(--kraft-deep)}
-.pick.add{border-style:dashed}
-.pick.add .thumb{display:grid;place-items:center;font-size:26px;font-weight:300;color:var(--ink-mute);
-  font-family:"Jost",sans-serif;line-height:1}
-.pick.add:hover{border-color:var(--kraft)}
-.pick.add:hover .thumb,.pick.add:hover .cap{color:var(--kraft)}
+/* popover */
+.pop{position:absolute;z-index:9;transform:translate(-50%,-100%);background:var(--card);
+  border:1px solid var(--rule-2);box-shadow:0 14px 34px -18px rgba(74,59,54,.5);padding:10px;width:230px}
+.pop::after{content:"";position:absolute;left:50%;bottom:-6px;width:10px;height:10px;background:var(--card);
+  border-right:1px solid var(--rule-2);border-bottom:1px solid var(--rule-2);transform:translateX(-50%) rotate(45deg)}
+.pop .cap{font-family:"Cormorant Garamond",serif;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-mute);margin-bottom:6px}
+.pop input{width:100%;border:0;border-bottom:1px solid var(--rule-2);background:transparent;padding:4px 2px;font-size:15px}
+.pop input:focus{outline:none;border-bottom-color:var(--rose)}
+.pop .acts{display:flex;gap:6px;margin-top:9px}
+.pop .acts button{flex:1;border:1px solid var(--rule-2);background:transparent;padding:5px 4px;cursor:pointer;
+  font-family:"Cormorant Garamond",serif;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft)}
+.pop .acts button:hover{border-color:var(--rose);color:var(--rose)}
+.pop .acts button.go{background:var(--rose);border-color:var(--rose);color:#FCFAF7}
+.pop .acts button.go:hover{background:var(--ink);border-color:var(--ink);color:#FCFAF7}
+.pop .acts button:disabled{opacity:.4;cursor:not-allowed}
 
-.layers{display:flex;flex-direction:column;gap:6px}
-.lrow{display:flex;align-items:center;gap:10px;border:1px solid var(--line);padding:8px 10px;background:var(--field);cursor:pointer;text-align:left}
-.lrow[aria-current=true]{border-color:var(--kraft);background:color-mix(in srgb,var(--kraft) 8%,var(--field))}
-.lrow .nm{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:13px}
-.lrow .tag{font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-mute)}
-.lrow .x{border:0;background:none;cursor:pointer;color:var(--ink-mute);font-size:17px;line-height:1;padding:0 2px}
-.lrow .x:hover{color:var(--kraft)}
-.empty{font-family:"Cormorant Garamond",serif;font-style:italic;font-size:16px;color:var(--ink-mute)}
+/* form */
+.formcol{padding:26px 22px 20px;display:flex;flex-direction:column;gap:17px;min-width:0;border-left:1px solid var(--rule)}
+.field{display:grid;grid-template-columns:104px minmax(0,1fr);gap:12px;align-items:baseline}
+.field > .k{font-family:"Cormorant Garamond",serif;font-size:11.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-soft)}
+.field .v{min-width:0}
+.line{width:100%;border:0;border-bottom:1px solid var(--rule-2);background:transparent;padding:2px 2px 4px;font-size:15px}
+.line:focus{outline:none;border-bottom-color:var(--rose)}
+.boxes{display:flex;gap:9px}
+.box{width:21px;height:21px;border:1px solid var(--rule-2);background:transparent;cursor:pointer;padding:0;display:grid;place-items:center}
+.box:hover{border-color:var(--rose-soft)}
+.box[aria-pressed=true]{border-color:var(--rose)}
+.box[aria-pressed=true]::before{content:"";width:9px;height:9px;background:var(--rose)}
+.dots{display:flex;gap:11px;align-items:flex-start}
+.dot{border:0;background:none;padding:0;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:5px}
+.dot i{display:block;width:25px;height:25px;border-radius:50%;border:1px solid rgba(74,59,54,.16)}
+.dot u{display:block;width:9px;height:9px;border-radius:50%;border:1px solid var(--rule-2);text-decoration:none}
+.dot[aria-pressed=true] u{background:var(--rose);border-color:var(--rose)}
+.pick{width:100%;border:0;border-bottom:1px solid var(--rule-2);background:transparent;padding:3px 2px;font-size:14px;cursor:pointer}
+.pick:focus{outline:none;border-bottom-color:var(--rose)}
+.msg{width:100%;border:0;background:transparent;resize:none;font-size:15px;line-height:29px;padding:0;
+  background-image:repeating-linear-gradient(var(--card),var(--card) 28px,var(--rule-2) 28px,var(--rule-2) 29px);
+  height:87px}
+.msg:focus{outline:none}
+.yesno{display:flex;gap:18px}
+.yesno label{display:flex;align-items:center;gap:7px;font-family:"Cormorant Garamond",serif;font-size:12px;
+  letter-spacing:.18em;text-transform:uppercase;color:var(--ink-soft);cursor:pointer}
+.tagline{margin-top:auto;padding-top:14px;text-align:center;font-family:"Cormorant Garamond",serif;
+  font-size:11px;letter-spacing:.26em;text-transform:uppercase;color:var(--ink-mute);line-height:2}
+.tagline i{font-style:normal;color:var(--rose-soft);display:block;font-size:10px}
 
-.sum{display:flex;flex-direction:column;gap:7px;font-size:13.5px}
-.sum > div{display:flex;justify-content:space-between;gap:12px;color:var(--ink-soft)}
-.sum > div b{font-weight:400;color:var(--ink);font-variant-numeric:tabular-nums;white-space:nowrap}
-.total{border-top:1px solid var(--line);margin-top:13px;padding-top:13px;display:flex;justify-content:space-between;align-items:baseline}
-.total span{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-mute)}
-.total b{font-family:"Cormorant Garamond",serif;font-size:28px;font-weight:400;font-variant-numeric:tabular-nums}
-.note{font-size:11.5px;color:var(--ink-mute);line-height:1.5;margin:0}
-.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%) translateY(10px);
-  background:var(--ink);color:var(--paper-2);padding:11px 18px;font-size:12.5px;letter-spacing:.05em;
-  opacity:0;pointer-events:none;transition:.28s;z-index:90;max-width:calc(100% - 40px);text-align:center}
-.toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
-footer{border-top:1px solid var(--line);margin-top:50px;padding-top:22px;display:flex;flex-wrap:wrap;gap:18px 40px;align-items:baseline}
-footer .f{font-size:12.5px;color:var(--ink-soft);max-width:34ch}
-footer .f b{display:block;font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-mute);font-weight:400;margin-bottom:3px}
+/* stub */
+.stub{position:relative;border-left:1px dashed var(--rule-2);padding:22px 16px 18px;
+  background:linear-gradient(180deg,rgba(243,233,228,.55),rgba(243,233,228,.2));
+  display:flex;flex-direction:column;align-items:center;gap:12px;min-width:0}
+.notch{position:absolute;left:-9px;width:18px;height:18px;border-radius:50%;background:var(--paper)}
+.notch.t{top:-9px}
+.notch.b{bottom:-9px}
+.stub img.mini{width:74%;max-width:120px;height:auto;mix-blend-mode:multiply;opacity:.75}
+.stub .tot{text-align:center;font-family:"Cormorant Garamond",serif}
+.stub .tot span{display:block;font-size:9.5px;letter-spacing:.24em;text-transform:uppercase;color:var(--ink-mute)}
+.stub .tot b{font-weight:400;font-size:26px;font-variant-numeric:tabular-nums;color:var(--ink)}
+.photobox{width:100%;aspect-ratio:1/1;border:1px dashed var(--rule-2);border-radius:10px;display:grid;place-items:center;
+  overflow:hidden;background:rgba(252,250,247,.5);position:relative;padding:0;cursor:pointer;text-align:center}
+.photobox:hover{border-color:var(--rose-soft)}
+.photobox span{font-family:"Cormorant Garamond",serif;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-mute);padding:8px}
+.photobox img{width:100%;height:100%;object-fit:cover;display:block}
+.photobox .rm{position:absolute;top:5px;right:5px;width:20px;height:20px;border-radius:50%;background:rgba(74,59,54,.68);
+  color:#FCFAF7;display:grid;place-items:center;font-size:13px;line-height:1}
+.stub .spark{color:var(--rose-soft);font-size:11px;margin-top:auto}
+
+/* under the ticket */
+.below{display:flex;flex-wrap:wrap;gap:14px;align-items:center;justify-content:center;margin-top:26px}
+.btn{border:1px solid var(--ink);background:var(--ink);color:var(--card);padding:12px 26px;cursor:pointer;
+  font-family:"Cormorant Garamond",serif;font-size:12px;letter-spacing:.24em;text-transform:uppercase}
+.btn:hover{background:var(--rose);border-color:var(--rose)}
+.btn.sec{background:transparent;color:var(--ink-soft);border-color:var(--rule-2)}
+.btn.sec:hover{background:transparent;color:var(--rose);border-color:var(--rose)}
+
+.gallery{margin-top:44px}
+.gallery .head{display:flex;align-items:center;gap:12px;justify-content:center;color:var(--rose-soft);margin-bottom:14px}
+.gallery .head i{height:1px;flex:1;max-width:150px;background:currentColor;display:block}
+.gallery .head span{font-family:"Cormorant Garamond",serif;font-size:10.5px;letter-spacing:.28em;text-transform:uppercase;color:var(--ink-mute)}
+.shots{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.shots img{width:100%;aspect-ratio:2/3;object-fit:cover;display:block}
+
+footer{margin-top:40px;padding-top:20px;border-top:1px solid var(--rule);display:flex;flex-wrap:wrap;
+  gap:14px 36px;justify-content:center;text-align:center;font-size:12.5px;color:var(--ink-soft)}
+footer b{font-weight:400;font-family:"Cormorant Garamond",serif;font-size:10px;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--ink-mute);display:block}
+
+.toast{position:fixed;left:50%;bottom:calc(22px + env(safe-area-inset-bottom,0px));transform:translate(-50%,10px);
+  background:var(--ink);color:var(--card);padding:11px 20px;font-size:12.5px;opacity:0;pointer-events:none;
+  transition:.28s;z-index:99;max-width:calc(100% - 40px);text-align:center}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+
+@media (max-width:900px){
+  .ticket{grid-template-columns:1fr}
+  .rail{border-right:0;border-bottom:1px solid var(--rule);padding-block:8px}
+  .rail span{writing-mode:horizontal-tb;transform:none}
+  .formcol{border-left:0;border-top:1px solid var(--rule);padding:22px 18px}
+  .stub{border-left:0;border-top:1px dashed var(--rule-2);flex-direction:row;flex-wrap:wrap;justify-content:space-between;align-items:center}
+  .notch{left:auto;top:auto}
+  .notch.t{left:-9px;top:-9px}
+  .notch.b{right:-9px;left:auto;top:-9px;bottom:auto}
+  .stub img.mini{width:70px}
+  .photobox{width:96px;aspect-ratio:1/1}
+  .stub .spark{display:none}
+}
+@media (max-width:520px){
+  .field{grid-template-columns:1fr;gap:5px}
+  .shots{grid-template-columns:1fr 1fr}
+  .shots img:last-child{display:none}
+}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
 
-<div class="topbar"><div class="topbar-in">
-  <div class="mark">Maison Sablé</div>
-  <button class="themebtn" id="theme">Light / Dark</button>
-</div></div>
-
-<div class="wrap">
-  <div class="lede">
-    <p class="eyebrow">You write it · we ink it · we wrap it</p>
-    <h1>Put your words <em>on the petal.</em></h1>
-    <p class="sub">A name, a date, a university, a small drawing — laid onto the lily by hand. Drag it around to see exactly where the ink will sit, then send us the brief.
-      <span class="th">พิมพ์ข้อความหรืออัปโหลดรูป แล้วลากไปวางบนกลีบลิลลี่ได้เลย</span></p>
+<div class="page">
+  <div class="masthead">
+    <h1>Maison Sablé</h1>
+    <p>Write on the petals. Click any petal below and type — a name, a date, a university — and we ink it by hand before the bouquet goes out.
+      <span class="th">คลิกที่กลีบแล้วพิมพ์ข้อความได้เลย</span></p>
+    <div class="rulewing"><i></i><span class="star">✦</span><i></i></div>
   </div>
 
-  <div class="cols">
-    <div>
-      <div class="stagewrap">
-        <div class="stage" id="stage">
-          <img class="photo" id="photo" src="p1.webp" alt="Maison Sablé lily bouquet with your tattoo placed on a petal">
-          <div class="hint" id="hint">Drag the ink onto a petal</div>
-        </div>
-        <div class="stagebar">
-          <button class="btn sec" id="center">Center on flower</button>
-          <button class="btn sec" id="dupe">Duplicate</button>
-          <span class="spacer"></span>
-          <button class="btn sec" id="clear">Clear all</button>
-        </div>
+  <div class="ticket">
+    <div class="rail"><span>A flower for a brighter day</span></div>
+
+    <div class="artcol">
+      <div class="art" id="art">
+        <img class="lineart" src="lily.webp" alt="Line drawing of a lily with six petals you can write on">
+        <svg id="petals" viewBox="0 0 1254 1254" role="group" aria-label="Lily petals — click one to write on it"></svg>
       </div>
+      <p class="artnote">Six petals · about 18 characters each</p>
     </div>
 
-    <div class="rail">
-      <section class="card">
-        <h2>01 <b>The bouquet</b></h2>
-        <div class="row">
-          <label class="lab">Style <span class="th">แบบช่อ</span></label>
-          <div class="photopick" id="photopick"></div>
-          <input type="file" id="bgfile" accept="image/*" hidden>
-          <p class="note">Shot a new bouquet? Add it with <b style="font-weight:400;color:var(--ink-soft)">+ Your photo</b> and ink straight onto it.</p>
-        </div>
-        <div class="row">
-          <span class="lab">Stems <span class="th">จำนวนก้าน</span></span>
-          <div class="chips" id="stems"></div>
-        </div>
-        <div class="row">
-          <span class="lab">Wrap <span class="th">กระดาษห่อ</span></span>
-          <div class="chips" id="wrapsel"></div>
-        </div>
-        <div class="row">
-          <span class="lab">Add-ons</span>
-          <div class="chips" id="addons"></div>
-        </div>
-      </section>
+    <div class="formcol">
+      <div class="field">
+        <span class="k">Name</span>
+        <span class="v"><input class="line" id="name" maxlength="40" placeholder="Who it is for"></span>
+      </div>
 
-      <section class="card">
-        <h2>02 <b>Your tattoo</b></h2>
-        <div class="tabs" role="tablist">
-          <button role="tab" id="tab-text" aria-selected="true" aria-controls="pane-text">Text</button>
-          <button role="tab" id="tab-image" aria-selected="false" aria-controls="pane-image">Picture</button>
-        </div>
+      <div class="field">
+        <span class="k">Quantity</span>
+        <span class="v"><span class="boxes" id="qty"></span></span>
+      </div>
 
-        <div id="pane-text" role="tabpanel" aria-labelledby="tab-text">
-          <div class="row">
-            <label class="lab" for="ttext">Words <span class="th">ข้อความ</span></label>
-            <input type="text" id="ttext" value="CHULA" maxlength="40" placeholder="A name, a date, a word…">
-          </div>
-          <div class="row">
-            <span class="lab">Quick ideas</span>
-            <div class="chips" id="presets"></div>
-          </div>
-          <div class="row">
-            <label class="lab" for="tfont">Lettering <span class="th">ฟอนต์</span></label>
-            <select id="tfont"></select>
-          </div>
-          <div class="row">
-            <span class="lab">Ink</span>
-            <div class="swatches" id="tcolor"></div>
-          </div>
-          <button class="btn wide" id="addtext">Add to petal</button>
-        </div>
+      <div class="field">
+        <span class="k">Flower colour</span>
+        <span class="v"><span class="dots" id="bloom"></span></span>
+      </div>
 
-        <div id="pane-image" role="tabpanel" aria-labelledby="tab-image" hidden>
-          <div class="row">
-            <label class="lab" for="tfile">Upload a picture <span class="th">อัปโหลดรูป</span></label>
-            <input type="file" id="tfile" accept="image/*" style="font-size:12.5px;padding:0">
-            <p class="note">Line art, a signature or a small photo works best. On a white background the paper drops away and only the drawing stays.</p>
-          </div>
-          <div class="row">
-            <span class="lab">Treatment</span>
-            <div class="chips" id="imgmode"></div>
-          </div>
-        </div>
-      </section>
+      <div class="field">
+        <span class="k">Lettering</span>
+        <span class="v"><select class="pick" id="font"></select></span>
+      </div>
 
-      <section class="card">
-        <h2>03 <b>Placement</b></h2>
-        <div class="row">
-          <label class="lab" for="size">Size <var id="size-v">—</var></label>
-          <input type="range" id="size" min="3" max="42" step="0.5" value="11">
-        </div>
-        <div class="row">
-          <label class="lab" for="rot">Angle <var id="rot-v">—</var></label>
-          <input type="range" id="rot" min="-90" max="90" step="1" value="-8">
-        </div>
-        <div class="row" id="trackrow">
-          <label class="lab" for="track">Letter spacing <var id="track-v">—</var></label>
-          <input type="range" id="track" min="-4" max="40" step="1" value="8">
-        </div>
-        <div class="row">
-          <label class="lab" for="press">Ink depth <var id="press-v">—</var></label>
-          <input type="range" id="press" min="35" max="100" step="1" value="88">
-        </div>
-        <div class="row">
-          <span class="lab">Layers <span class="th">เลเยอร์</span></span>
-          <div class="layers" id="layers"></div>
-        </div>
-      </section>
+      <div class="field">
+        <span class="k">Ink</span>
+        <span class="v"><span class="dots" id="ink"></span></span>
+      </div>
 
-      <section class="card">
-        <h2>04 <b>Note card</b></h2>
-        <div class="row">
-          <label class="lab" for="msg">Message for the card <span class="th">ข้อความในการ์ด</span></label>
-          <textarea id="msg" maxlength="220" placeholder="ยินดีด้วยนะ — congratulations, graduate."></textarea>
-        </div>
-        <div class="row">
-          <label class="lab" for="who">From</label>
-          <input type="text" id="who" maxlength="40" placeholder="Your name">
-        </div>
-      </section>
+      <div class="field">
+        <span class="k">Message</span>
+        <span class="v"><textarea class="msg" id="msg" maxlength="180" placeholder="A line for the note card"></textarea></span>
+      </div>
 
-      <section class="card">
-        <h2>05 <b>Your order</b></h2>
-        <div class="sum" id="sum"></div>
-        <div class="total"><span>Total</span><b id="total">฿0</b></div>
-        <div class="row" style="margin-top:16px">
-          <button class="btn wide" id="copy">Copy order brief</button>
-          <p class="note">Paste it to us on Instagram or LINE together with a screenshot of your placement. Every petal is inked by hand the morning it goes out, so we need the brief 24 hours ahead.</p>
-        </div>
-      </section>
+      <div class="field">
+        <span class="k">Photo</span>
+        <span class="v"><span class="yesno">
+          <label><button class="box" id="photo-yes" aria-pressed="false" aria-label="Photo yes"></button> Yes</label>
+          <label><button class="box" id="photo-no" aria-pressed="true" aria-label="Photo no"></button> No</label>
+        </span></span>
+      </div>
+
+      <p class="tagline">A small bouquet<i>✦</i>A bigger meaning</p>
+    </div>
+
+    <div class="stub">
+      <span class="notch t"></span><span class="notch b"></span>
+      <img class="mini" src="bouquet-line.webp" alt="">
+      <div class="tot"><span>Total</span><b id="total">฿0</b></div>
+      <button class="photobox" id="photobox" aria-label="Add the picture to be tattooed">
+        <span id="photolabel">Tap to add<br>your picture</span>
+      </button>
+      <input type="file" id="photofile" accept="image/*" hidden>
+      <span class="spark">✦</span>
+    </div>
+  </div>
+
+  <div class="below">
+    <button class="btn" id="copy">Copy order brief</button>
+    <button class="btn sec" id="clear">Clear the petals</button>
+  </div>
+
+  <div class="gallery">
+    <div class="head"><i></i><span>The real thing</span><i></i></div>
+    <div class="shots">
+      <img src="p1.webp" alt="Lily wrapped in a kraft cone with a white ribbon">
+      <img src="p2.webp" alt="Flat lay of lilies with the Maison Sablé card">
+      <img src="p3.webp" alt="Three wrapped bouquets beside a white gift box">
     </div>
   </div>
 
   <footer>
-    <div class="f"><b>Instagram &amp; TikTok</b>@maisonsable.bkk</div>
-    <div class="f"><b>Lead time</b>24 hours · same-day for orders placed before 11:00</div>
-    <div class="f"><b>Petal ink</b>Food-safe, hand-applied, lasts as long as the bloom does</div>
+    <div><b>Instagram &amp; TikTok</b>@maisonsable.bkk</div>
+    <div><b>Lead time</b>24 hours · same-day before 11:00</div>
+    <div><b>Petal ink</b>Hand-applied, food-safe</div>
   </footer>
 </div>
 <div class="toast" id="toast"></div>
 
 <script>
-/* ---------------------------------------------------------------
-   PRICES — everything the shop charges lives here, in Thai baht.
-   Change a number and the whole page follows.
-----------------------------------------------------------------*/
+/* -------------------------------------------------------------
+   PRICES — in baht. Change a number and the slip follows.
+--------------------------------------------------------------*/
 const PRICE = {
-  stems: {1:390, 3:990, 5:1590, 9:2690},
-  wrap:  {kraft:0, ivory:0, blush:60},
-  addon: {box:250, ribbon:80, dried:150},
-  tattooText: 120,
-  tattooImage: 220
+  stems: {1:390, 2:690, 3:990, 4:1290, 5:1590},
+  petalWord: 120,
+  photo: 220
 };
 
-const PHOTOS = [
-  {id:"kraft", src:"p1.webp", label:"Kraft cone",    ratio:2/3,  spot:{x:52,y:42}, wrap:"kraft"},
-  {id:"detail",src:"p2.webp", label:"Petal detail",  ratio:2/3,  spot:{x:24,y:40}, wrap:"kraft"},
-  {id:"ivory", src:"p3.webp", label:"Ivory set",     ratio:2/3,  spot:{x:50,y:36}, wrap:"ivory"}
+/* Petal map, in the coordinates of lily.webp (1254 x 1254).
+   a  = where the writing sits, rot = the angle of that petal,
+   len = how much room the petal gives.                          */
+const PETALS = [
+  {name:"top right",   a:[792,430], rot:-71.5, len:400},
+  {name:"top left",    a:[520,452], rot: 54.5, len:360},
+  {name:"left",        a:[388,628], rot: 13.0, len:400},
+  {name:"lower left",  a:[452,882], rot:-39.5, len:380},
+  {name:"bottom",      a:[782,958], rot: 76.0, len:380},
+  {name:"right",       a:[968,632], rot:-18.5, len:370}
 ];
 
 const FONTS = [
-  {id:"cormorant", label:"Fine serif · TH+EN",      css:'"Cormorant Garamond","Noto Serif Thai",serif', weight:400},
-  {id:"charmonman",label:"Handwritten · TH+EN",     css:'"Charmonman",cursive',                          weight:400},
-  {id:"mitr",      label:"Soft sans · TH+EN",       css:'"Mitr","Jost",sans-serif',                      weight:300},
-  {id:"notoserif", label:"Bookish · TH+EN",         css:'"Noto Serif Thai",serif',                       weight:400},
-  {id:"jost",      label:"Geometric · EN only",     css:'"Jost",sans-serif',                             weight:400},
-  {id:"elite",     label:"Typewriter · EN only",    css:'"Special Elite",monospace',                     weight:400}
+  {id:"elite",     label:"Typewriter — EN only",  css:'"Special Elite",monospace',                      track:.08},
+  {id:"cormorant", label:"Fine serif — TH + EN",  css:'"Cormorant Garamond","Noto Serif Thai",serif',   track:.12},
+  {id:"charmonman",label:"Handwritten — TH + EN", css:'"Charmonman",cursive',                           track:.02},
+  {id:"mitr",      label:"Soft sans — TH + EN",   css:'"Mitr","Jost",sans-serif',                       track:.06},
+  {id:"noto",      label:"Bookish — TH + EN",     css:'"Noto Serif Thai",serif',                        track:.06}
 ];
 
 const INKS = [
-  {id:"black",  label:"Ink black",  hex:"#1B1A17"},
-  {id:"sepia",  label:"Sepia",      hex:"#4A3527"},
-  {id:"kraft",  label:"Kraft brown",hex:"#7A4B2E"},
-  {id:"blush",  label:"Blush",      hex:"#B4657E"},
-  {id:"olive",  label:"Olive",      hex:"#5C6B52"}
+  {id:"rose",  label:"Rose",      hex:"#9E6B5C"},
+  {id:"black", label:"Ink black", hex:"#24201D"},
+  {id:"sepia", label:"Sepia",     hex:"#5A4438"},
+  {id:"blush", label:"Blush",     hex:"#BE8288"},
+  {id:"sage",  label:"Sage",      hex:"#77856A"}
 ];
 
-const PRESETS = ["CHULA","TU","MU","KU","Congrats 2026","19.09.26","ยินดีด้วย","I ♡ U"];
+const BLOOMS = [
+  {id:"ivory", label:"Ivory", hex:"#EDE9DF"},
+  {id:"blush", label:"Blush", hex:"#EBC9C3"},
+  {id:"rose",  label:"Rose",  hex:"#D79A93"},
+  {id:"lilac", label:"Lilac", hex:"#C9BBD4"},
+  {id:"sage",  label:"Sage",  hex:"#AFBAA0"}
+];
 
 const state = {
-  photo: "kraft",
-  stems: 1,
-  wrap: "kraft",
-  addons: new Set(),
+  qty: 1,
+  bloom: "ivory",
   font: "elite",
-  ink: "black",
-  imgmode: "mono",
-  layers: [],
-  sel: null,
-  seq: 0
+  ink: "rose",
+  wantPhoto: false,
+  photo: null,
+  photoName: "",
+  petals: ["CHULA","","19.09.26","","",""],   /* opens with two examples */
+  petalPhoto: -1,
+  open: -1
 };
 
 const $ = s => document.querySelector(s);
-const stage = $("#stage"), photoEl = $("#photo"), hint = $("#hint");
+const svg = $("#petals"), art = $("#art");
+const NS = "http://www.w3.org/2000/svg";
 const fmt = n => "฿" + n.toLocaleString("en-US");
 
-/* ---------- build controls ---------- */
-function chipGroup(host, items, isOn, onPick, ghost){
-  host.innerHTML = "";
-  items.forEach(it => {
-    const b = document.createElement("button");
-    b.className = "chip" + (ghost ? " ghost" : "");
-    b.type = "button";
-    b.textContent = it.label;
-    b.setAttribute("aria-pressed", isOn(it) ? "true" : "false");
-    b.addEventListener("click", () => { onPick(it); });
-    host.appendChild(b);
+/* ---------- the petals ---------- */
+function buildPetals(){
+  svg.innerHTML = "";
+  PETALS.forEach((p, i) => {
+    const g = document.createElementNS(NS, "g");
+    g.setAttribute("class", "petal");
+    g.setAttribute("transform", "translate(" + p.a[0] + "," + p.a[1] + ") rotate(" + p.rot + ")");
+    g.setAttribute("tabindex", "0");
+    g.setAttribute("role", "button");
+    g.dataset.i = i;
+
+    const hit = document.createElementNS(NS, "ellipse");
+    hit.setAttribute("class", "hit");
+    hit.setAttribute("rx", p.len / 2);
+    hit.setAttribute("ry", 74);
+    g.appendChild(hit);
+
+    const guide = document.createElementNS(NS, "line");
+    guide.setAttribute("class", "guide");
+    guide.setAttribute("x1", -p.len / 2 + 14); guide.setAttribute("y1", 30);
+    guide.setAttribute("x2",  p.len / 2 - 14); guide.setAttribute("y2", 30);
+    g.appendChild(guide);
+
+    const hintT = document.createElementNS(NS, "text");
+    hintT.setAttribute("class", "phint");
+    hintT.setAttribute("y", -6);
+    hintT.textContent = "write";
+    g.appendChild(hintT);
+
+    const t = document.createElementNS(NS, "text");
+    t.setAttribute("class", "ptext");
+    t.setAttribute("y", -4);
+    g.appendChild(t);
+
+    const im = document.createElementNS(NS, "image");
+    im.setAttribute("class", "pimg");
+    im.setAttribute("preserveAspectRatio", "xMidYMid meet");
+    im.style.display = "none";
+    g.appendChild(im);
+
+    g.addEventListener("click", () => openPetal(i));
+    g.addEventListener("keydown", e => {
+      if (e.key === "Enter" || e.key === " "){ e.preventDefault(); openPetal(i); }
+    });
+    svg.appendChild(g);
+  });
+  paintPetals();
+}
+
+function paintPetals(){
+  const f = FONTS.find(x => x.id === state.font) || FONTS[0];
+  const ink = INKS.find(x => x.id === state.ink) || INKS[0];
+  svg.querySelectorAll(".petal").forEach(g => {
+    const i = +g.dataset.i, p = PETALS[i];
+    const words = state.petals[i] || "";
+    const hasImg = state.petalPhoto === i && state.photo;
+    const t = g.querySelector(".ptext");
+    const im = g.querySelector(".pimg");
+
+    g.setAttribute("aria-label", "Petal " + (i + 1) + ", " + p.name +
+      (words ? ", says " + words : hasImg ? ", holds your picture" : ", empty — click to write"));
+    g.classList.toggle("empty", !words && !hasImg);
+
+    t.style.fontFamily = f.css;
+    t.style.letterSpacing = f.track + "em";
+    t.style.fill = ink.hex;
+    t.textContent = words;
+
+    if (words){
+      const room = p.len - 40;
+      let size = 62;
+      t.style.fontSize = size + "px";
+      const w = t.getComputedTextLength ? t.getComputedTextLength() : 0;
+      if (w > room && w > 0) size = Math.max(22, size * room / w);
+      t.style.fontSize = size + "px";
+    }
+
+    if (hasImg){
+      const box = Math.min(p.len - 60, 150);
+      im.setAttribute("href", state.photo);
+      im.setAttribute("x", -box / 2); im.setAttribute("y", -box / 2 - 4);
+      im.setAttribute("width", box); im.setAttribute("height", box);
+      im.style.display = "";
+      im.style.mixBlendMode = "multiply";
+      im.style.filter = "grayscale(1) contrast(1.2)";
+    } else {
+      im.style.display = "none";
+    }
   });
 }
 
-function buildStatic(){
-  buildPicker();
-  $("#bgfile").addEventListener("change", e => {
-    const f = e.target.files && e.target.files[0];
-    e.target.value = "";
-    if (!f) return;
-    if (f.size > 8 * 1024 * 1024){ toast("That photo is over 8 MB — try a smaller one."); return; }
-    const r = new FileReader();
-    r.onload = () => addBackground(r.result, f.name);
-    r.readAsDataURL(f);
+/* ---------- writing popover ---------- */
+let pop = null;
+function closePop(){
+  if (pop){ pop.remove(); pop = null; }
+  svg.querySelectorAll(".petal.on").forEach(g => g.classList.remove("on"));
+  state.open = -1;
+}
+
+function openPetal(i){
+  closePop();
+  state.open = i;
+  const g = svg.querySelector('.petal[data-i="' + i + '"]');
+  g.classList.add("on");
+
+  const r = g.getBoundingClientRect(), a = art.getBoundingClientRect();
+  const cx = r.left + r.width / 2 - a.left;
+  const cy = r.top - a.top;
+
+  pop = document.createElement("div");
+  pop.className = "pop";
+  pop.innerHTML =
+    '<p class="cap">Petal ' + (i + 1) + ' · ' + PETALS[i].name + '</p>' +
+    '<input id="popin" maxlength="18" autocomplete="off" placeholder="type here">' +
+    '<div class="acts">' +
+      '<button type="button" class="use">Picture</button>' +
+      '<button type="button" class="clr">Clear</button>' +
+      '<button type="button" class="go">Done</button>' +
+    '</div>';
+  art.appendChild(pop);
+
+  const w = 230, pad = 6;
+  pop.style.left = Math.max(w / 2 + pad, Math.min(a.width - w / 2 - pad, cx)) + "px";
+  pop.style.top = Math.max(96, cy - 8) + "px";
+
+  const input = pop.querySelector("#popin");
+  input.value = state.petals[i];
+  input.addEventListener("input", () => {
+    state.petals[i] = input.value;
+    if (input.value && state.petalPhoto === i) state.petalPhoto = -1;
+    paintPetals(); renderTotal();
+  });
+  input.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === "Escape") closePop(); });
+
+  const useBtn = pop.querySelector(".use");
+  useBtn.disabled = !state.photo;
+  useBtn.title = state.photo ? "Put your picture on this petal" : "Add a picture on the stub first";
+  useBtn.addEventListener("click", () => {
+    if (!state.photo) return;
+    state.petalPhoto = i; state.petals[i] = "";
+    input.value = ""; paintPetals(); renderTotal();
   });
 
-  const sel = $("#tfont");
+  pop.querySelector(".clr").addEventListener("click", () => {
+    state.petals[i] = "";
+    if (state.petalPhoto === i) state.petalPhoto = -1;
+    input.value = ""; input.focus(); paintPetals(); renderTotal();
+  });
+  pop.querySelector(".go").addEventListener("click", closePop);
+
+  setTimeout(() => input.focus({preventScroll:true}), 20);
+}
+
+document.addEventListener("pointerdown", e => {
+  if (!pop) return;
+  if (pop.contains(e.target) || e.target.closest(".petal")) return;
+  closePop();
+});
+
+/* ---------- the form ---------- */
+function buildForm(){
+  const qty = $("#qty");
+  for (let n = 1; n <= 5; n++){
+    const b = document.createElement("button");
+    b.type = "button"; b.className = "box";
+    b.setAttribute("aria-label", n + (n === 1 ? " stem" : " stems"));
+    b.addEventListener("click", () => { state.qty = n; render(); });
+    qty.appendChild(b);
+  }
+
+  const bloom = $("#bloom");
+  BLOOMS.forEach(c => {
+    const b = document.createElement("button");
+    b.type = "button"; b.className = "dot";
+    b.setAttribute("aria-label", c.label);
+    b.title = c.label;
+    b.innerHTML = '<i style="background:' + c.hex + '"></i><u></u>';
+    b.addEventListener("click", () => { state.bloom = c.id; render(); });
+    bloom.appendChild(b);
+  });
+
+  const ink = $("#ink");
+  INKS.forEach(c => {
+    const b = document.createElement("button");
+    b.type = "button"; b.className = "dot";
+    b.setAttribute("aria-label", c.label);
+    b.title = c.label;
+    b.innerHTML = '<i style="background:' + c.hex + '"></i><u></u>';
+    b.addEventListener("click", () => { state.ink = c.id; render(); });
+    ink.appendChild(b);
+  });
+
+  const sel = $("#font");
   FONTS.forEach(f => {
     const o = document.createElement("option");
-    o.value = f.id; o.textContent = f.label;
-    o.style.fontFamily = f.css;
+    o.value = f.id; o.textContent = f.label; o.style.fontFamily = f.css;
     sel.appendChild(o);
   });
   sel.value = state.font;
-  sel.addEventListener("change", () => {
-    state.font = sel.value;
-    const L = current(); if (L && L.type === "text"){ L.font = sel.value; drawLayers(); }
+  sel.addEventListener("change", () => { state.font = sel.value; render(); });
+
+  $("#photo-yes").addEventListener("click", () => {
+    state.wantPhoto = true; render();
+    if (!state.photo) $("#photofile").click();
+  });
+  $("#photo-no").addEventListener("click", () => {
+    state.wantPhoto = false; state.photo = null; state.photoName = ""; state.petalPhoto = -1; render();
   });
 
-  chipGroup($("#presets"), PRESETS.map(p => ({label:p})), () => false, it => {
-    $("#ttext").value = it.label;
-    const L = current();
-    if (L && L.type === "text"){ L.text = it.label; drawLayers(); } else { addText(); }
-  }, true);
-
-  const inks = $("#tcolor");
-  INKS.forEach(c => {
-    const b = document.createElement("button");
-    b.className = "sw"; b.type = "button";
-    b.style.background = c.hex;
-    b.title = c.label; b.setAttribute("aria-label", c.label);
-    b.setAttribute("aria-pressed", c.id === state.ink ? "true" : "false");
-    b.addEventListener("click", () => {
-      state.ink = c.id;
-      const L = current(); if (L && L.type === "text"){ L.ink = c.id; }
-      renderAll();
-    });
-    inks.appendChild(b);
+  $("#photobox").addEventListener("click", () => {
+    if (state.photo){ state.photo = null; state.photoName = ""; state.petalPhoto = -1; state.wantPhoto = false; render(); }
+    else $("#photofile").click();
   });
 
-  $("#ttext").addEventListener("input", e => {
-    const L = current();
-    if (L && L.type === "text"){ L.text = e.target.value || " "; drawLayers(); }
-  });
-
-  $("#addtext").addEventListener("click", addText);
-
-  $("#tfile").addEventListener("change", e => {
+  $("#photofile").addEventListener("change", e => {
     const f = e.target.files && e.target.files[0];
+    e.target.value = "";
     if (!f) return;
-    if (f.size > 6 * 1024 * 1024){ toast("That picture is over 6 MB — try a smaller one."); return; }
+    if (f.size > 8 * 1024 * 1024) return toast("That picture is over 8 MB — try a smaller one.");
     const r = new FileReader();
-    r.onload = () => addImage(r.result, f.name);
+    r.onload = () => {
+      state.photo = r.result; state.photoName = f.name; state.wantPhoto = true;
+      const free = state.petals.findIndex((t, i) => !t && state.petalPhoto !== i);
+      state.petalPhoto = free < 0 ? 1 : free;
+      render();
+      toast("Picture placed on petal " + (state.petalPhoto + 1) + " — click another petal to move it.");
+    };
     r.readAsDataURL(f);
   });
 
-  ["size","rot","track","press"].forEach(k => {
-    $("#" + k).addEventListener("input", () => {
-      const L = current(); if (!L) { syncSliders(); return; }
-      if (k === "size")  L.size  = +$("#size").value;
-      if (k === "rot")   L.rot   = +$("#rot").value;
-      if (k === "track") L.track = +$("#track").value;
-      if (k === "press") L.press = +$("#press").value;
-      drawLayers(); syncSliders();
-    });
-  });
-
-  $("#center").addEventListener("click", () => {
-    const L = current(); if (!L) return toast("Add a tattoo first.");
-    const s = curPhoto().spot;
-    L.x = s.x; L.y = s.y; drawLayers();
-  });
-  $("#dupe").addEventListener("click", () => {
-    const L = current(); if (!L) return toast("Nothing to duplicate yet.");
-    const c = Object.assign({}, L, {id: ++state.seq, x: Math.min(92, L.x + 8), y: Math.min(92, L.y + 7)});
-    state.layers.push(c); state.sel = c.id; renderAll();
-  });
-  $("#clear").addEventListener("click", () => {
-    if (!state.layers.length) return;
-    state.layers = []; state.sel = null; renderAll();
-  });
-
-  $("#tab-text").addEventListener("click", () => switchTab("text"));
-  $("#tab-image").addEventListener("click", () => switchTab("image"));
-
-  ["#msg","#who"].forEach(s => $(s).addEventListener("input", renderSummary));
-
+  $("#msg").addEventListener("input", () => {});
   $("#copy").addEventListener("click", copyBrief);
-
-  $("#theme").addEventListener("click", () => {
-    const now = document.documentElement.getAttribute("data-theme");
-    const dark = now ? now === "dark" : matchMedia("(prefers-color-scheme: dark)").matches;
-    document.documentElement.setAttribute("data-theme", dark ? "light" : "dark");
+  $("#clear").addEventListener("click", () => {
+    closePop();
+    state.petals = ["","","","","",""];
+    state.petalPhoto = -1;
+    render();
   });
 }
 
-/* ---------- bouquet photos ---------- */
-let customSeq = 0;
-const curPhoto = () => PHOTOS.find(p => p.id === state.photo) || PHOTOS[0];
+function words(){ return state.petals.filter(t => t.trim()).length; }
 
-function buildPicker(){
-  const host = $("#photopick");
-  host.innerHTML = "";
-  PHOTOS.forEach(p => {
-    const b = document.createElement("button");
-    b.type = "button"; b.className = "pick"; b.dataset.id = p.id;
-    b.setAttribute("aria-pressed", p.id === state.photo ? "true" : "false");
-    b.setAttribute("aria-label", p.label);
-    const th = document.createElement("span"); th.className = "thumb";
-    const im = document.createElement("img"); im.src = p.src; im.alt = "";
-    th.appendChild(im);
-    const cap = document.createElement("span"); cap.className = "cap"; cap.textContent = p.label;
-    b.append(th, cap);
-    b.addEventListener("click", () => {
-      state.photo = p.id;
-      if (p.wrap) state.wrap = p.wrap;
-      photoEl.src = p.src;
-      renderAll();
-    });
-    if (p.custom){
-      const x = document.createElement("span");
-      x.className = "del"; x.textContent = "×";
-      x.setAttribute("role", "button"); x.tabIndex = 0;
-      x.title = "Remove this photo";
-      const kill = ev => { ev.stopPropagation(); ev.preventDefault(); removeBackground(p.id); };
-      x.addEventListener("click", kill);
-      x.addEventListener("keydown", ev => { if (ev.key === "Enter" || ev.key === " ") kill(ev); });
-      b.appendChild(x);
-    }
-    host.appendChild(b);
-  });
-  const add = document.createElement("button");
-  add.type = "button"; add.className = "pick add";
-  add.setAttribute("aria-label", "Upload your own bouquet photo");
-  add.innerHTML = '<span class="thumb">+</span><span class="cap">Your photo</span>';
-  add.addEventListener("click", () => $("#bgfile").click());
-  host.appendChild(add);
-}
-
-function addBackground(dataUrl, name){
-  const short = (name || "").replace(/\.[a-z0-9]+$/i, "").slice(0, 13) || "Your photo";
-  const id = "c" + (++customSeq);
-  PHOTOS.push({id, src: dataUrl, label: short, spot:{x:50, y:45}, custom:true});
-  state.photo = id;
-  photoEl.src = dataUrl;
-  buildPicker(); renderAll();
-  toast("Photo added — drag your ink onto it.");
-}
-
-function removeBackground(id){
-  const i = PHOTOS.findIndex(p => p.id === id);
-  if (i < 0) return;
-  PHOTOS.splice(i, 1);
-  if (state.photo === id){
-    const p = PHOTOS[0];
-    state.photo = p.id;
-    if (p.wrap) state.wrap = p.wrap;
-    photoEl.src = p.src;
-  }
-  buildPicker(); renderAll();
-}
-
-function switchTab(which){
-  $("#tab-text").setAttribute("aria-selected", which === "text");
-  $("#tab-image").setAttribute("aria-selected", which === "image");
-  $("#pane-text").hidden = which !== "text";
-  $("#pane-image").hidden = which !== "image";
-}
-
-/* ---------- layers ---------- */
-const current = () => state.layers.find(l => l.id === state.sel) || null;
-
-function addText(){
-  const s = curPhoto().spot;
-  const L = {
-    id: ++state.seq, type: "text",
-    text: $("#ttext").value || "CHULA",
-    font: state.font, ink: state.ink,
-    x: s.x + (state.layers.length % 3) * 4,
-    y: s.y + (state.layers.length % 3) * 5,
-    size: 6.5, rot: -8, track: 8, press: 88
-  };
-  state.layers.push(L); state.sel = L.id; renderAll(); hideHint();
-}
-
-function addImage(dataUrl, name){
-  const s = curPhoto().spot;
-  const L = {
-    id: ++state.seq, type: "image", src: dataUrl, name: name || "picture",
-    mode: state.imgmode,
-    x: s.x, y: s.y, size: 14, rot: -6, track: 0, press: 85
-  };
-  state.layers.push(L); state.sel = L.id; renderAll(); hideHint();
-  toast("Picture added — drag it onto a petal.");
-}
-
-function hideHint(){ hint.style.opacity = "0"; }
-
-function drawLayers(){
-  stage.querySelectorAll(".layer").forEach(n => n.remove());
-  state.layers.forEach(L => {
-    const el = document.createElement("div");
-    el.className = "layer" + (L.id === state.sel ? " sel" : "");
-    el.dataset.id = L.id;
-    el.style.left = L.x + "%";
-    el.style.top = L.y + "%";
-    el.style.transform = "translate(-50%,-50%) rotate(" + L.rot + "deg)";
-
-    const ink = document.createElement("div");
-    ink.className = "ink";
-    ink.style.opacity = (L.press / 100).toFixed(2);
-
-    if (L.type === "text"){
-      const f = FONTS.find(x => x.id === L.font) || FONTS[0];
-      const c = INKS.find(x => x.id === L.ink) || INKS[0];
-      ink.style.fontFamily = f.css;
-      ink.style.fontWeight = f.weight;
-      ink.style.color = c.hex;
-      ink.style.fontSize = L.size + "cqw";
-      ink.style.letterSpacing = (L.track / 100) + "em";
-      ink.textContent = L.text;
-    } else {
-      const img = document.createElement("img");
-      img.src = L.src; img.alt = "";
-      img.style.filter = L.mode === "mono"
-        ? "grayscale(1) contrast(1.25) brightness(1.02)"
-        : (L.mode === "line" ? "grayscale(1) contrast(2.2) brightness(1.1)" : "saturate(.85)");
-      ink.style.width = (L.size * 1.6) + "cqw";
-      ink.appendChild(img);
-    }
-    el.appendChild(ink);
-    el.addEventListener("pointerdown", onGrab);
-    stage.appendChild(el);
-  });
-  renderLayerList();
-}
-
-function renderLayerList(){
-  const host = $("#layers");
-  host.innerHTML = "";
-  if (!state.layers.length){
-    const p = document.createElement("p");
-    p.className = "empty";
-    p.textContent = "Nothing on the petals yet.";
-    host.appendChild(p);
-    return;
-  }
-  state.layers.forEach(L => {
-    const row = document.createElement("div");
-    row.className = "lrow";
-    row.setAttribute("aria-current", L.id === state.sel ? "true" : "false");
-    row.tabIndex = 0;
-    const nm = document.createElement("span");
-    nm.className = "nm";
-    nm.textContent = L.type === "text" ? L.text : L.name;
-    const tag = document.createElement("span");
-    tag.className = "tag";
-    tag.textContent = L.type === "text" ? "text" : "picture";
-    const x = document.createElement("button");
-    x.className = "x"; x.type = "button"; x.innerHTML = "&times;";
-    x.setAttribute("aria-label", "Remove this tattoo");
-    x.addEventListener("click", ev => {
-      ev.stopPropagation();
-      state.layers = state.layers.filter(o => o.id !== L.id);
-      if (state.sel === L.id) state.sel = state.layers.length ? state.layers[state.layers.length - 1].id : null;
-      renderAll();
-    });
-    const pick = () => { state.sel = L.id; syncFromLayer(); renderAll(); };
-    row.addEventListener("click", pick);
-    row.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " "){ e.preventDefault(); pick(); }});
-    row.append(nm, tag, x);
-    host.appendChild(row);
-  });
-}
-
-function syncFromLayer(){
-  const L = current(); if (!L) return;
-  if (L.type === "text"){
-    $("#ttext").value = L.text;
-    $("#tfont").value = L.font;
-    state.font = L.font; state.ink = L.ink;
-    switchTab("text");
-  } else {
-    switchTab("image");
-  }
-}
-
-function syncSliders(){
-  const L = current();
-  const on = !!L;
-  ["size","rot","track","press"].forEach(k => { $("#" + k).disabled = !on; });
-  $("#trackrow").style.opacity = (on && L.type === "text") ? "1" : ".45";
-  if (on){
-    $("#size").value = L.size; $("#rot").value = L.rot;
-    $("#track").value = L.track; $("#press").value = L.press;
-  }
-  $("#size-v").textContent  = on ? L.size.toFixed(1) + " cqw" : "—";
-  $("#rot-v").textContent   = on ? L.rot + "°" : "—";
-  $("#track-v").textContent = on && L.type === "text" ? L.track + "" : "—";
-  $("#press-v").textContent = on ? L.press + "%" : "—";
-}
-
-/* ---------- dragging ---------- */
-let drag = null;
-function onGrab(e){
-  const id = +e.currentTarget.dataset.id;
-  state.sel = id; syncFromLayer(); renderAll();
-  const L = current(); if (!L) return;
-  const r = stage.getBoundingClientRect();
-  drag = {id, ox: e.clientX, oy: e.clientY, sx: L.x, sy: L.y, w: r.width, h: r.height};
-  e.currentTarget.setPointerCapture(e.pointerId);
-  e.preventDefault();
-  hideHint();
-}
-stage.addEventListener("pointermove", e => {
-  if (!drag) return;
-  const L = state.layers.find(l => l.id === drag.id); if (!L) return;
-  L.x = Math.max(2, Math.min(98, drag.sx + (e.clientX - drag.ox) / drag.w * 100));
-  L.y = Math.max(2, Math.min(98, drag.sy + (e.clientY - drag.oy) / drag.h * 100));
-  const el = stage.querySelector('.layer[data-id="' + L.id + '"]');
-  if (el){ el.style.left = L.x + "%"; el.style.top = L.y + "%"; }
-});
-["pointerup","pointercancel"].forEach(ev => stage.addEventListener(ev, () => { drag = null; }));
-
-document.addEventListener("keydown", e => {
-  const L = current(); if (!L) return;
-  if (["INPUT","TEXTAREA","SELECT"].includes(document.activeElement.tagName)) return;
-  const step = e.shiftKey ? 3 : 0.6;
-  const map = {ArrowLeft:[-step,0], ArrowRight:[step,0], ArrowUp:[0,-step], ArrowDown:[0,step]};
-  if (map[e.key]){
-    L.x = Math.max(2, Math.min(98, L.x + map[e.key][0]));
-    L.y = Math.max(2, Math.min(98, L.y + map[e.key][1]));
-    drawLayers(); e.preventDefault();
-  }
-});
-
-/* ---------- summary ---------- */
-function lineItems(){
-  const items = [];
-  items.push({k: state.stems + (state.stems > 1 ? " lily stems" : " lily stem"), v: PRICE.stems[state.stems]});
-  const wrapLabel = {kraft:"Kraft wrap", ivory:"Ivory wrap", blush:"Blush wrap"}[state.wrap];
-  items.push({k: wrapLabel, v: PRICE.wrap[state.wrap]});
-  const t = state.layers.filter(l => l.type === "text").length;
-  const im = state.layers.filter(l => l.type === "image").length;
-  if (t) items.push({k: "Petal lettering × " + t, v: PRICE.tattooText * t});
-  if (im) items.push({k: "Petal picture × " + im, v: PRICE.tattooImage * im});
-  const names = {box:"Gift box", ribbon:"Satin ribbon", dried:"Dried accent"};
-  state.addons.forEach(a => items.push({k: names[a], v: PRICE.addon[a]}));
-  return items;
-}
-
-function renderSummary(){
-  const host = $("#sum");
-  host.innerHTML = "";
-  const items = lineItems();
-  let total = 0;
-  items.forEach(it => {
-    total += it.v;
-    const d = document.createElement("div");
-    const a = document.createElement("span"); a.textContent = it.k;
-    const b = document.createElement("b"); b.textContent = it.v === 0 ? "included" : fmt(it.v);
-    d.append(a, b); host.appendChild(d);
-  });
-  if (!state.layers.length){
-    const d = document.createElement("div");
-    const a = document.createElement("span");
-    a.className = "empty";
-    a.textContent = "No petal ink yet";
-    d.appendChild(a);
-    host.appendChild(d);
-  }
+function renderTotal(){
+  let total = PRICE.stems[state.qty] || 0;
+  total += words() * PRICE.petalWord;
+  if (state.photo) total += PRICE.photo;
   $("#total").textContent = fmt(total);
+  return total;
 }
 
-function briefText(){
-  const p = curPhoto();
-  const style = p.custom ? "your own photo (" + p.label + ")" : p.label;
-  const lines = [];
-  lines.push("MAISON SABLÉ — PETAL TATTOO ORDER");
-  lines.push("");
-  lines.push("Bouquet: " + style + " · " + state.stems + " stem" + (state.stems > 1 ? "s" : "") +
-             " · " + state.wrap + " wrap");
-  if (state.addons.size) lines.push("Add-ons: " + [...state.addons].join(", "));
-  lines.push("");
-  lines.push("PETAL INK");
-  if (!state.layers.length){
-    lines.push("  (none yet)");
+function render(){
+  document.querySelectorAll("#qty .box").forEach((b, i) =>
+    b.setAttribute("aria-pressed", i < state.qty ? "true" : "false"));
+  document.querySelectorAll("#bloom .dot").forEach((b, i) =>
+    b.setAttribute("aria-pressed", BLOOMS[i].id === state.bloom ? "true" : "false"));
+  document.querySelectorAll("#ink .dot").forEach((b, i) =>
+    b.setAttribute("aria-pressed", INKS[i].id === state.ink ? "true" : "false"));
+
+  art.style.setProperty("--bloom", (BLOOMS.find(b => b.id === state.bloom) || BLOOMS[0]).hex);
+
+  $("#photo-yes").setAttribute("aria-pressed", state.wantPhoto ? "true" : "false");
+  $("#photo-no").setAttribute("aria-pressed", state.wantPhoto ? "false" : "true");
+
+  const box = $("#photobox");
+  const old = box.querySelector("img"), rm = box.querySelector(".rm");
+  if (old) old.remove();
+  if (rm) rm.remove();
+  if (state.photo){
+    $("#photolabel").hidden = true;
+    const im = document.createElement("img"); im.src = state.photo; im.alt = "";
+    const x = document.createElement("span"); x.className = "rm"; x.textContent = "×";
+    box.append(im, x);
+    box.setAttribute("aria-label", "Remove the picture");
   } else {
-    state.layers.forEach((L, i) => {
-      if (L.type === "text"){
-        const f = FONTS.find(x => x.id === L.font), c = INKS.find(x => x.id === L.ink);
-        lines.push("  " + (i + 1) + ". TEXT  “" + L.text + "”");
-        lines.push("      font " + f.label + " · " + c.label + " · " + L.rot + "° · size " + L.size);
-      } else {
-        lines.push("  " + (i + 1) + ". PICTURE  " + L.name + " (" + L.mode + ")");
-        lines.push("      " + L.rot + "° · size " + L.size);
-      }
-      lines.push("      placed at " + Math.round(L.x) + "% across, " + Math.round(L.y) + "% down");
-    });
+    $("#photolabel").hidden = false;
+    box.setAttribute("aria-label", "Add the picture to be tattooed");
   }
-  const msg = $("#msg").value.trim(), who = $("#who").value.trim();
-  if (msg || who){
-    lines.push("");
-    lines.push("NOTE CARD");
-    if (msg) lines.push("  " + msg);
-    if (who) lines.push("  — " + who);
-  }
-  lines.push("");
-  const items = lineItems();
-  items.forEach(it => lines.push("  " + it.k + " ......... " + (it.v === 0 ? "included" : fmt(it.v))));
-  lines.push("  TOTAL ......... " + $("#total").textContent);
-  lines.push("");
-  lines.push("Sent from the Petal Tattoo Studio · @maisonsable.bkk");
-  return lines.join("\n");
+
+  paintPetals();
+  renderTotal();
+}
+
+/* ---------- brief ---------- */
+function briefText(){
+  const f = FONTS.find(x => x.id === state.font), ink = INKS.find(x => x.id === state.ink);
+  const bloom = BLOOMS.find(x => x.id === state.bloom);
+  const L = [];
+  L.push("MAISON SABLÉ — ORDER");
+  L.push("");
+  L.push("Name: " + ($("#name").value.trim() || "—"));
+  L.push("Quantity: " + state.qty + (state.qty > 1 ? " stems" : " stem"));
+  L.push("Flower colour: " + bloom.label);
+  L.push("Lettering: " + f.label.split(" — ")[0] + " · " + ink.label + " ink");
+  L.push("");
+  L.push("PETALS");
+  let any = false;
+  PETALS.forEach((p, i) => {
+    if (state.petals[i].trim()){
+      any = true;
+      L.push("  " + (i + 1) + ". " + p.name + " — “" + state.petals[i].trim() + "”");
+    } else if (state.petalPhoto === i && state.photo){
+      any = true;
+      L.push("  " + (i + 1) + ". " + p.name + " — picture: " + state.photoName);
+    }
+  });
+  if (!any) L.push("  (nothing written yet)");
+  const m = $("#msg").value.trim();
+  if (m){ L.push(""); L.push("NOTE CARD"); L.push("  " + m); }
+  L.push("");
+  L.push("Photo: " + (state.photo ? "yes — " + state.photoName : "no"));
+  L.push("Total: " + $("#total").textContent);
+  L.push("");
+  L.push("Sent from maisonsable · @maisonsable.bkk");
+  return L.join("\n");
 }
 
 function copyBrief(){
+  closePop();
   const text = briefText();
-  const done = () => toast("Brief copied — paste it to @maisonsable.bkk with your screenshot.");
+  const ok = () => toast("Brief copied — send it to @maisonsable.bkk with a screenshot.");
   if (navigator.clipboard && navigator.clipboard.writeText){
-    navigator.clipboard.writeText(text).then(done).catch(() => fallback(text, done));
-  } else fallback(text, done);
+    navigator.clipboard.writeText(text).then(ok).catch(() => manual(text, ok));
+  } else manual(text, ok);
 }
-function fallback(text, done){
+function manual(text, ok){
   const ta = document.createElement("textarea");
   ta.value = text;
   ta.style.cssText = "position:fixed;top:-1000px;left:0;opacity:0";
   document.body.appendChild(ta); ta.select();
-  try { document.execCommand("copy"); done(); }
-  catch (err){ toast("Copy blocked here — screenshot this page instead."); }
+  try { document.execCommand("copy"); ok(); }
+  catch (e){ toast("Copy is blocked here — screenshot the slip instead."); }
   ta.remove();
 }
 
-let toastT;
-function toast(msg){
+let tT;
+function toast(m){
   const t = $("#toast");
-  t.textContent = msg; t.classList.add("on");
-  clearTimeout(toastT);
-  toastT = setTimeout(() => t.classList.remove("on"), 3200);
-}
-
-/* ---------- render ---------- */
-function renderAll(){
-  document.querySelectorAll("#photopick .pick[data-id]").forEach(b =>
-    b.setAttribute("aria-pressed", b.dataset.id === state.photo ? "true" : "false"));
-
-  chipGroup($("#stems"), [1,3,5,9].map(n => ({label: n + (n === 1 ? " stem" : " stems"), n})),
-    it => it.n === state.stems, it => { state.stems = it.n; renderAll(); });
-
-  chipGroup($("#wrapsel"), [
-      {label:"Kraft", id:"kraft"}, {label:"Ivory", id:"ivory"}, {label:"Blush", id:"blush"}],
-    it => it.id === state.wrap, it => { state.wrap = it.id; renderAll(); });
-
-  chipGroup($("#addons"), [
-      {label:"Gift box", id:"box"}, {label:"Satin ribbon", id:"ribbon"}, {label:"Dried accent", id:"dried"}],
-    it => state.addons.has(it.id),
-    it => { state.addons.has(it.id) ? state.addons.delete(it.id) : state.addons.add(it.id); renderAll(); }, true);
-
-  chipGroup($("#imgmode"), [
-      {label:"Soft grey", id:"mono"}, {label:"High contrast", id:"line"}, {label:"Keep colour", id:"colour"}],
-    it => {
-      const L = current();
-      return (L && L.type === "image") ? L.mode === it.id : state.imgmode === it.id;
-    },
-    it => {
-      state.imgmode = it.id;
-      const L = current(); if (L && L.type === "image") L.mode = it.id;
-      renderAll();
-    });
-
-  document.querySelectorAll("#tcolor .sw").forEach((b, i) => {
-    const L = current();
-    const active = (L && L.type === "text") ? L.ink : state.ink;
-    b.setAttribute("aria-pressed", INKS[i].id === active ? "true" : "false");
-  });
-
-  drawLayers();
-  syncSliders();
-  renderSummary();
+  t.textContent = m; t.classList.add("on");
+  clearTimeout(tT); tT = setTimeout(() => t.classList.remove("on"), 3400);
 }
 
 /* ---------- boot ---------- */
-buildStatic();
-photoEl.addEventListener("load", () => {
-  if (photoEl.naturalWidth) stage.style.aspectRatio = photoEl.naturalWidth + " / " + photoEl.naturalHeight;
-});
-if (photoEl.complete && photoEl.naturalWidth) stage.style.aspectRatio = photoEl.naturalWidth + " / " + photoEl.naturalHeight;
-
-/* open in a real working state: one lettering already on the petal */
-state.layers.push({id: ++state.seq, type:"text", text:"CHULA", font:"elite", ink:"black",
-                   x:52, y:42, size:6.5, rot:-8, track:14, press:88});
-state.sel = 1;
-document.fonts && document.fonts.ready.then(drawLayers);
-renderAll();
+buildPetals();
+buildForm();
+render();
+if (document.fonts) document.fonts.ready.then(paintPetals);
+addEventListener("resize", closePop);
 </script>
