@@ -1,7 +1,7 @@
 <title>Maison Sablé</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Jost:wght@300;400&family=Charmonman:wght@400;700&family=Mitr:wght@200;300&family=Special+Elite&family=Noto+Serif+Thai:wght@300;400&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300&family=Jost:wght@300;400&family=Playfair+Display:wght@400;700;900&family=Bodoni+Moda:wght@400;700;900&family=EB+Garamond:wght@400;500&family=Cinzel+Decorative:wght@400;700&family=Rye&family=Charmonman:wght@400;700&family=Mitr:wght@200;300&family=Noto+Serif+Thai:wght@300;400&display=swap">
 <style>
 /* A deliberately single-theme page: a printed paper order slip. */
 :root{
@@ -22,7 +22,6 @@ body{margin:0;background:var(--paper);color:var(--ink);
   font-family:"Jost","Noto Serif Thai",system-ui,sans-serif;font-weight:300;font-size:15px;line-height:1.6}
 h1{margin:0;font-weight:400}
 button,input,textarea,select{font:inherit;color:inherit}
-.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 
 .page{max-width:1140px;margin:0 auto;padding-inline:20px;padding-block:34px 60px}
 
@@ -34,7 +33,7 @@ button,input,textarea,select{font:inherit;color:inherit}
 .rulewing i{display:block;height:1px;width:min(120px,18vw);background:currentColor}
 .star{font-style:normal;font-size:12px}
 
-/* ---------- the ticket ---------- */
+/* ---------- the slip ---------- */
 .ticket{background:var(--card);box-shadow:var(--shadow);
   clip-path:polygon(14px 0,calc(100% - 14px) 0,100% 14px,100% calc(100% - 14px),calc(100% - 14px) 100%,14px 100%,0 calc(100% - 14px),0 14px);
   display:grid;grid-template-columns:34px minmax(0,1.04fr) minmax(0,1fr) minmax(0,.6fr);position:relative}
@@ -44,41 +43,46 @@ button,input,textarea,select{font:inherit;color:inherit}
 
 /* writing surface */
 .artcol{padding:22px 16px 18px;display:flex;flex-direction:column;gap:10px;min-width:0}
-.art{position:relative;isolation:isolate;touch-action:manipulation}
-.art::before{content:"";position:absolute;inset:0;z-index:0;border-radius:50%;
-  background:radial-gradient(circle at 56% 56%,var(--bloom,#EDE9DF) 0%,rgba(0,0,0,0) 62%);opacity:.85}
-.art img.lineart{position:relative;z-index:1;display:block;width:100%;height:auto;mix-blend-mode:multiply;user-select:none;-webkit-user-drag:none}
-.art svg{position:absolute;inset:0;z-index:2;width:100%;height:100%;overflow:visible}
+.art{position:relative;touch-action:manipulation}
+.art img.lineart{display:block;width:100%;height:auto;mix-blend-mode:multiply;user-select:none;-webkit-user-drag:none}
+.art svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
 .petal{cursor:text;outline:none}
 .hit{fill:transparent}
 .guide{stroke:var(--rule-2);stroke-width:2.2;stroke-dasharray:7 11;stroke-linecap:round;opacity:0}
-.petal.empty .guide{opacity:.85}
+.petal.empty .guide{opacity:.9}
 .petal:hover .guide,.petal:focus-visible .guide{opacity:1;stroke:var(--rose-soft)}
 .petal.on .guide{opacity:1;stroke:var(--rose)}
-.ptext{fill:var(--rose);dominant-baseline:middle;text-anchor:middle;pointer-events:none;white-space:pre}
+.ptext{dominant-baseline:middle;text-anchor:middle;pointer-events:none;white-space:pre}
 .phint{fill:var(--rule);font-family:"Jost",sans-serif;font-size:25px;letter-spacing:.26em;
   text-anchor:middle;dominant-baseline:middle;pointer-events:none;text-transform:uppercase}
 .petal:hover .phint{fill:var(--rose-soft)}
 .petal.on .phint,.petal:not(.empty) .phint{opacity:0}
 .artnote{text-align:center;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-mute);font-family:"Cormorant Garamond",serif}
 
-/* popover */
+/* the writing field */
 .pop{position:absolute;z-index:9;transform:translate(-50%,-50%);background:var(--card);
-  border:1px solid var(--rule-2);box-shadow:0 16px 40px -20px rgba(74,59,54,.55);padding:10px;width:206px}
-.pop .cap{font-family:"Cormorant Garamond",serif;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-mute);margin-bottom:6px}
-.pop input{width:100%;border:0;border-bottom:1px solid var(--rule-2);background:transparent;padding:4px 2px;font-size:15px}
-.pop input:focus{outline:none;border-bottom-color:var(--rose)}
-.pop .acts{display:flex;gap:6px;margin-top:9px}
-.pop .acts button{flex:1;border:1px solid var(--rule-2);background:transparent;padding:5px 4px;cursor:pointer;
-  font-family:"Cormorant Garamond",serif;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft)}
-.pop .acts button:hover{border-color:var(--rose);color:var(--rose)}
+  border:1px solid var(--rule-2);box-shadow:0 16px 40px -20px rgba(74,59,54,.55);padding:11px;width:214px}
+.pop .cap{font-family:"Cormorant Garamond",serif;font-size:10px;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--ink-mute);margin:0 0 7px;display:flex;justify-content:space-between;gap:6px;align-items:center}
+.pop input[type=text]{width:100%;border:0;border-bottom:1px solid var(--rule-2);background:transparent;padding:4px 2px;font-size:15px}
+.pop input[type=text]:focus{outline:none;border-bottom-color:var(--rose)}
+.dirtog{display:flex;border:1px solid var(--rule-2)}
+.dirtog button{border:0;background:transparent;cursor:pointer;padding:2px 7px;font-size:11px;color:var(--ink-mute);line-height:1.5}
+.dirtog button[aria-pressed=true]{background:var(--rose);color:#FCFAF7}
+.pop .acts{display:flex;gap:6px;margin-top:10px}
+.pop .acts button{flex:1;border:1px solid var(--rule-2);background:transparent;padding:5px 3px;cursor:pointer;
+  font-family:"Cormorant Garamond",serif;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft)}
+.pop .acts button:hover:not(:disabled){border-color:var(--rose);color:var(--rose)}
 .pop .acts button.go{background:var(--rose);border-color:var(--rose);color:#FCFAF7}
 .pop .acts button.go:hover{background:var(--ink);border-color:var(--ink);color:#FCFAF7}
-.pop .acts button:disabled{opacity:.4;cursor:not-allowed}
+.pop .acts button:disabled{opacity:.35;cursor:not-allowed}
+.pop .sizer{margin-top:10px;display:flex;align-items:center;gap:8px}
+.pop .sizer span{font-family:"Cormorant Garamond",serif;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-mute)}
+.pop input[type=range]{flex:1;accent-color:var(--rose);margin:0;min-width:0}
 
 /* form */
-.formcol{padding:26px 22px 20px;display:flex;flex-direction:column;gap:17px;min-width:0;border-left:1px solid var(--rule)}
-.field{display:grid;grid-template-columns:104px minmax(0,1fr);gap:12px;align-items:baseline}
+.formcol{padding:26px 22px 20px;display:flex;flex-direction:column;gap:16px;min-width:0;border-left:1px solid var(--rule)}
+.field{display:grid;grid-template-columns:100px minmax(0,1fr);gap:12px;align-items:baseline}
 .field > .k{font-family:"Cormorant Garamond",serif;font-size:11.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-soft)}
 .field .v{min-width:0}
 .field.tall{align-items:start}
@@ -86,17 +90,35 @@ button,input,textarea,select{font:inherit;color:inherit}
 .line{width:100%;border:0;border-bottom:1px solid var(--rule-2);background:transparent;padding:2px 2px 4px;font-size:15px}
 .line:focus{outline:none;border-bottom-color:var(--rose)}
 .boxes{display:flex;gap:9px}
-.box{width:21px;height:21px;border:1px solid var(--rule-2);background:transparent;cursor:pointer;padding:0;display:grid;place-items:center}
+.box{width:21px;height:21px;border:1px solid var(--rule-2);background:transparent;cursor:pointer;padding:0;display:grid;place-items:center;flex:none}
 .box:hover{border-color:var(--rose-soft)}
 .box[aria-pressed=true]{border-color:var(--rose)}
 .box[aria-pressed=true]::before{content:"";width:9px;height:9px;background:var(--rose)}
-.dots{display:flex;gap:11px;align-items:flex-start}
+.dots{display:flex;gap:12px;align-items:flex-start;flex-wrap:wrap}
 .dot{border:0;background:none;padding:0;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:5px}
 .dot i{display:block;width:25px;height:25px;border-radius:50%;border:1px solid rgba(74,59,54,.16)}
 .dot u{display:block;width:9px;height:9px;border-radius:50%;border:1px solid var(--rule-2);text-decoration:none}
 .dot[aria-pressed=true] u{background:var(--rose);border-color:var(--rose)}
-.pick{width:100%;border:0;border-bottom:1px solid var(--rule-2);background:transparent;padding:3px 2px;font-size:14px;cursor:pointer}
-.pick:focus{outline:none;border-bottom-color:var(--rose)}
+.dot em{font-style:normal;font-family:"Cormorant Garamond",serif;font-size:9.5px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--ink-mute)}
+.dot[aria-pressed=true] em{color:var(--rose)}
+
+/* lettering specimens */
+.fonts{display:grid;grid-template-columns:repeat(4,1fr);gap:7px}
+.ftile{position:relative;height:104px;border:1px solid var(--rule-2);background:var(--card);cursor:pointer;
+  padding:9px 4px;display:grid;place-items:center;overflow:hidden}
+.ftile img{max-height:100%;max-width:100%;width:auto;object-fit:contain;mix-blend-mode:multiply}
+.ftile:hover{border-color:var(--rose-soft)}
+.ftile[aria-pressed=true]{border-color:var(--rose);box-shadow:0 0 0 1px var(--rose)}
+.ftile[aria-pressed=true]::after{content:"✓";position:absolute;top:2px;right:4px;font-size:11px;color:var(--rose);line-height:1}
+.thai{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-top:7px}
+.thtile{position:relative;border:1px solid var(--rule-2);background:var(--card);cursor:pointer;padding:6px 4px;
+  font-family:"Noto Serif Thai",serif;font-size:14px;color:var(--ink);text-align:center;line-height:1.5}
+.thtile:hover{border-color:var(--rose-soft)}
+.thtile[aria-pressed=true]{border-color:var(--rose);box-shadow:0 0 0 1px var(--rose)}
+.thtile[aria-pressed=true]::after{content:"✓";position:absolute;top:1px;right:3px;font-size:10px;color:var(--rose);line-height:1}
+.fnote{font-size:10.5px;color:var(--ink-mute);margin:7px 0 0;line-height:1.45}
+
 .msg{width:100%;border:0;background:transparent;resize:none;font-size:15px;line-height:29px;padding:0;
   background-image:repeating-linear-gradient(var(--card),var(--card) 28px,var(--rule-2) 28px,var(--rule-2) 29px);
   height:87px}
@@ -104,33 +126,34 @@ button,input,textarea,select{font:inherit;color:inherit}
 .yesno{display:flex;gap:18px}
 .yesno label{display:flex;align-items:center;gap:7px;font-family:"Cormorant Garamond",serif;font-size:12px;
   letter-spacing:.18em;text-transform:uppercase;color:var(--ink-soft);cursor:pointer}
-.tagline{margin-top:auto;padding-top:14px;text-align:center;font-family:"Cormorant Garamond",serif;
+.tagline{margin-top:auto;padding-top:16px;text-align:center;font-family:"Cormorant Garamond",serif;
   font-size:11px;letter-spacing:.26em;text-transform:uppercase;color:var(--ink-mute);line-height:2}
 .tagline i{font-style:normal;color:var(--rose-soft);display:block;font-size:10px}
 
 /* stub */
-.stub{position:relative;border-left:1px dashed var(--rule-2);padding:22px 16px 18px;
+.stub{position:relative;border-left:1px dashed var(--rule-2);padding:22px 14px 18px;
   background:linear-gradient(180deg,rgba(243,233,228,.55),rgba(243,233,228,.2));
   display:flex;flex-direction:column;align-items:center;gap:12px;min-width:0}
 .notch{position:absolute;left:-9px;width:18px;height:18px;border-radius:50%;background:var(--paper)}
 .notch.t{top:-9px}
 .notch.b{bottom:-9px}
-.stub img.mini{width:74%;max-width:120px;height:auto;mix-blend-mode:multiply;opacity:.75}
-.stub .tot{text-align:center;font-family:"Cormorant Garamond",serif}
-.stub .tot span{display:block;font-size:9.5px;letter-spacing:.24em;text-transform:uppercase;color:var(--ink-mute)}
-.stub .tot b{font-weight:400;font-size:26px;font-variant-numeric:tabular-nums;color:var(--ink)}
-.photobox{width:100%;aspect-ratio:1/1;border:1px dashed var(--rule-2);border-radius:10px;display:grid;place-items:center;
+.stub img.mini{width:72%;max-width:112px;height:auto;mix-blend-mode:multiply;opacity:.75}
+.stubcap{font-family:"Cormorant Garamond",serif;font-size:9.5px;letter-spacing:.24em;text-transform:uppercase;color:var(--ink-mute)}
+.slots{display:flex;flex-direction:column;gap:9px;width:100%}
+.slot{width:100%;aspect-ratio:3/4;border:1px dashed var(--rule-2);border-radius:9px;display:grid;place-items:center;
   overflow:hidden;background:rgba(252,250,247,.5);position:relative;padding:0;cursor:pointer;text-align:center}
-.photobox:hover{border-color:var(--rose-soft)}
-.photobox span{font-family:"Cormorant Garamond",serif;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-mute);padding:8px}
-.photobox img{width:100%;height:100%;object-fit:cover;display:block}
-.photobox .rm{position:absolute;top:5px;right:5px;width:20px;height:20px;border-radius:50%;background:rgba(74,59,54,.68);
-  color:#FCFAF7;display:grid;place-items:center;font-size:13px;line-height:1}
+.slot:hover{border-color:var(--rose-soft)}
+.slot > span{font-family:"Cormorant Garamond",serif;font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-mute);padding:6px}
+.slot img{width:100%;height:100%;object-fit:cover;display:block}
+.slot .rm{position:absolute;top:4px;right:4px;width:19px;height:19px;border-radius:50%;background:rgba(74,59,54,.68);
+  color:#FCFAF7;display:grid;place-items:center;font-size:12px;line-height:1}
+.slot .on{position:absolute;bottom:0;left:0;right:0;background:rgba(74,59,54,.62);color:#FCFAF7;
+  font-family:"Cormorant Garamond",serif;font-size:8.5px;letter-spacing:.14em;text-transform:uppercase;padding:2px}
 .stub .spark{color:var(--rose-soft);font-size:11px;margin-top:auto}
 
-/* under the ticket */
+/* under the slip */
 .below{display:flex;flex-wrap:wrap;gap:14px;align-items:center;justify-content:center;margin-top:26px}
-.btn{border:1px solid var(--ink);background:var(--ink);color:var(--card);padding:12px 26px;cursor:pointer;
+.btn{border:1px solid var(--ink);background:var(--ink);color:var(--card);padding:12px 24px;cursor:pointer;
   font-family:"Cormorant Garamond",serif;font-size:12px;letter-spacing:.24em;text-transform:uppercase}
 .btn:hover{background:var(--rose);border-color:var(--rose)}
 .btn.sec{background:transparent;color:var(--ink-soft);border-color:var(--rule-2)}
@@ -148,6 +171,15 @@ footer{margin-top:40px;padding-top:20px;border-top:1px solid var(--rule);display
 footer b{font-weight:400;font-family:"Cormorant Garamond",serif;font-size:10px;letter-spacing:.2em;
   text-transform:uppercase;color:var(--ink-mute);display:block}
 
+/* receipt */
+.sheet{position:fixed;inset:0;z-index:70;background:rgba(74,59,54,.55);display:grid;place-items:center;padding:20px}
+.sheetbox{background:var(--card);max-width:min(460px,92vw);max-height:88vh;overflow:auto;padding:16px;
+  box-shadow:0 30px 70px -30px rgba(0,0,0,.6);display:flex;flex-direction:column;gap:12px}
+.sheetbox img{width:100%;height:auto;display:block;border:1px solid var(--rule)}
+.sheetbox .row{display:flex;gap:10px;flex-wrap:wrap}
+.sheetbox .row .btn{flex:1;text-align:center;padding:10px 12px}
+.sheetbox p{margin:0;font-size:11.5px;color:var(--ink-mute);line-height:1.5}
+
 .toast{position:fixed;left:50%;bottom:calc(22px + env(safe-area-inset-bottom,0px));transform:translate(-50%,10px);
   background:var(--ink);color:var(--card);padding:11px 20px;font-size:12.5px;opacity:0;pointer-events:none;
   transition:.28s;z-index:99;max-width:calc(100% - 40px);text-align:center}
@@ -158,16 +190,16 @@ footer b{font-weight:400;font-family:"Cormorant Garamond",serif;font-size:10px;l
   .rail{border-right:0;border-bottom:1px solid var(--rule);padding-block:8px}
   .rail span{writing-mode:horizontal-tb;transform:none}
   .formcol{border-left:0;border-top:1px solid var(--rule);padding:22px 18px}
-  .stub{border-left:0;border-top:1px dashed var(--rule-2);flex-direction:row;flex-wrap:wrap;justify-content:space-between;align-items:center}
-  .notch{left:auto;top:auto}
-  .notch.t{left:-9px;top:-9px}
-  .notch.b{right:-9px;left:auto;top:-9px;bottom:auto}
-  .stub img.mini{width:70px}
-  .photobox{width:96px;aspect-ratio:1/1}
-  .stub .spark{display:none}
+  .stub{border-left:0;border-top:1px dashed var(--rule-2)}
+  .notch{left:-9px;top:-9px;bottom:auto}
+  .notch.b{left:auto;right:-9px}
+  .stub img.mini{width:84px}
+  .slots{flex-direction:row}
+  .slot{width:33%}
 }
 @media (max-width:520px){
   .field{grid-template-columns:1fr;gap:5px}
+  .fonts{grid-template-columns:repeat(3,1fr)}
   .shots{grid-template-columns:1fr 1fr}
   .shots img:last-child{display:none}
 }
@@ -182,15 +214,15 @@ footer b{font-weight:400;font-family:"Cormorant Garamond",serif;font-size:10px;l
     <div class="rulewing"><i></i><span class="star">✦</span><i></i></div>
   </div>
 
-  <div class="ticket">
+  <div class="ticket" id="ticket">
     <div class="rail"><span>A flower for a brighter day</span></div>
 
     <div class="artcol">
       <div class="art" id="art">
-        <img class="lineart" src="lily.webp" alt="Line drawing of a lily with six petals you can write on">
+        <img class="lineart" id="lineart" src="lily.webp" alt="Line drawing of a lily with six petals you can write on">
         <svg id="petals" viewBox="0 0 1254 1254" role="group" aria-label="Lily petals — click one to write on it"></svg>
       </div>
-      <p class="artnote">Six petals · about 18 characters each</p>
+      <p class="artnote">Six petals · about 12 letters each</p>
     </div>
 
     <div class="formcol">
@@ -209,9 +241,13 @@ footer b{font-weight:400;font-family:"Cormorant Garamond",serif;font-size:10px;l
         <span class="v"><span class="dots" id="bloom"></span></span>
       </div>
 
-      <div class="field">
+      <div class="field tall">
         <span class="k">Lettering</span>
-        <span class="v"><select class="pick" id="font"></select></span>
+        <span class="v">
+          <div class="fonts" id="fonts"></div>
+          <div class="thai" id="thai"></div>
+          <p class="fnote">The eight specimens are inked as drawn — Latin letters only. The three below set Thai.</p>
+        </span>
       </div>
 
       <div class="field">
@@ -220,8 +256,8 @@ footer b{font-weight:400;font-family:"Cormorant Garamond",serif;font-size:10px;l
       </div>
 
       <div class="field tall">
-        <span class="k">Message</span>
-        <span class="v"><textarea class="msg" id="msg" maxlength="180" placeholder="A line for the note card"></textarea></span>
+        <span class="k">Special request</span>
+        <span class="v"><textarea class="msg" id="msg" maxlength="180" placeholder="Anything we should know"></textarea></span>
       </div>
 
       <div class="field">
@@ -232,23 +268,30 @@ footer b{font-weight:400;font-family:"Cormorant Garamond",serif;font-size:10px;l
         </span></span>
       </div>
 
+      <div class="field">
+        <span class="k">Polaroid</span>
+        <span class="v"><span class="yesno">
+          <label><button class="box" id="pola-yes" aria-pressed="false" aria-label="Polaroid yes"></button> Yes</label>
+          <label><button class="box" id="pola-no" aria-pressed="true" aria-label="Polaroid no"></button> No</label>
+        </span></span>
+      </div>
+
       <p class="tagline">A small bouquet<i>✦</i>A bigger meaning</p>
     </div>
 
     <div class="stub">
       <span class="notch t"></span><span class="notch b"></span>
       <img class="mini" src="bouquet-line.webp" alt="">
-      <div class="tot"><span>Total</span><b id="total">฿0</b></div>
-      <button class="photobox" id="photobox" aria-label="Add the picture to be tattooed">
-        <span id="photolabel">Tap to add<br>your picture</span>
-      </button>
-      <input type="file" id="photofile" accept="image/*" hidden>
+      <span class="stubcap">Pictures · up to 3</span>
+      <div class="slots" id="slots"></div>
+      <input type="file" id="picfile" accept="image/*" hidden>
       <span class="spark">✦</span>
     </div>
   </div>
 
   <div class="below">
-    <button class="btn" id="copy">Copy order brief</button>
+    <button class="btn" id="save">Save the slip</button>
+    <button class="btn sec" id="copy">Copy order brief</button>
     <button class="btn sec" id="clear">Clear the petals</button>
   </div>
 
@@ -271,69 +314,91 @@ footer b{font-weight:400;font-family:"Cormorant Garamond",serif;font-size:10px;l
 
 <script>
 /* -------------------------------------------------------------
-   PRICES — in baht. Change a number and the slip follows.
+   Prices are switched off until the shop sets them. Fill in the
+   numbers below and flip SHOW_PRICES to true — the slip, the
+   brief and the receipt all pick them up.
 --------------------------------------------------------------*/
+const SHOW_PRICES = false;
 const PRICE = {
-  stems: {1:390, 2:690, 3:990, 4:1290, 5:1590},
-  petalWord: 120,
-  photo: 220
+  stems: {1:0, 2:0, 3:0, 4:0, 5:0},
+  petalWord: 0,
+  picture: 0,
+  polaroid: 0
 };
 
-/* Petal map, in the coordinates of lily.webp (1254 x 1254).
-   a  = where the writing sits, rot = the angle of that petal,
-   len = how much room the petal gives.                          */
-const PETALS = [
-  {name:"top right",   a:[795,395], rot:-73.0, len:420},
-  {name:"top left",    a:[452,372], rot: 43.0, len:300},
-  {name:"left",        a:[358,618], rot:  9.0, len:420},
-  {name:"lower left",  a:[458,876], rot:-36.0, len:380},
-  {name:"bottom",      a:[748,950], rot: 75.0, len:380},
-  {name:"right",       a:[975,652], rot:-13.5, len:350}
+/* The two blooms. Each is the same drawing, 1254 x 1254. */
+const BLOOMS = [
+  {id:"white", label:"White", hex:"#F1EDE6", src:"lily.webp"},
+  {id:"pink",  label:"Pink",  hex:"#F3B9C6", src:"lily-pink.webp"}
 ];
 
+/* Petal map, in the coordinates of the drawing.
+   a = where the writing sits, rot = the angle of that petal,
+   len = the room it gives, tip = which end of the axis is the tip. */
+const PETALS = [
+  {name:"top right",   a:[795,395], rot:-73.0, len:420, tip: 1},
+  {name:"top left",    a:[452,372], rot: 43.0, len:300, tip:-1},
+  {name:"left",        a:[358,618], rot:  9.0, len:420, tip:-1},
+  {name:"lower left",  a:[458,876], rot:-36.0, len:380, tip:-1},
+  {name:"bottom",      a:[748,950], rot: 75.0, len:380, tip: 1},
+  {name:"right",       a:[975,652], rot:-13.5, len:350, tip: 1}
+];
+
+/* The lettering the shop inks. The eight specimens are the shop's own
+   sheets; `css` is the nearest face we have on screen for the preview. */
 const FONTS = [
-  {id:"elite",     label:"Typewriter — EN only",  css:'"Special Elite",monospace',                      track:.08},
-  {id:"cormorant", label:"Fine serif — TH + EN",  css:'"Cormorant Garamond","Noto Serif Thai",serif',   track:.12},
-  {id:"charmonman",label:"Handwritten — TH + EN", css:'"Charmonman",cursive',                           track:.02},
-  {id:"mitr",      label:"Soft sans — TH + EN",   css:'"Mitr","Jost",sans-serif',                       track:.06},
-  {id:"noto",      label:"Bookish — TH + EN",     css:'"Noto Serif Thai",serif',                        track:.06}
+  {id:"f1", img:"f1.jpg", css:'"Bodoni Moda",serif',        weight:900, track:.04, thai:false},
+  {id:"f2", img:"f2.jpg", css:'"EB Garamond",serif',        weight:400, track:.10, thai:false},
+  {id:"f3", img:"f3.jpg", css:'"Cinzel Decorative",serif',  weight:700, track:.06, thai:false},
+  {id:"f4", img:"f4.jpg", css:'"Bodoni Moda",serif',        weight:700, track:.05, thai:false},
+  {id:"f5", img:"f5.jpg", css:'"Cormorant Garamond",serif', weight:300, track:.12, thai:false},
+  {id:"f6", img:"f6.jpg", css:'"Rye",serif',                weight:400, track:.04, thai:false},
+  {id:"f7", img:"f7.jpg", css:'"Playfair Display",serif',   weight:900, track:.05, thai:false},
+  {id:"f8", img:"f8.jpg", css:'"Playfair Display",serif',   weight:400, track:.08, thai:false},
+  {id:"t1", label:"ขอบคุณ", css:'"Noto Serif Thai",serif',  weight:400, track:.04, thai:true},
+  {id:"t2", label:"ขอบคุณ", css:'"Charmonman",cursive',     weight:400, track:.02, thai:true},
+  {id:"t3", label:"ขอบคุณ", css:'"Mitr",sans-serif',        weight:300, track:.04, thai:true}
 ];
 
 const INKS = [
   {id:"rose",  label:"Rose",      hex:"#9E6B5C"},
   {id:"black", label:"Ink black", hex:"#24201D"},
   {id:"sepia", label:"Sepia",     hex:"#5A4438"},
-  {id:"blush", label:"Blush",     hex:"#BE8288"},
-  {id:"sage",  label:"Sage",      hex:"#77856A"}
+  {id:"blush", label:"Blush",     hex:"#BE8288"}
 ];
 
-const BLOOMS = [
-  {id:"ivory", label:"Ivory", hex:"#EDE9DF"},
-  {id:"blush", label:"Blush", hex:"#EBC9C3"},
-  {id:"rose",  label:"Rose",  hex:"#D79A93"},
-  {id:"lilac", label:"Lilac", hex:"#C9BBD4"},
-  {id:"sage",  label:"Sage",  hex:"#AFBAA0"}
-];
+const MAX_PICS = 3;
 
 const state = {
   qty: 1,
-  bloom: "ivory",
-  font: "elite",
+  bloom: "white",
+  font: "f7",
   ink: "rose",
   wantPhoto: false,
-  photo: null,
-  photoName: "",
-  petals: ["CHULA","","19.09.26","","",""],   /* opens with two examples */
-  petalPhoto: -1,
+  polaroid: false,
+  /* one entry per petal */
+  petals: [
+    {text:"CHULA",    dir:"v"},
+    {text:"",         dir:"v"},
+    {text:"19.09.26", dir:"h"},
+    {text:"",         dir:"v"},
+    {text:"",         dir:"v"},
+    {text:"",         dir:"v"}
+  ],
+  pics: [],        /* {src, name, petal, size} — at most MAX_PICS */
+  pendingPetal: -1,
   open: -1
 };
 
 const $ = s => document.querySelector(s);
-const svg = $("#petals"), art = $("#art"), ticket = document.querySelector(".ticket");
+const svg = $("#petals"), art = $("#art"), ticket = $("#ticket"), lineart = $("#lineart");
 const NS = "http://www.w3.org/2000/svg";
-const fmt = n => "฿" + n.toLocaleString("en-US");
+const theFont = () => FONTS.find(f => f.id === state.font) || FONTS[0];
+const theInk  = () => INKS.find(i => i.id === state.ink) || INKS[0];
+const theBloom= () => BLOOMS.find(b => b.id === state.bloom) || BLOOMS[0];
+const picOn   = i => state.pics.find(p => p.petal === i) || null;
 
-/* ---------- the petals ---------- */
+/* ---------- petals ---------- */
 function buildPetals(){
   svg.innerHTML = "";
   PETALS.forEach((p, i) => {
@@ -346,8 +411,7 @@ function buildPetals(){
 
     const hit = document.createElementNS(NS, "ellipse");
     hit.setAttribute("class", "hit");
-    hit.setAttribute("rx", p.len / 2);
-    hit.setAttribute("ry", 74);
+    hit.setAttribute("rx", p.len / 2); hit.setAttribute("ry", 74);
     g.appendChild(hit);
 
     const guide = document.createElementNS(NS, "line");
@@ -362,16 +426,9 @@ function buildPetals(){
     hintT.textContent = "write";
     g.appendChild(hintT);
 
-    const t = document.createElementNS(NS, "text");
-    t.setAttribute("class", "ptext");
-    t.setAttribute("y", -4);
-    g.appendChild(t);
-
-    const im = document.createElementNS(NS, "image");
-    im.setAttribute("class", "pimg");
-    im.setAttribute("preserveAspectRatio", "xMidYMid meet");
-    im.style.display = "none";
-    g.appendChild(im);
+    const hold = document.createElementNS(NS, "g");
+    hold.setAttribute("class", "hold");
+    g.appendChild(hold);
 
     g.addEventListener("click", () => openPetal(i));
     g.addEventListener("keydown", e => {
@@ -379,52 +436,75 @@ function buildPetals(){
     });
     svg.appendChild(g);
   });
-  paintPetals();
 }
 
 function paintPetals(){
-  const f = FONTS.find(x => x.id === state.font) || FONTS[0];
-  const ink = INKS.find(x => x.id === state.ink) || INKS[0];
+  const f = theFont(), ink = theInk();
   svg.querySelectorAll(".petal").forEach(g => {
     const i = +g.dataset.i, p = PETALS[i];
-    const words = state.petals[i] || "";
-    const hasImg = state.petalPhoto === i && state.photo;
-    const t = g.querySelector(".ptext");
-    const im = g.querySelector(".pimg");
+    const words = (state.petals[i].text || "").trim();
+    const pic = picOn(i);
+    const hold = g.querySelector(".hold");
+    hold.innerHTML = "";
 
     g.setAttribute("aria-label", "Petal " + (i + 1) + ", " + p.name +
-      (words ? ", says " + words : hasImg ? ", holds your picture" : ", empty — click to write"));
-    g.classList.toggle("empty", !words && !hasImg);
+      (words ? ", says " + words : pic ? ", holds a picture" : ", empty — click to write"));
+    g.classList.toggle("empty", !words && !pic);
 
-    t.style.fontFamily = f.css;
-    t.style.letterSpacing = f.track + "em";
-    t.style.fill = ink.hex;
-    t.textContent = words;
+    if (pic){
+      /* stand the picture along the petal, top toward the middle of the flower */
+      const h = pic.size, w = h * 0.78;
+      const im = document.createElementNS(NS, "image");
+      im.setAttribute("href", pic.src);
+      im.setAttribute("x", -w / 2); im.setAttribute("y", -h / 2);
+      im.setAttribute("width", w); im.setAttribute("height", h);
+      im.setAttribute("preserveAspectRatio", "xMidYMid slice");
+      im.setAttribute("transform", "rotate(" + (p.tip > 0 ? -90 : 90) + ")");
+      im.style.mixBlendMode = "multiply";
+      hold.appendChild(im);
+      return;
+    }
+    if (!words) return;
 
-    if (words){
-      const room = p.len - 40;
+    if (state.petals[i].dir === "v"){
+      /* letters upright, stepping along the petal from the tip inwards */
+      const chars = [...words];
+      let size = Math.min(64, (p.len - 30) / Math.max(chars.length, 1) / 1.02);
+      size = Math.max(16, size);
+      const step = size * 1.02;
+      chars.forEach((ch, n) => {
+        if (ch === " ") return;
+        const x = p.tip * ((chars.length - 1) / 2 - n) * step;
+        const t = document.createElementNS(NS, "text");
+        t.setAttribute("class", "ptext");
+        t.setAttribute("transform", "translate(" + x.toFixed(1) + ",0) rotate(" + (-p.rot) + ")");
+        t.style.fontFamily = f.css;
+        t.style.fontWeight = f.weight;
+        t.style.fontSize = size + "px";
+        t.style.fill = ink.hex;
+        t.textContent = ch;
+        hold.appendChild(t);
+      });
+    } else {
+      const t = document.createElementNS(NS, "text");
+      t.setAttribute("class", "ptext");
+      t.setAttribute("y", -4);
+      t.style.fontFamily = f.css;
+      t.style.fontWeight = f.weight;
+      t.style.letterSpacing = f.track + "em";
+      t.style.fill = ink.hex;
       let size = 62;
       t.style.fontSize = size + "px";
+      t.textContent = words;
+      hold.appendChild(t);
+      const room = p.len - 40;
       const w = t.getComputedTextLength ? t.getComputedTextLength() : 0;
-      if (w > room && w > 0) size = Math.max(22, size * room / w);
-      t.style.fontSize = size + "px";
-    }
-
-    if (hasImg){
-      const box = Math.min(p.len - 60, 150);
-      im.setAttribute("href", state.photo);
-      im.setAttribute("x", -box / 2); im.setAttribute("y", -box / 2 - 4);
-      im.setAttribute("width", box); im.setAttribute("height", box);
-      im.style.display = "";
-      im.style.mixBlendMode = "multiply";
-      im.style.filter = "grayscale(1) contrast(1.2)";
-    } else {
-      im.style.display = "none";
+      if (w > room && w > 0) t.style.fontSize = Math.max(18, size * room / w) + "px";
     }
   });
 }
 
-/* ---------- writing popover ---------- */
+/* ---------- the writing field ---------- */
 let pop = null;
 function closePop(){
   if (pop){ pop.remove(); pop = null; }
@@ -438,56 +518,74 @@ function openPetal(i){
   const g = svg.querySelector('.petal[data-i="' + i + '"]');
   g.classList.add("on");
 
-  /* Sit the field just beyond the petal, pushed away from the centre of the
-     flower, so the bloom stays visible while you write. It floats over the
-     whole slip — the drawing column alone is too narrow to hold it. */
+  /* sit the field beyond the petal, pushed away from the middle of the
+     flower, so the bloom stays visible while you write */
   const r = g.getBoundingClientRect(), a = art.getBoundingClientRect(), t = ticket.getBoundingClientRect();
-  const cx = r.left + r.width / 2 - t.left;
-  const cy = r.top + r.height / 2 - t.top;
-  const fx = a.left + a.width * 700 / 1254 - t.left;
-  const fy = a.top + a.height * 690 / 1254 - t.top;
+  const cx = r.left + r.width / 2 - t.left, cy = r.top + r.height / 2 - t.top;
+  const fx = a.left + a.width * 700 / 1254 - t.left, fy = a.top + a.height * 690 / 1254 - t.top;
   const d = Math.hypot(cx - fx, cy - fy) || 1;
-  const outX = cx + (cx - fx) / d * 96;
-  const outY = cy + (cy - fy) / d * 96;
+  const outX = cx + (cx - fx) / d * 96, outY = cy + (cy - fy) / d * 96;
 
+  const pic = picOn(i);
   pop = document.createElement("div");
   pop.className = "pop";
   pop.innerHTML =
-    '<p class="cap">Petal ' + (i + 1) + ' · ' + PETALS[i].name + '</p>' +
-    '<input id="popin" maxlength="18" autocomplete="off" placeholder="type here">' +
+    '<p class="cap"><span>Petal ' + (i + 1) + ' · ' + PETALS[i].name + '</span>' +
+      '<span class="dirtog"><button type="button" data-d="v" title="Letters down the petal">↕</button>' +
+      '<button type="button" data-d="h" title="Word along the petal">↔</button></span></p>' +
+    '<input type="text" id="popin" maxlength="18" autocomplete="off" placeholder="type here">' +
+    (pic ? '<div class="sizer"><span>Size</span><input type="range" id="popsize" min="70" max="300" step="5"></div>' : '') +
     '<div class="acts">' +
-      '<button type="button" class="use">Picture</button>' +
+      '<button type="button" class="use">' + (pic ? "Swap" : "Picture") + '</button>' +
       '<button type="button" class="clr">Clear</button>' +
       '<button type="button" class="go">Done</button>' +
     '</div>';
   ticket.appendChild(pop);
 
-  const w = pop.offsetWidth || 206, h = pop.offsetHeight || 112, pad = 10;
+  const w = pop.offsetWidth || 214, h = pop.offsetHeight || 118, pad = 10;
   pop.style.left = Math.max(w / 2 + pad, Math.min(t.width - w / 2 - pad, outX)) + "px";
   pop.style.top  = Math.max(h / 2 + pad, Math.min(t.height - h / 2 - pad, outY)) + "px";
 
   const input = pop.querySelector("#popin");
-  input.value = state.petals[i];
+  input.value = state.petals[i].text;
   input.addEventListener("input", () => {
-    state.petals[i] = input.value;
-    if (input.value && state.petalPhoto === i) state.petalPhoto = -1;
-    paintPetals(); renderTotal();
+    state.petals[i].text = input.value;
+    if (input.value.trim()) dropPic(i);
+    paintPetals();
   });
   input.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === "Escape") closePop(); });
 
+  pop.querySelectorAll(".dirtog button").forEach(b => {
+    b.setAttribute("aria-pressed", b.dataset.d === state.petals[i].dir ? "true" : "false");
+    b.addEventListener("click", () => {
+      state.petals[i].dir = b.dataset.d;
+      pop.querySelectorAll(".dirtog button").forEach(o =>
+        o.setAttribute("aria-pressed", o.dataset.d === b.dataset.d ? "true" : "false"));
+      paintPetals();
+    });
+  });
+
+  const sizeIn = pop.querySelector("#popsize");
+  if (sizeIn && pic){
+    sizeIn.value = pic.size;
+    sizeIn.addEventListener("input", () => { pic.size = +sizeIn.value; paintPetals(); });
+  }
+
   const useBtn = pop.querySelector(".use");
-  useBtn.disabled = !state.photo;
-  useBtn.title = state.photo ? "Put your picture on this petal" : "Add a picture on the stub first";
+  if (!pic && state.pics.length >= MAX_PICS){
+    useBtn.disabled = true;
+    useBtn.title = "Three pictures is the limit — clear one first";
+  }
   useBtn.addEventListener("click", () => {
-    if (!state.photo) return;
-    state.petalPhoto = i; state.petals[i] = "";
-    input.value = ""; paintPetals(); renderTotal();
+    state.pendingPetal = i;
+    $("#picfile").click();
   });
 
   pop.querySelector(".clr").addEventListener("click", () => {
-    state.petals[i] = "";
-    if (state.petalPhoto === i) state.petalPhoto = -1;
-    input.value = ""; input.focus(); paintPetals(); renderTotal();
+    state.petals[i].text = "";
+    dropPic(i);
+    input.value = ""; input.focus();
+    paintPetals(); renderStub();
   });
   pop.querySelector(".go").addEventListener("click", closePop);
 
@@ -504,7 +602,68 @@ document.addEventListener("pointerdown", e => {
   closePop();
 });
 
-/* ---------- the form ---------- */
+function dropPic(i){
+  const n = state.pics.findIndex(p => p.petal === i);
+  if (n >= 0) state.pics.splice(n, 1);
+}
+
+/* ---------- pictures ---------- */
+function firstFreePetal(){
+  for (let i = 0; i < PETALS.length; i++){
+    if (!state.petals[i].text.trim() && !picOn(i)) return i;
+  }
+  return -1;
+}
+
+function addPicture(src, name){
+  let i = state.pendingPetal;
+  state.pendingPetal = -1;
+  if (i < 0) i = firstFreePetal();
+  if (i < 0){ toast("Every petal is taken — clear one first."); return; }
+  const existing = picOn(i);
+  if (existing){
+    existing.src = src; existing.name = name;
+  } else {
+    if (state.pics.length >= MAX_PICS){ toast("Three pictures is the limit."); return; }
+    state.pics.push({src, name, petal:i, size:150});
+  }
+  state.petals[i].text = "";
+  state.wantPhoto = true;
+  closePop();
+  render();
+  toast("Picture set on petal " + (i + 1) + " — click it to resize.");
+}
+
+function renderStub(){
+  const host = $("#slots");
+  host.innerHTML = "";
+  for (let n = 0; n < MAX_PICS; n++){
+    const pic = state.pics[n];
+    const b = document.createElement("button");
+    b.type = "button"; b.className = "slot";
+    if (pic){
+      b.setAttribute("aria-label", "Picture on petal " + (pic.petal + 1) + " — remove it");
+      const im = document.createElement("img"); im.src = pic.src; im.alt = "";
+      const x = document.createElement("span"); x.className = "rm"; x.textContent = "×";
+      const on = document.createElement("span"); on.className = "on"; on.textContent = "petal " + (pic.petal + 1);
+      b.append(im, x, on);
+      b.addEventListener("click", () => {
+        state.pics.splice(state.pics.indexOf(pic), 1);
+        if (!state.pics.length) state.wantPhoto = false;
+        render();
+      });
+    } else {
+      b.setAttribute("aria-label", "Add a picture");
+      const s = document.createElement("span");
+      s.innerHTML = "Tap to add<br>a picture";
+      b.appendChild(s);
+      b.addEventListener("click", () => { state.pendingPetal = -1; $("#picfile").click(); });
+    }
+    host.appendChild(b);
+  }
+}
+
+/* ---------- form ---------- */
 function buildForm(){
   const qty = $("#qty");
   for (let n = 1; n <= 5; n++){
@@ -520,9 +679,12 @@ function buildForm(){
     const b = document.createElement("button");
     b.type = "button"; b.className = "dot";
     b.setAttribute("aria-label", c.label);
-    b.title = c.label;
-    b.innerHTML = '<i style="background:' + c.hex + '"></i><u></u>';
-    b.addEventListener("click", () => { state.bloom = c.id; render(); });
+    b.innerHTML = '<i style="background:' + c.hex + '"></i><u></u><em>' + c.label + '</em>';
+    b.addEventListener("click", () => {
+      state.bloom = c.id;
+      lineart.src = c.src;
+      render();
+    });
     bloom.appendChild(b);
   });
 
@@ -530,69 +692,61 @@ function buildForm(){
   INKS.forEach(c => {
     const b = document.createElement("button");
     b.type = "button"; b.className = "dot";
-    b.setAttribute("aria-label", c.label);
-    b.title = c.label;
+    b.setAttribute("aria-label", c.label); b.title = c.label;
     b.innerHTML = '<i style="background:' + c.hex + '"></i><u></u>';
     b.addEventListener("click", () => { state.ink = c.id; render(); });
     ink.appendChild(b);
   });
 
-  const sel = $("#font");
+  const fh = $("#fonts"), th = $("#thai");
   FONTS.forEach(f => {
-    const o = document.createElement("option");
-    o.value = f.id; o.textContent = f.label; o.style.fontFamily = f.css;
-    sel.appendChild(o);
+    const b = document.createElement("button");
+    b.type = "button";
+    b.dataset.f = f.id;
+    if (f.thai){
+      b.className = "thtile";
+      b.style.fontFamily = f.css;
+      b.style.fontWeight = f.weight;
+      b.textContent = f.label;
+      b.setAttribute("aria-label", "Thai lettering " + f.css.split('"')[1]);
+      th.appendChild(b);
+    } else {
+      b.className = "ftile";
+      b.innerHTML = '<img src="' + f.img + '" alt="">';
+      b.setAttribute("aria-label", "Lettering specimen " + f.id.slice(1));
+      fh.appendChild(b);
+    }
+    b.addEventListener("click", () => { state.font = f.id; render(); });
   });
-  sel.value = state.font;
-  sel.addEventListener("change", () => { state.font = sel.value; render(); });
 
   $("#photo-yes").addEventListener("click", () => {
     state.wantPhoto = true; render();
-    if (!state.photo) $("#photofile").click();
+    if (!state.pics.length){ state.pendingPetal = -1; $("#picfile").click(); }
   });
   $("#photo-no").addEventListener("click", () => {
-    state.wantPhoto = false; state.photo = null; state.photoName = ""; state.petalPhoto = -1; render();
+    state.wantPhoto = false; state.pics = []; render();
   });
+  $("#pola-yes").addEventListener("click", () => { state.polaroid = true; render(); });
+  $("#pola-no").addEventListener("click", () => { state.polaroid = false; render(); });
 
-  $("#photobox").addEventListener("click", () => {
-    if (state.photo){ state.photo = null; state.photoName = ""; state.petalPhoto = -1; state.wantPhoto = false; render(); }
-    else $("#photofile").click();
-  });
-
-  $("#photofile").addEventListener("change", e => {
+  $("#picfile").addEventListener("change", e => {
     const f = e.target.files && e.target.files[0];
     e.target.value = "";
     if (!f) return;
     if (f.size > 8 * 1024 * 1024) return toast("That picture is over 8 MB — try a smaller one.");
     const r = new FileReader();
-    r.onload = () => {
-      state.photo = r.result; state.photoName = f.name; state.wantPhoto = true;
-      const free = state.petals.findIndex((t, i) => !t && state.petalPhoto !== i);
-      state.petalPhoto = free < 0 ? 1 : free;
-      render();
-      toast("Picture placed on petal " + (state.petalPhoto + 1) + " — click another petal to move it.");
-    };
+    r.onload = () => addPicture(r.result, f.name);
     r.readAsDataURL(f);
   });
 
-  $("#msg").addEventListener("input", () => {});
   $("#copy").addEventListener("click", copyBrief);
+  $("#save").addEventListener("click", saveSlip);
   $("#clear").addEventListener("click", () => {
     closePop();
-    state.petals = ["","","","","",""];
-    state.petalPhoto = -1;
+    state.petals.forEach(p => { p.text = ""; });
+    state.pics = [];
     render();
   });
-}
-
-function words(){ return state.petals.filter(t => t.trim()).length; }
-
-function renderTotal(){
-  let total = PRICE.stems[state.qty] || 0;
-  total += words() * PRICE.petalWord;
-  if (state.photo) total += PRICE.photo;
-  $("#total").textContent = fmt(total);
-  return total;
 }
 
 function render(){
@@ -602,69 +756,66 @@ function render(){
     b.setAttribute("aria-pressed", BLOOMS[i].id === state.bloom ? "true" : "false"));
   document.querySelectorAll("#ink .dot").forEach((b, i) =>
     b.setAttribute("aria-pressed", INKS[i].id === state.ink ? "true" : "false"));
-
-  art.style.setProperty("--bloom", (BLOOMS.find(b => b.id === state.bloom) || BLOOMS[0]).hex);
+  document.querySelectorAll("[data-f]").forEach(b =>
+    b.setAttribute("aria-pressed", b.dataset.f === state.font ? "true" : "false"));
 
   $("#photo-yes").setAttribute("aria-pressed", state.wantPhoto ? "true" : "false");
   $("#photo-no").setAttribute("aria-pressed", state.wantPhoto ? "false" : "true");
+  $("#pola-yes").setAttribute("aria-pressed", state.polaroid ? "true" : "false");
+  $("#pola-no").setAttribute("aria-pressed", state.polaroid ? "false" : "true");
 
-  const box = $("#photobox");
-  const old = box.querySelector("img"), rm = box.querySelector(".rm");
-  if (old) old.remove();
-  if (rm) rm.remove();
-  if (state.photo){
-    $("#photolabel").hidden = true;
-    const im = document.createElement("img"); im.src = state.photo; im.alt = "";
-    const x = document.createElement("span"); x.className = "rm"; x.textContent = "×";
-    box.append(im, x);
-    box.setAttribute("aria-label", "Remove the picture");
-  } else {
-    $("#photolabel").hidden = false;
-    box.setAttribute("aria-label", "Add the picture to be tattooed");
-  }
-
+  renderStub();
   paintPetals();
-  renderTotal();
 }
 
 /* ---------- brief ---------- */
 function briefText(){
-  const f = FONTS.find(x => x.id === state.font), ink = INKS.find(x => x.id === state.ink);
-  const bloom = BLOOMS.find(x => x.id === state.bloom);
-  const L = [];
+  const f = theFont(), L = [];
   L.push("MAISON SABLÉ — ORDER");
   L.push("");
   L.push("Name: " + ($("#name").value.trim() || "—"));
   L.push("Quantity: " + state.qty + (state.qty > 1 ? " stems" : " stem"));
-  L.push("Flower colour: " + bloom.label);
-  L.push("Lettering: " + f.label.split(" — ")[0] + " · " + ink.label + " ink");
+  L.push("Flower: " + theBloom().label);
+  L.push("Lettering: " + (f.thai ? "Thai · " + f.css.split('"')[1] : "specimen " + f.id.slice(1)) +
+         " · " + theInk().label + " ink");
   L.push("");
   L.push("PETALS");
   let any = false;
   PETALS.forEach((p, i) => {
-    if (state.petals[i].trim()){
+    const t = state.petals[i].text.trim(), pic = picOn(i);
+    if (t){
       any = true;
-      L.push("  " + (i + 1) + ". " + p.name + " — “" + state.petals[i].trim() + "”");
-    } else if (state.petalPhoto === i && state.photo){
+      L.push("  " + (i + 1) + ". " + p.name + " — “" + t + "”  (" +
+        (state.petals[i].dir === "v" ? "letters down the petal" : "along the petal") + ")");
+    } else if (pic){
       any = true;
-      L.push("  " + (i + 1) + ". " + p.name + " — picture: " + state.photoName);
+      L.push("  " + (i + 1) + ". " + p.name + " — picture: " + pic.name + "  (size " + pic.size + ")");
     }
   });
   if (!any) L.push("  (nothing written yet)");
   const m = $("#msg").value.trim();
-  if (m){ L.push(""); L.push("NOTE CARD"); L.push("  " + m); }
+  if (m){ L.push(""); L.push("SPECIAL REQUEST"); L.push("  " + m); }
   L.push("");
-  L.push("Photo: " + (state.photo ? "yes — " + state.photoName : "no"));
-  L.push("Total: " + $("#total").textContent);
+  L.push("Photo: " + (state.pics.length ? "yes — " + state.pics.length : "no"));
+  L.push("Polaroid: " + (state.polaroid ? "yes" : "no"));
+  if (SHOW_PRICES) L.push("Total: " + total());
   L.push("");
   L.push("Sent from maisonsable · @maisonsable.bkk");
   return L.join("\n");
 }
 
+function total(){
+  let t = PRICE.stems[state.qty] || 0;
+  t += state.petals.filter(p => p.text.trim()).length * PRICE.petalWord;
+  t += state.pics.length * PRICE.picture;
+  if (state.polaroid) t += PRICE.polaroid;
+  return "฿" + t.toLocaleString("en-US");
+}
+
 function copyBrief(){
   closePop();
   const text = briefText();
-  const ok = () => toast("Brief copied — send it to @maisonsable.bkk with a screenshot.");
+  const ok = () => toast("Brief copied — send it to @maisonsable.bkk with the slip.");
   if (navigator.clipboard && navigator.clipboard.writeText){
     navigator.clipboard.writeText(text).then(ok).catch(() => manual(text, ok));
   } else manual(text, ok);
@@ -679,6 +830,176 @@ function manual(text, ok){
   ta.remove();
 }
 
+/* ---------- the receipt ---------- */
+const R = {w:1000, h:1480, pad:58};
+
+function tracked(ctx, text, cx, y, spacing, align){
+  const chars = [...text];
+  let w = 0;
+  chars.forEach(c => { w += ctx.measureText(c).width + spacing; });
+  w -= spacing;
+  let x = align === "left" ? cx : cx - w / 2;
+  chars.forEach(c => { ctx.fillText(c, x, y); x += ctx.measureText(c).width + spacing; });
+  return w;
+}
+
+function dottedRow(ctx, label, value, y){
+  ctx.fillStyle = "#7C6A63";
+  ctx.font = '500 19px "Cormorant Garamond", serif';
+  ctx.textAlign = "left";
+  tracked(ctx, label.toUpperCase(), R.pad, y, 3.4, "left");
+  ctx.fillStyle = "#4A3B36";
+  ctx.font = '400 23px "Jost", sans-serif';
+  ctx.fillText(value, R.pad + 250, y);
+  ctx.strokeStyle = "#E2D2CA";
+  ctx.lineWidth = 1;
+  ctx.beginPath();
+  ctx.moveTo(R.pad + 244, y + 9);
+  ctx.lineTo(R.w - R.pad, y + 9);
+  ctx.stroke();
+}
+
+function drawPetalInk(ctx, ox, oy, size){
+  const s = size / 1254, f = theFont(), ink = theInk();
+  PETALS.forEach((p, i) => {
+    const words = state.petals[i].text.trim(), pic = picOn(i);
+    if (!words && !pic) return;
+    ctx.save();
+    ctx.translate(ox + p.a[0] * s, oy + p.a[1] * s);
+    ctx.rotate(p.rot * Math.PI / 180);
+    if (pic && pic.img){
+      const h = pic.size * s, w = h * 0.78;
+      ctx.rotate((p.tip > 0 ? -90 : 90) * Math.PI / 180);
+      ctx.globalCompositeOperation = "multiply";
+      ctx.drawImage(pic.img, -w / 2, -h / 2, w, h);
+      ctx.globalCompositeOperation = "source-over";
+    } else if (words && state.petals[i].dir === "v"){
+      const chars = [...words];
+      let fs = Math.min(64, (p.len - 30) / Math.max(chars.length, 1) / 1.02);
+      fs = Math.max(16, fs) * s;
+      const step = fs * 1.02;
+      ctx.fillStyle = ink.hex;
+      ctx.font = f.weight + " " + fs.toFixed(1) + 'px ' + f.css;
+      ctx.textAlign = "center"; ctx.textBaseline = "middle";
+      chars.forEach((ch, n) => {
+        if (ch === " ") return;
+        const x = p.tip * ((chars.length - 1) / 2 - n) * step;
+        ctx.save();
+        ctx.translate(x, 0);
+        ctx.rotate(-p.rot * Math.PI / 180);
+        ctx.fillText(ch, 0, 0);
+        ctx.restore();
+      });
+    } else if (words){
+      let fs = 62 * s;
+      ctx.fillStyle = ink.hex;
+      ctx.textAlign = "center"; ctx.textBaseline = "middle";
+      ctx.font = f.weight + " " + fs.toFixed(1) + 'px ' + f.css;
+      const room = (p.len - 40) * s;
+      const w = ctx.measureText(words).width;
+      if (w > room) ctx.font = f.weight + " " + Math.max(11, fs * room / w).toFixed(1) + 'px ' + f.css;
+      ctx.fillText(words, 0, -4 * s);
+    }
+    ctx.restore();
+  });
+}
+
+function buildReceipt(){
+  const c = document.createElement("canvas");
+  const dpr = 2;
+  c.width = R.w * dpr; c.height = R.h * dpr;
+  const ctx = c.getContext("2d");
+  ctx.scale(dpr, dpr);
+
+  ctx.fillStyle = "#FCFAF7";
+  ctx.fillRect(0, 0, R.w, R.h);
+  ctx.strokeStyle = "#E2D2CA";
+  ctx.lineWidth = 1;
+  ctx.strokeRect(22.5, 22.5, R.w - 45, R.h - 45);
+
+  /* masthead */
+  ctx.fillStyle = "#4A3B36";
+  ctx.font = '400 46px "Cormorant Garamond", serif';
+  ctx.textAlign = "left"; ctx.textBaseline = "alphabetic";
+  tracked(ctx, "Maison Sablé", R.w / 2, 106, 4.6);
+  ctx.fillStyle = "#C9A294";
+  ctx.font = '400 15px "Cormorant Garamond", serif';
+  tracked(ctx, "A FLOWER FOR A BRIGHTER DAY", R.w / 2, 136, 4);
+  ctx.beginPath();
+  ctx.moveTo(R.pad, 158); ctx.lineTo(R.w - R.pad, 158);
+  ctx.strokeStyle = "#E2D2CA"; ctx.stroke();
+
+  /* the flower */
+  const size = 660, ox = (R.w - size) / 2, oy = 186;
+  if (lineart.complete && lineart.naturalWidth){
+    ctx.globalCompositeOperation = "multiply";
+    ctx.drawImage(lineart, ox, oy, size, size);
+    ctx.globalCompositeOperation = "source-over";
+  }
+  drawPetalInk(ctx, ox, oy, size);
+
+  /* the slip */
+  let y = oy + size + 66;
+  const f = theFont();
+  dottedRow(ctx, "Name", $("#name").value.trim() || "—", y); y += 52;
+  dottedRow(ctx, "Quantity", state.qty + (state.qty > 1 ? " stems" : " stem"), y); y += 52;
+  dottedRow(ctx, "Flower colour", theBloom().label, y); y += 52;
+  dottedRow(ctx, "Lettering", (f.thai ? "Thai" : "Specimen " + f.id.slice(1)) + " · " + theInk().label, y); y += 52;
+  const req = $("#msg").value.trim();
+  dottedRow(ctx, "Special request", req.length > 42 ? req.slice(0, 42) + "…" : (req || "—"), y); y += 52;
+  dottedRow(ctx, "Photo", state.pics.length ? state.pics.length + (state.pics.length > 1 ? " pictures" : " picture") : "no", y); y += 52;
+  dottedRow(ctx, "Polaroid", state.polaroid ? "yes" : "no", y); y += 52;
+  if (SHOW_PRICES){ dottedRow(ctx, "Total", total(), y); y += 52; }
+
+  /* footer */
+  ctx.fillStyle = "#A08D85";
+  ctx.font = '400 15px "Cormorant Garamond", serif';
+  tracked(ctx, "A SMALL BOUQUET ✦ A BIGGER MEANING", R.w / 2, R.h - 86, 4.2);
+  ctx.fillStyle = "#C9A294";
+  ctx.font = '300 14px "Jost", sans-serif';
+  tracked(ctx, "@maisonsable.bkk", R.w / 2, R.h - 58, 2.4);
+  return c;
+}
+
+function saveSlip(){
+  closePop();
+  const pending = state.pics.filter(p => !p.img).map(p => new Promise(res => {
+    const im = new Image();
+    im.onload = () => { p.img = im; res(); };
+    im.onerror = res;
+    im.src = p.src;
+  }));
+  Promise.all(pending).then(() => {
+    const canvas = buildReceipt();
+    const url = canvas.toDataURL("image/png");
+    showSheet(url);
+  });
+}
+
+function showSheet(url){
+  const wrap = document.createElement("div");
+  wrap.className = "sheet";
+  wrap.innerHTML =
+    '<div class="sheetbox">' +
+      '<img src="' + url + '" alt="Your order slip">' +
+      '<div class="row">' +
+        '<button type="button" class="btn" id="dl">Download</button>' +
+        '<button type="button" class="btn sec" id="cl">Close</button>' +
+      '</div>' +
+      '<p>If the download does not start, press and hold the picture to save it.</p>' +
+    '</div>';
+  document.body.appendChild(wrap);
+  const shut = () => wrap.remove();
+  wrap.addEventListener("click", e => { if (e.target === wrap) shut(); });
+  wrap.querySelector("#cl").addEventListener("click", shut);
+  wrap.querySelector("#dl").addEventListener("click", () => {
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "maison-sable-slip.png";
+    document.body.appendChild(a); a.click(); a.remove();
+  });
+}
+
 let tT;
 function toast(m){
   const t = $("#toast");
@@ -691,5 +1012,6 @@ buildPetals();
 buildForm();
 render();
 if (document.fonts) document.fonts.ready.then(paintPetals);
+lineart.addEventListener("load", paintPetals);
 addEventListener("resize", closePop);
 </script>
