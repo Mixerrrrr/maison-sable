@@ -105,9 +105,9 @@ button,input,textarea,select{font:inherit;color:inherit}
 
 /* lettering specimens */
 .fonts{display:grid;grid-template-columns:repeat(4,1fr);gap:7px}
-.ftile{position:relative;height:104px;border:1px solid var(--rule-2);background:var(--card);cursor:pointer;
-  padding:9px 4px;display:grid;place-items:center;overflow:hidden}
-.ftile img{max-height:100%;max-width:100%;width:auto;object-fit:contain;mix-blend-mode:multiply}
+.ftile{position:relative;height:126px;border:1px solid var(--rule-2);background:var(--card);cursor:pointer;display:block;
+  padding:10px 5px;overflow:hidden}
+.ftile img{display:block;height:100%;width:100%;object-fit:contain;mix-blend-mode:multiply}
 .ftile:hover{border-color:var(--rose-soft)}
 .ftile[aria-pressed=true]{border-color:var(--rose);box-shadow:0 0 0 1px var(--rose)}
 .ftile[aria-pressed=true]::after{content:"✓";position:absolute;top:2px;right:4px;font-size:11px;color:var(--rose);line-height:1}
@@ -140,7 +140,7 @@ button,input,textarea,select{font:inherit;color:inherit}
 .stub img.mini{width:72%;max-width:112px;height:auto;mix-blend-mode:multiply;opacity:.75}
 .stubcap{font-family:"Cormorant Garamond",serif;font-size:9.5px;letter-spacing:.24em;text-transform:uppercase;color:var(--ink-mute)}
 .slots{display:flex;flex-direction:column;gap:9px;width:100%}
-.slot{width:100%;aspect-ratio:3/4;border:1px dashed var(--rule-2);border-radius:9px;display:grid;place-items:center;
+.slot{width:100%;aspect-ratio:1/1;border:1px dashed var(--rule-2);border-radius:9px;display:grid;place-items:center;
   overflow:hidden;background:rgba(252,250,247,.5);position:relative;padding:0;cursor:pointer;text-align:center}
 .slot:hover{border-color:var(--rose-soft)}
 .slot > span{font-family:"Cormorant Garamond",serif;font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-mute);padding:6px}
