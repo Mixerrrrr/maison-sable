@@ -16,7 +16,8 @@ Everything a shopkeeper needs is in one block at the top of the `<script>` in
 | Prices (switched off for now) | `SHOW_PRICES` + the `PRICE` object |
 | The two blooms and their drawings | the `BLOOMS` array |
 | Words offered on a petal (universities) | the `CATS` array |
-| Lettering cuts and their Thai faces | the `FONTS` array |
+| Ready-made lettering on a petal | the `DESIGNS` array |
+| Fallback cuts and the Thai faces | the `FONTS` array |
 | Ink colours | the `INKS` array |
 | Where each petal's writing sits | the `PETALS` array |
 | How many pictures a customer may place | `MAX_PICS` |
@@ -47,10 +48,10 @@ these six lines are the only thing that needs re-measuring.
 
 ## Lettering
 
-A customer picks a **category** first — Congrats, Chula, Mahidol, Thammasat, or
-Alphabet — and all six cuts set that word, so they compare them in the
-letters they are actually buying. Picking a category also writes the word onto a
-free petal, and picking it again swaps that same petal rather than filling another.
+A customer picks a **category** first — Congrats, Chula, C U, Mahidol, Thammasat or
+Alphabet — and the row below fills with the shop lettering for that word. Tapping
+one puts it on a free petal; picking another swaps that same petal rather than
+filling another.
 **Alphabet** hands them the petal to type their own; from then on the specimens
 follow whatever they typed.
 
@@ -60,21 +61,34 @@ To add a university, add a line to `CATS`:
 {id:"kasetsart", label:"Kasetsart", word:"KASETSART"}
 ```
 
-The eight sheets `f1.jpg`–`f8.jpg` are six typefaces: `f3`/`f6` and `f4`/`f7` are the
-same cut shown with different words. The row offers those six, and the sheets stay in
-the repo because they are what the shop inks from.
+### The sheets
 
-On screen each cut is set in the nearest face we can load (`css` in `FONTS`), so a
-preview approximates its sheet rather than reproducing it. To make a cut exact, put
-the real font file in the repo, declare an `@font-face` in the `<style>` block, and
-point that entry's `css` at it. The three Thai entries set real Thai — the six Latin
-cuts have no Thai glyphs.
+`f1.jpg`–`f8.jpg` are the shop's own lettering, and they are used as artwork, not as
+fonts: tap one and that exact image goes down the petal. `DESIGNS` maps each file to
+the word it spells, the cut it is in, and its pixel size:
+
+```js
+{id:"d5", word:"CHULA", cut:"Engraved", img:"f6.jpg", w:103, h:473}
+```
+
+To offer a new word, letter it in the shop's fonts, export one tall image per cut
+(letters stacked, dark on white — the white drops out), drop the files in beside
+`index.html` and add a line here per file. The category appears on its own once a
+`CATS` entry and a matching `word` exist.
+
+### Words with no sheet yet
+
+Mahidol and Thammasat have no artwork, so those categories fall back to typed
+letters set in the nearest faces we can load (`FONTS`), and the slip says so. That is
+a stand-in until the sheets exist — the six Latin cuts approximate the sheets rather
+than reproducing them. The three Thai entries set real Thai; the Latin cuts have no
+Thai glyphs.
 
 ## Images
 
 - `lily.webp` / `lily-pink.webp` — the white and pink blooms customers write on
 - `bouquet-line.webp` — the small drawing on the stub
-- `f1–f8.jpg` — the lettering specimens
+- `f1–f8.jpg` — the shop lettering that goes on a petal
 - `p1–p3.webp` — the real product photos under "The real thing"
 
 ## How it works
@@ -86,6 +100,7 @@ small field that floats just beyond the petal so the bloom stays visible.
 - **↕ down the petal** draws each letter upright, stepping along the petal from the
   tip inwards, which is how the shop inks them.
 - **↔ along the petal** sets the word on the petal's axis and shrinks it to fit.
+- A **sheet** lies down the petal from the tip inwards, at whatever size the slider says.
 - A **picture** stands upright with its top toward the middle of the flower, and has
   its own size slider. Up to three can be placed, one per petal.
 
@@ -97,5 +112,4 @@ then the filled-in fields — and offers it as a PNG. It is drawn by hand in
 
 - The order brief is copied to the clipboard; it is not emailed or stored anywhere.
 - An uploaded picture lives in that browser tab only and is lost on refresh.
-- The specimen previews use the nearest available web font, not the exact sheet.
-  Drop the real font files into the repo and point `css` at an `@font-face` to fix that.
+- Words with no sheet fall back to look-alike web fonts, not the shop's own cuts.
