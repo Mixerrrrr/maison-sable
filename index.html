@@ -147,7 +147,7 @@ button,input,textarea,select{font:inherit;color:inherit}
 .notch.b{bottom:-9px}
 .stub img.mini{width:72%;max-width:112px;height:auto;mix-blend-mode:multiply;opacity:.75}
 .stubcap{font-family:"Cormorant Garamond",serif;font-size:9.5px;letter-spacing:.24em;text-transform:uppercase;color:var(--ink-mute)}
-.slots{display:flex;flex-direction:column;gap:9px;width:100%}
+.slots{display:grid;grid-template-columns:1fr 1fr;gap:8px;width:100%}
 .slot{width:100%;aspect-ratio:1/1;border:1px dashed var(--rule-2);border-radius:9px;display:grid;place-items:center;
   overflow:hidden;background:rgba(252,250,247,.5);position:relative;padding:0;cursor:pointer;text-align:center}
 .slot:hover{border-color:var(--rose-soft)}
@@ -202,8 +202,7 @@ footer b{font-weight:400;font-family:"Cormorant Garamond",serif;font-size:10px;l
   .notch{left:-9px;top:-9px;bottom:auto}
   .notch.b{left:auto;right:-9px}
   .stub img.mini{width:84px}
-  .slots{flex-direction:row}
-  .slot{width:33%}
+  .slots{grid-template-columns:repeat(6,1fr)}
 }
 @media (max-width:520px){
   .field{grid-template-columns:1fr;gap:5px}
@@ -299,7 +298,7 @@ footer b{font-weight:400;font-family:"Cormorant Garamond",serif;font-size:10px;l
     <div class="stub">
       <span class="notch t"></span><span class="notch b"></span>
       <img class="mini" src="bouquet-line.webp" alt="">
-      <span class="stubcap">Pictures · up to 3</span>
+      <span class="stubcap" id="stubcap">Pictures</span>
       <div class="slots" id="slots"></div>
       <input type="file" id="picfile" accept="image/*" hidden>
       <span class="spark">✦</span>
@@ -405,7 +404,7 @@ const INKS = [
   {id:"blush", label:"Blush",     hex:"#BE8288"}
 ];
 
-const MAX_PICS = 3;
+const MAX_PICS = 6;   /* one per petal */
 
 const state = {
   qty: 1,
@@ -668,7 +667,7 @@ function openPetal(i){
   const useBtn = pop.querySelector(".use");
   if (!pic && state.pics.length >= MAX_PICS){
     useBtn.disabled = true;
-    useBtn.title = "Three pictures is the limit — clear one first";
+    useBtn.title = "Every petal already has a picture — clear one first";
   }
   useBtn.addEventListener("click", () => {
     state.pendingPetal = i;
@@ -720,7 +719,7 @@ function addPicture(src, name){
   if (existing){
     existing.src = src; existing.name = name;
   } else {
-    if (state.pics.length >= MAX_PICS){ toast("Three pictures is the limit."); return; }
+    if (state.pics.length >= MAX_PICS){ toast("Every petal already has a picture."); return; }
     state.pics.push({src, name, petal:i, size:150});
   }
   state.petals[i].text = "";
@@ -1223,6 +1222,7 @@ function toast(m){
 /* ---------- boot ---------- */
 buildPetals();
 buildForm();
+$("#stubcap").textContent = "Pictures · up to " + MAX_PICS;
 render();
 if (document.fonts) document.fonts.ready.then(paintPetals);
 lineart.addEventListener("load", paintPetals);
