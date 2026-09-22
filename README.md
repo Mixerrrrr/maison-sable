@@ -48,7 +48,7 @@ these six lines are the only thing that needs re-measuring.
 ## Lettering
 
 A customer picks a **category** first — Congrats, Chula, Mahidol, Thammasat, or
-Alphabet — and the eight specimens all set that word, so they compare cuts in the
+Alphabet — and all six cuts set that word, so they compare them in the
 letters they are actually buying. Picking a category also writes the word onto a
 free petal, and picking it again swaps that same petal rather than filling another.
 **Alphabet** hands them the petal to type their own; from then on the specimens
@@ -60,10 +60,15 @@ To add a university, add a line to `CATS`:
 {id:"kasetsart", label:"Kasetsart", word:"KASETSART"}
 ```
 
-`f1.jpg`–`f8.jpg` are the shop's own specimen sheets, kept here because they are
-what the shop inks from. On screen each cut is set in the nearest face we can load
-(`css` in `FONTS`), so the preview approximates the sheet rather than reproducing
-it. The three Thai entries set real Thai — the eight cuts are Latin only.
+The eight sheets `f1.jpg`–`f8.jpg` are six typefaces: `f3`/`f6` and `f4`/`f7` are the
+same cut shown with different words. The row offers those six, and the sheets stay in
+the repo because they are what the shop inks from.
+
+On screen each cut is set in the nearest face we can load (`css` in `FONTS`), so a
+preview approximates its sheet rather than reproducing it. To make a cut exact, put
+the real font file in the repo, declare an `@font-face` in the `<style>` block, and
+point that entry's `css` at it. The three Thai entries set real Thai — the six Latin
+cuts have no Thai glyphs.
 
 ## Images
 
@@ -93,3 +98,4 @@ then the filled-in fields — and offers it as a PNG. It is drawn by hand in
 - The order brief is copied to the clipboard; it is not emailed or stored anywhere.
 - An uploaded picture lives in that browser tab only and is lost on refresh.
 - The specimen previews use the nearest available web font, not the exact sheet.
+  Drop the real font files into the repo and point `css` at an `@font-face` to fix that.
