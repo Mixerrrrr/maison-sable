@@ -20,7 +20,7 @@ Everything a shopkeeper needs is in one block at the top of the `<script>` in
 | Fallback cuts for words with no sheet | the `FONTS` array |
 | Ink colours | the `INKS` array |
 | Where each petal's writing sits | the `PETALS` array |
-| How many pictures a customer may place | `MAX_PICS` |
+| How many pictures at once | `MAX_PICS` — one per petal |
 | Instagram handle, lead time, ink blurb | the `<footer>` near the end |
 
 ### Turning prices on
@@ -108,7 +108,7 @@ small field that floats just beyond the petal so the bloom stays visible.
   gives both.
 - A **photograph** is not directional, so it takes whichever quarter turn leaves it
   upright (`uprightTurn`).
-- Up to three pictures can be placed, one per petal.
+- A picture can go on any petal; `MAX_PICS` caps how many at once.
 
 **Save the slip** paints the whole order onto a canvas — the flower with its ink,
 then the filled-in fields — and offers it as a PNG. It is drawn by hand in
