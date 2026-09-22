@@ -101,11 +101,14 @@ small field that floats just beyond the petal so the bloom stays visible.
 - **↕ down the petal** draws each letter upright, stepping along the petal from the
   tip inwards, which is how the shop inks them.
 - **↔ along the petal** sets the word on the petal's axis and shrinks it to fit.
-- A **sheet** lies along the petal at whatever size the slider says. Artwork takes a
-  quarter turn to follow the petal; `uprightTurn()` picks the direction that leaves it
-  readable, so nothing lands upside down on the lower petals.
-- A **picture** stands along the petal the same way, kept upright, with its own size
-  slider. Up to three can be placed, one per petal.
+- A **sheet** lies along the petal at whatever size the slider says, first letter at the
+  tip and the tail running back into the middle — the same direction typed words go
+  (`sheetTurn`). A sheet is one rigid strip, so on the lower petals that reads
+  bottom-up: consistent order costs upright glyphs, and there is no placement that
+  gives both.
+- A **photograph** is not directional, so it takes whichever quarter turn leaves it
+  upright (`uprightTurn`).
+- Up to three pictures can be placed, one per petal.
 
 **Save the slip** paints the whole order onto a canvas — the flower with its ink,
 then the filled-in fields — and offers it as a PNG. It is drawn by hand in
