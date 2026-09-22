@@ -1,7 +1,7 @@
 <title>Maison Sablé</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300&family=Jost:wght@300;400&family=Playfair+Display:wght@400;700;900&family=Bodoni+Moda:wght@400;700;900&family=EB+Garamond:wght@400;500&family=Cinzel+Decorative:wght@400;700&family=Rye&family=Charmonman:wght@400;700&family=Mitr:wght@200;300&family=Noto+Serif+Thai:wght@300;400&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300&family=Jost:wght@300;400&family=Playfair+Display:wght@900&family=Bodoni+Moda:wght@900&family=EB+Garamond:wght@400&family=Cinzel+Decorative:wght@700&family=Rye&family=Charmonman:wght@400&family=Mitr:wght@200;300&family=Noto+Serif+Thai:wght@300;400&display=swap">
 <style>
 /* A deliberately single-theme page: a printed paper order slip. */
 :root{
@@ -115,7 +115,7 @@ button,input,textarea,select{font:inherit;color:inherit}
 .cat[aria-pressed=true]{border-color:var(--rose);color:var(--rose);box-shadow:0 0 0 1px var(--rose)}
 .cat[aria-pressed=true]::after{content:"✓";position:absolute;top:3px;right:5px;font-size:10px;line-height:1}
 .cat em{display:block;font-style:italic;font-size:10px;letter-spacing:.03em;text-transform:none;color:var(--ink-mute);margin-top:1px}
-.fonts{display:grid;grid-template-columns:repeat(4,1fr);gap:7px}
+.fonts{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}
 .ftile{position:relative;height:126px;border:1px solid var(--rule-2);background:var(--card);cursor:pointer;
   padding:9px 3px;overflow:hidden;display:flex;align-items:center;justify-content:center;color:var(--ink)}
 .ftile .stack{display:block;text-align:center;line-height:1.04;white-space:nowrap}
@@ -266,7 +266,7 @@ footer b{font-weight:400;font-family:"Cormorant Garamond",serif;font-size:10px;l
             <div>
               <div class="fonts" id="fonts"></div>
               <div class="thai" id="thai"></div>
-              <p class="fnote">Pick the word on the left, then the cut of the letters. The eight are Latin only — the three below set Thai.</p>
+              <p class="fnote">Pick the word on the left, then the cut of the letters. The six are Latin only — the three below set Thai.</p>
             </div>
           </div>
         </span>
@@ -380,17 +380,15 @@ const CATS = [
 /* The lettering the shop inks. The specimen sheets f1–f8.jpg are what the
    shop works from; `css` is the nearest face we can set on screen. */
 const FONTS = [
-  {id:"f1", name:"Bodoni Black",    css:'"Bodoni Moda",serif',        weight:900, track:.04, thai:false},
-  {id:"f2", name:"Garamond",        css:'"EB Garamond",serif',        weight:400, track:.10, thai:false},
-  {id:"f3", name:"Engraved",        css:'"Cinzel Decorative",serif',  weight:700, track:.06, thai:false},
-  {id:"f4", name:"Bodoni Bold",     css:'"Bodoni Moda",serif',        weight:700, track:.05, thai:false},
-  {id:"f5", name:"Cormorant Light", css:'"Cormorant Garamond",serif', weight:300, track:.12, thai:false},
-  {id:"f6", name:"Western",         css:'"Rye",serif',                weight:400, track:.04, thai:false},
-  {id:"f7", name:"Playfair Black",  css:'"Playfair Display",serif',   weight:900, track:.05, thai:false},
-  {id:"f8", name:"Playfair",        css:'"Playfair Display",serif',   weight:400, track:.08, thai:false},
-  {id:"t1", name:"Thai serif",      label:"ขอบคุณ", css:'"Noto Serif Thai",serif', weight:400, track:.04, thai:true},
-  {id:"t2", name:"Thai hand",       label:"ขอบคุณ", css:'"Charmonman",cursive',    weight:400, track:.02, thai:true},
-  {id:"t3", name:"Thai sans",       label:"ขอบคุณ", css:'"Mitr",sans-serif',       weight:300, track:.04, thai:true}
+  {id:"f1", name:"Fat didone",  sheet:"f1",    css:'"Bodoni Moda",serif',        weight:900, track:.04, thai:false},
+  {id:"f4", name:"Heavy serif", sheet:"f4/f7", css:'"Playfair Display",serif',   weight:900, track:.05, thai:false},
+  {id:"f3", name:"Engraved",    sheet:"f3/f6", css:'"Rye",serif',                weight:400, track:.04, thai:false},
+  {id:"f8", name:"Roman caps",  sheet:"f8",    css:'"Cinzel Decorative",serif',  weight:700, track:.06, thai:false},
+  {id:"f2", name:"Book serif",  sheet:"f2",    css:'"EB Garamond",serif',        weight:400, track:.10, thai:false},
+  {id:"f5", name:"Light serif", sheet:"f5",    css:'"Cormorant Garamond",serif', weight:300, track:.12, thai:false},
+  {id:"t1", name:"Thai serif",  label:"ขอบคุณ", css:'"Noto Serif Thai",serif', weight:400, track:.04, thai:true},
+  {id:"t2", name:"Thai hand",   label:"ขอบคุณ", css:'"Charmonman",cursive',    weight:400, track:.02, thai:true},
+  {id:"t3", name:"Thai sans",   label:"ขอบคุณ", css:'"Mitr",sans-serif',       weight:300, track:.04, thai:true}
 ];
 
 const INKS = [
@@ -407,7 +405,7 @@ const state = {
   bloom: "white",
   category: "chula",
   catPetal: 0,      /* the petal the category word was written to */
-  font: "f7",
+  font: "f4",
   ink: "rose",
   wantPhoto: false,
   polaroid: false,
