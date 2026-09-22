@@ -441,8 +441,12 @@ const theBloom= () => BLOOMS.find(b => b.id === state.bloom) || BLOOMS[0];
 const picOn   = i => state.pics.find(p => p.petal === i) || null;
 const sheetOn = i => (state.petals[i].sheet ? DESIGNS.find(d => d.id === state.petals[i].sheet) : null);
 
-/* Artwork lies along the petal, so it needs a quarter turn — this picks the
-   one that leaves it closest to upright, whichever way the petal points. */
+/* Lettering follows the petal like a ray: first letter at the tip, tail
+   running back into the middle of the flower — the same way typed words go. */
+const sheetTurn = p => (p.tip > 0 ? 90 : -90);
+
+/* A photograph is not directional, so it takes whichever quarter turn
+   leaves it upright. */
 function uprightTurn(rot){
   const a = ((rot + 90 + 180) % 360) - 180;
   const b = ((rot - 90 + 180) % 360) - 180;
@@ -520,7 +524,7 @@ function paintPetals(){
       im.setAttribute("x", -W / 2); im.setAttribute("y", -L / 2);
       im.setAttribute("width", W); im.setAttribute("height", L);
       im.setAttribute("preserveAspectRatio", "xMidYMid meet");
-      im.setAttribute("transform", "rotate(" + uprightTurn(p.rot) + ")");
+      im.setAttribute("transform", "rotate(" + sheetTurn(p) + ")");
       im.style.mixBlendMode = "multiply";
       hold.appendChild(im);
       return;
@@ -1068,7 +1072,7 @@ function drawPetalInk(ctx, ox, oy, size){
     if (sheet && sheet.img_){
       const L = (state.petals[i].size || Math.round(p.len * 0.8)) * s;
       const W = L * sheet.w / sheet.h;
-      ctx.rotate(uprightTurn(p.rot) * Math.PI / 180);
+      ctx.rotate(sheetTurn(p) * Math.PI / 180);
       ctx.globalCompositeOperation = "multiply";
       ctx.drawImage(sheet.img_, -W / 2, -L / 2, W, L);
       ctx.globalCompositeOperation = "source-over";
@@ -1149,7 +1153,6 @@ function buildReceipt(){
   dottedRow(ctx, "Name", $("#name").value.trim() || "—", y); y += 52;
   dottedRow(ctx, "Quantity", state.qty + (state.qty > 1 ? " stems" : " stem"), y); y += 52;
   dottedRow(ctx, "Flower colour", theBloom().label, y); y += 52;
-  dottedRow(ctx, "Lettering", letteringLabel(), y); y += 52;
   const req = $("#msg").value.trim();
   dottedRow(ctx, "Special request", req.length > 42 ? req.slice(0, 42) + "…" : (req || "—"), y); y += 52;
   dottedRow(ctx, "Photo", state.pics.length ? state.pics.length + (state.pics.length > 1 ? " pictures" : " picture") : "no", y); y += 52;
