@@ -266,7 +266,7 @@ footer b{font-weight:400;font-family:"Cormorant Garamond",serif;font-size:10px;l
             <div>
               <div class="fonts" id="fonts"></div>
               <div class="thai" id="thai"></div>
-              <p class="fnote">Pick the word on the left, then the cut of the letters. The six are Latin only — the three below set Thai.</p>
+              <p class="fnote" id="fnote">Pick the word on the left, then the lettering. Tap one and it goes on a petal.</p>
             </div>
           </div>
         </span>
@@ -372,9 +372,24 @@ const PETALS = [
 const CATS = [
   {id:"congrats",  label:"Congrats",   word:"CONGRATS"},
   {id:"chula",     label:"Chula",      word:"CHULA"},
+  {id:"cu",        label:"C U",        word:"CU"},
   {id:"mahidol",   label:"Mahidol",    word:"MAHIDOL"},
   {id:"thammasat", label:"Thammasat",  word:"THAMMASAT"},
   {id:"alphabet",  label:"Alphabet",   word:"", note:"customize"}
+];
+
+/* The shop's own lettering sheets. Tap one and that artwork goes on the
+   petal exactly as drawn. To offer a new word, letter it in the shop's
+   fonts, drop the images in beside this file and add them here. */
+const DESIGNS = [
+  {id:"d1", word:"CONGRATS", cut:"Book serif",  img:"f2.jpg", w:111, h:591},
+  {id:"d2", word:"CONGRATS", cut:"Engraved",    img:"f3.jpg", w:110, h:591},
+  {id:"d3", word:"CONGRATS", cut:"Heavy serif", img:"f4.jpg", w:113, h:591},
+  {id:"d4", word:"CONGRATS", cut:"Light serif", img:"f5.jpg", w: 96, h:591},
+  {id:"d5", word:"CHULA",    cut:"Engraved",    img:"f6.jpg", w:103, h:473},
+  {id:"d6", word:"CHULA",    cut:"Heavy serif", img:"f7.jpg", w:115, h:473},
+  {id:"d7", word:"CU",       cut:"Roman caps",  img:"f8.jpg", w:240, h:473},
+  {id:"d8", word:"CU",       cut:"Fat didone",  img:"f1.jpg", w:246, h:473}
 ];
 
 /* The lettering the shop inks. The specimen sheets f1–f8.jpg are what the
@@ -409,14 +424,15 @@ const state = {
   ink: "rose",
   wantPhoto: false,
   polaroid: false,
-  /* one entry per petal */
+  design: "d6",
+  /* one entry per petal — either a sheet, or typed words */
   petals: [
-    {text:"CHULA",    dir:"v"},
-    {text:"",         dir:"v"},
-    {text:"19.09.26", dir:"h"},
-    {text:"",         dir:"v"},
-    {text:"",         dir:"v"},
-    {text:"",         dir:"v"}
+    {text:"",         dir:"v", sheet:"d6", size:0},
+    {text:"",         dir:"v", sheet:null, size:0},
+    {text:"19.09.26", dir:"h", sheet:null, size:0},
+    {text:"",         dir:"v", sheet:null, size:0},
+    {text:"",         dir:"v", sheet:null, size:0},
+    {text:"",         dir:"v", sheet:null, size:0}
   ],
   pics: [],        /* {src, name, petal, size} — at most MAX_PICS */
   pendingPetal: -1,
@@ -430,6 +446,14 @@ const theFont = () => FONTS.find(f => f.id === state.font) || FONTS[0];
 const theInk  = () => INKS.find(i => i.id === state.ink) || INKS[0];
 const theBloom= () => BLOOMS.find(b => b.id === state.bloom) || BLOOMS[0];
 const picOn   = i => state.pics.find(p => p.petal === i) || null;
+const sheetOn = i => (state.petals[i].sheet ? DESIGNS.find(d => d.id === state.petals[i].sheet) : null);
+
+/* what the slip should say under Lettering */
+function letteringLabel(){
+  const used = state.petals.map((p, i) => sheetOn(i)).filter(Boolean);
+  if (used.length) return used[0].cut + ", inked from the sheet";
+  return theFont().name + " · " + theInk().label;
+}
 
 /* ---------- petals ---------- */
 function buildPetals(){
@@ -477,12 +501,28 @@ function paintPetals(){
     const i = +g.dataset.i, p = PETALS[i];
     const words = (state.petals[i].text || "").trim();
     const pic = picOn(i);
+    const sheet = state.petals[i].sheet ? DESIGNS.find(d => d.id === state.petals[i].sheet) : null;
     const hold = g.querySelector(".hold");
     hold.innerHTML = "";
 
     g.setAttribute("aria-label", "Petal " + (i + 1) + ", " + p.name +
-      (words ? ", says " + words : pic ? ", holds a picture" : ", empty — click to write"));
-    g.classList.toggle("empty", !words && !pic);
+      (sheet ? ", says " + sheet.word : words ? ", says " + words : pic ? ", holds a picture" : ", empty — click to write"));
+    g.classList.toggle("empty", !words && !pic && !sheet);
+
+    if (sheet){
+      /* the shop's sheet, laid down the petal from the tip inwards */
+      const L = state.petals[i].size || Math.round(p.len * 0.8);
+      const W = L * sheet.w / sheet.h;
+      const im = document.createElementNS(NS, "image");
+      im.setAttribute("href", sheet.img);
+      im.setAttribute("x", -W / 2); im.setAttribute("y", -L / 2);
+      im.setAttribute("width", W); im.setAttribute("height", L);
+      im.setAttribute("preserveAspectRatio", "xMidYMid meet");
+      im.setAttribute("transform", "rotate(" + (p.tip > 0 ? 90 : -90) + ")");
+      im.style.mixBlendMode = "multiply";
+      hold.appendChild(im);
+      return;
+    }
 
     if (pic){
       /* stand the picture along the petal, top toward the middle of the flower */
@@ -560,14 +600,19 @@ function openPetal(i){
   const outX = cx + (cx - fx) / d * 96, outY = cy + (cy - fy) / d * 96;
 
   const pic = picOn(i);
+  const sheet = state.petals[i].sheet ? DESIGNS.find(d => d.id === state.petals[i].sheet) : null;
+  const sized = pic || sheet;
   pop = document.createElement("div");
   pop.className = "pop";
   pop.innerHTML =
-    '<p class="cap"><span>Petal ' + (i + 1) + ' · ' + PETALS[i].name + '</span>' +
-      '<span class="dirtog"><button type="button" data-d="v" title="Letters down the petal">↕</button>' +
-      '<button type="button" data-d="h" title="Word along the petal">↔</button></span></p>' +
-    '<input type="text" id="popin" maxlength="18" autocomplete="off" placeholder="type here">' +
-    (pic ? '<div class="sizer"><span>Size</span><input type="range" id="popsize" min="70" max="300" step="5"></div>' : '') +
+    '<p class="cap"><span>' + (sheet ? sheet.word + " · " + sheet.cut : "Petal " + (i + 1) + " · " + PETALS[i].name) + '</span>' +
+      (sheet ? "" :
+        '<span class="dirtog"><button type="button" data-d="v" title="Letters down the petal">↕</button>' +
+        '<button type="button" data-d="h" title="Word along the petal">↔</button></span>') + '</p>' +
+    '<input type="text" id="popin" maxlength="18" autocomplete="off" placeholder="' +
+      (sheet ? "type to replace the sheet" : "type here") + '">' +
+    (sized ? '<div class="sizer"><span>Size</span><input type="range" id="popsize" min="' +
+      (sheet ? 80 : 70) + '" max="' + (sheet ? Math.round(PETALS[i].len * 1.1) : 300) + '" step="5"></div>' : '') +
     '<div class="acts">' +
       '<button type="button" class="use">' + (pic ? "Swap" : "Picture") + '</button>' +
       '<button type="button" class="clr">Clear</button>' +
@@ -583,7 +628,10 @@ function openPetal(i){
   input.value = state.petals[i].text;
   input.addEventListener("input", () => {
     state.petals[i].text = input.value;
-    if (input.value.trim()) dropPic(i);
+    if (input.value.trim()){
+      dropPic(i);
+      state.petals[i].sheet = null;   /* typing replaces the sheet */
+    }
     /* once they edit it themselves, the category stops owning this petal */
     if (state.catPetal === i) state.catPetal = -1;
     paintPetals();
@@ -602,7 +650,10 @@ function openPetal(i){
   });
 
   const sizeIn = pop.querySelector("#popsize");
-  if (sizeIn && pic){
+  if (sizeIn && sheet){
+    sizeIn.value = state.petals[i].size || Math.round(PETALS[i].len * 0.8);
+    sizeIn.addEventListener("input", () => { state.petals[i].size = +sizeIn.value; paintPetals(); });
+  } else if (sizeIn && pic){
     sizeIn.value = pic.size;
     sizeIn.addEventListener("input", () => { pic.size = +sizeIn.value; paintPetals(); });
   }
@@ -619,7 +670,9 @@ function openPetal(i){
 
   pop.querySelector(".clr").addEventListener("click", () => {
     state.petals[i].text = "";
+    state.petals[i].sheet = null;
     dropPic(i);
+    if (state.catPetal === i) state.catPetal = -1;
     input.value = ""; input.focus();
     paintPetals(); renderStub();
   });
@@ -646,7 +699,7 @@ function dropPic(i){
 /* ---------- pictures ---------- */
 function firstFreePetal(){
   for (let i = 0; i < PETALS.length; i++){
-    if (!state.petals[i].text.trim() && !picOn(i)) return i;
+    if (!state.petals[i].text.trim() && !state.petals[i].sheet && !picOn(i)) return i;
   }
   return -1;
 }
@@ -743,25 +796,16 @@ function buildForm(){
     ch.appendChild(b);
   });
 
-  const fh = $("#fonts"), th = $("#thai");
-  FONTS.forEach(f => {
+  const th = $("#thai");
+  FONTS.filter(f => f.thai).forEach(f => {
     const b = document.createElement("button");
-    b.type = "button";
-    b.dataset.f = f.id;
-    if (f.thai){
-      b.className = "thtile";
-      b.style.fontFamily = f.css;
-      b.style.fontWeight = f.weight;
-      b.textContent = f.label;
-      b.setAttribute("aria-label", "Thai lettering, " + f.name);
-      th.appendChild(b);
-    } else {
-      b.className = "ftile";
-      b.appendChild(document.createElement("span")).className = "stack";
-      b.setAttribute("aria-label", "Lettering " + f.name);
-      fh.appendChild(b);
-    }
-    b.addEventListener("click", () => { state.font = f.id; render(); });
+    b.type = "button"; b.className = "thtile"; b.dataset.f = f.id;
+    b.style.fontFamily = f.css;
+    b.style.fontWeight = f.weight;
+    b.textContent = f.label;
+    b.setAttribute("aria-label", "Thai lettering, " + f.name);
+    b.addEventListener("click", () => pickCut(f));
+    th.appendChild(b);
   });
 
   $("#photo-yes").addEventListener("click", () => {
@@ -788,7 +832,7 @@ function buildForm(){
   $("#save").addEventListener("click", saveSlip);
   $("#clear").addEventListener("click", () => {
     closePop();
-    state.petals.forEach(p => { p.text = ""; });
+    state.petals.forEach(p => { p.text = ""; p.sheet = null; });
     state.catPetal = -1;
     state.pics = [];
     render();
@@ -803,6 +847,10 @@ function specimenWord(){
   return (own ? own.text.trim() : "Abc").toUpperCase().slice(0, 12);
 }
 
+const designsFor = word => DESIGNS.filter(d => d.word === word);
+const theCat = () => CATS.find(c => c.id === state.category) || CATS[0];
+const targetPetal = () => (state.catPetal >= 0 ? state.catPetal : firstFreePetal());
+
 function pickCategory(c){
   state.category = c.id;
   if (!c.word){
@@ -813,36 +861,87 @@ function pickCategory(c){
     if (i >= 0) openPetal(i);
     return;
   }
-  let i = state.catPetal;
-  if (i < 0) i = firstFreePetal();
+  const sheets = designsFor(c.word);
+  if (sheets.length){
+    const keep = sheets.find(d => d.cut === (DESIGNS.find(x => x.id === state.design) || {}).cut);
+    pickSheet(keep || sheets[0]);
+  } else {
+    placeOnPetal({text: c.word});
+  }
+}
+
+/* put something on the petal the category owns, or the next free one */
+function placeOnPetal(what){
+  const i = targetPetal();
   if (i < 0){
     render();
-    toast("Every petal is taken — clear one to put " + c.word + " on the flower.");
+    toast("Every petal is taken — clear one first.");
     return;
   }
   dropPic(i);
-  state.petals[i].text = c.word;
+  const p = state.petals[i];
+  p.text = what.text || "";
+  p.sheet = what.sheet || null;
+  if (p.sheet && !p.size) p.size = Math.round(PETALS[i].len * 0.8);
   state.catPetal = i;
   closePop();
   render();
 }
 
+function pickSheet(d){
+  state.design = d.id;
+  placeOnPetal({sheet: d.id});
+}
+
+function pickCut(f){
+  state.font = f.id;
+  const c = theCat();
+  if (c.word && !designsFor(c.word).length) placeOnPetal({text: c.word});
+  else render();
+}
+
 function paintSpecimens(){
-  const word = [...specimenWord()];
-  const size = Math.max(8, Math.min(21, Math.floor(104 / Math.max(word.length, 1))));
-  document.querySelectorAll("#fonts .ftile").forEach(b => {
-    const f = FONTS.find(x => x.id === b.dataset.f);
-    const stack = b.querySelector(".stack");
-    stack.innerHTML = "";
-    stack.style.fontFamily = f.css;
-    stack.style.fontWeight = f.weight;
-    stack.style.fontSize = size + "px";
-    word.forEach(ch => {
-      const s = document.createElement("span");
-      s.textContent = ch === " " ? " " : ch;
-      stack.appendChild(s);
+  const host = $("#fonts"), note = $("#fnote");
+  const c = theCat(), sheets = c.word ? designsFor(c.word) : [];
+  host.innerHTML = "";
+
+  if (sheets.length){
+    sheets.forEach(d => {
+      const b = document.createElement("button");
+      b.type = "button"; b.className = "ftile"; b.dataset.d = d.id;
+      b.setAttribute("aria-label", d.word + " in the " + d.cut.toLowerCase() + " cut");
+      b.title = d.cut;
+      b.innerHTML = '<img src="' + d.img + '" alt="">';
+      b.addEventListener("click", () => pickSheet(d));
+      host.appendChild(b);
     });
-  });
+    note.textContent = "The shop's own sheets — tap one and it goes on a petal exactly as drawn.";
+  } else {
+    const word = [...specimenWord()];
+    const size = Math.max(8, Math.min(21, Math.floor(104 / Math.max(word.length, 1))));
+    FONTS.filter(f => !f.thai).forEach(f => {
+      const b = document.createElement("button");
+      b.type = "button"; b.className = "ftile"; b.dataset.f = f.id;
+      b.setAttribute("aria-label", "Lettering " + f.name);
+      b.title = f.name;
+      const stack = document.createElement("span");
+      stack.className = "stack";
+      stack.style.fontFamily = f.css;
+      stack.style.fontWeight = f.weight;
+      stack.style.fontSize = size + "px";
+      word.forEach(ch => {
+        const s = document.createElement("span");
+        s.textContent = ch === " " ? " " : ch;
+        stack.appendChild(s);
+      });
+      b.appendChild(stack);
+      b.addEventListener("click", () => pickCut(f));
+      host.appendChild(b);
+    });
+    note.textContent = c.word
+      ? "No sheet for this word yet — shown in the nearest cut we can set on screen."
+      : "Your own letters, in the nearest cut we can set on screen. The three below set Thai.";
+  }
 }
 
 function render(){
@@ -857,6 +956,8 @@ function render(){
     b.setAttribute("aria-pressed", INKS[i].id === state.ink ? "true" : "false"));
   document.querySelectorAll("[data-f]").forEach(b =>
     b.setAttribute("aria-pressed", b.dataset.f === state.font ? "true" : "false"));
+  document.querySelectorAll("#fonts [data-d]").forEach(b =>
+    b.setAttribute("aria-pressed", b.dataset.d === state.design ? "true" : "false"));
 
   $("#photo-yes").setAttribute("aria-pressed", state.wantPhoto ? "true" : "false");
   $("#photo-no").setAttribute("aria-pressed", state.wantPhoto ? "false" : "true");
@@ -875,14 +976,18 @@ function briefText(){
   L.push("Name: " + ($("#name").value.trim() || "—"));
   L.push("Quantity: " + state.qty + (state.qty > 1 ? " stems" : " stem"));
   L.push("Flower: " + theBloom().label);
-  L.push("Lettering: " + f.name +
-         " · " + theInk().label + " ink");
+  L.push("Lettering: " + letteringLabel());
   L.push("");
   L.push("PETALS");
   let any = false;
   PETALS.forEach((p, i) => {
     const t = state.petals[i].text.trim(), pic = picOn(i);
-    if (t){
+    const sheet = state.petals[i].sheet ? DESIGNS.find(d => d.id === state.petals[i].sheet) : null;
+    if (sheet){
+      any = true;
+      L.push("  " + (i + 1) + ". " + p.name + " — sheet " + sheet.img + ": " + sheet.word +
+        ", " + sheet.cut.toLowerCase());
+    } else if (t){
       any = true;
       L.push("  " + (i + 1) + ". " + p.name + " — “" + t + "”  (" +
         (state.petals[i].dir === "v" ? "letters down the petal" : "along the petal") + ")");
@@ -962,11 +1067,19 @@ function drawPetalInk(ctx, ox, oy, size){
   const s = size / 1254, f = theFont(), ink = theInk();
   PETALS.forEach((p, i) => {
     const words = state.petals[i].text.trim(), pic = picOn(i);
-    if (!words && !pic) return;
+    const sheet = state.petals[i].sheet ? DESIGNS.find(d => d.id === state.petals[i].sheet) : null;
+    if (!words && !pic && !sheet) return;
     ctx.save();
     ctx.translate(ox + p.a[0] * s, oy + p.a[1] * s);
     ctx.rotate(p.rot * Math.PI / 180);
-    if (pic && pic.img){
+    if (sheet && sheet.img_){
+      const L = (state.petals[i].size || Math.round(p.len * 0.8)) * s;
+      const W = L * sheet.w / sheet.h;
+      ctx.rotate((p.tip > 0 ? 90 : -90) * Math.PI / 180);
+      ctx.globalCompositeOperation = "multiply";
+      ctx.drawImage(sheet.img_, -W / 2, -L / 2, W, L);
+      ctx.globalCompositeOperation = "source-over";
+    } else if (pic && pic.img){
       const h = pic.size * s, w = h * 0.78;
       ctx.rotate((p.tip > 0 ? -90 : 90) * Math.PI / 180);
       ctx.globalCompositeOperation = "multiply";
@@ -1043,7 +1156,7 @@ function buildReceipt(){
   dottedRow(ctx, "Name", $("#name").value.trim() || "—", y); y += 52;
   dottedRow(ctx, "Quantity", state.qty + (state.qty > 1 ? " stems" : " stem"), y); y += 52;
   dottedRow(ctx, "Flower colour", theBloom().label, y); y += 52;
-  dottedRow(ctx, "Lettering", f.name + " · " + theInk().label, y); y += 52;
+  dottedRow(ctx, "Lettering", letteringLabel(), y); y += 52;
   const req = $("#msg").value.trim();
   dottedRow(ctx, "Special request", req.length > 42 ? req.slice(0, 42) + "…" : (req || "—"), y); y += 52;
   dottedRow(ctx, "Photo", state.pics.length ? state.pics.length + (state.pics.length > 1 ? " pictures" : " picture") : "no", y); y += 52;
@@ -1062,12 +1175,17 @@ function buildReceipt(){
 
 function saveSlip(){
   closePop();
-  const pending = state.pics.filter(p => !p.img).map(p => new Promise(res => {
+  const load = (obj, key, src) => new Promise(res => {
     const im = new Image();
-    im.onload = () => { p.img = im; res(); };
+    im.onload = () => { obj[key] = im; res(); };
     im.onerror = res;
-    im.src = p.src;
-  }));
+    im.src = src;
+  });
+  const sheets = state.petals
+    .map(p => p.sheet && DESIGNS.find(d => d.id === p.sheet))
+    .filter(d => d && !d.img_);
+  const pending = state.pics.filter(p => !p.img).map(p => load(p, "img", p.src))
+    .concat(sheets.map(d => load(d, "img_", d.img)));
   Promise.all(pending).then(() => {
     const canvas = buildReceipt();
     const url = canvas.toDataURL("image/png");
