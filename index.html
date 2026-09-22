@@ -84,6 +84,7 @@ button,input,textarea,select{font:inherit;color:inherit}
 .formcol{padding:26px 22px 20px;display:flex;flex-direction:column;gap:16px;min-width:0;border-left:1px solid var(--rule)}
 .field{display:grid;grid-template-columns:100px minmax(0,1fr);gap:12px;align-items:baseline}
 .field > .k{font-family:"Cormorant Garamond",serif;font-size:11.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-soft)}
+.field > .k em{display:block;font-style:normal;color:var(--ink-mute);margin-top:8px}
 .field .v{min-width:0}
 .field.tall{align-items:start}
 .field.tall > .k{padding-top:5px}
@@ -103,11 +104,21 @@ button,input,textarea,select{font:inherit;color:inherit}
   text-transform:uppercase;color:var(--ink-mute)}
 .dot[aria-pressed=true] em{color:var(--rose)}
 
-/* lettering specimens */
+/* lettering — category, then specimens */
+.letterrow{display:grid;grid-template-columns:114px minmax(0,1fr);gap:11px;align-items:start}
+.cats{display:flex;flex-direction:column;gap:6px}
+.cat{position:relative;border:1px solid var(--rule-2);background:transparent;cursor:pointer;padding:8px 16px 8px 8px;
+  font-family:"Cormorant Garamond",serif;font-size:11px;letter-spacing:.17em;text-transform:uppercase;
+  color:var(--ink-soft);text-align:center;line-height:1.35}
+.cat:hover{border-color:var(--rose-soft);color:var(--ink)}
+.cat[aria-pressed=true]{border-color:var(--rose);color:var(--rose);box-shadow:0 0 0 1px var(--rose)}
+.cat[aria-pressed=true]::after{content:"✓";position:absolute;top:3px;right:5px;font-size:10px;line-height:1}
+.cat em{display:block;font-style:italic;font-size:10px;letter-spacing:.03em;text-transform:none;color:var(--ink-mute);margin-top:1px}
 .fonts{display:grid;grid-template-columns:repeat(4,1fr);gap:7px}
-.ftile{position:relative;height:126px;border:1px solid var(--rule-2);background:var(--card);cursor:pointer;display:block;
-  padding:10px 5px;overflow:hidden}
-.ftile img{display:block;height:100%;width:100%;object-fit:contain;mix-blend-mode:multiply}
+.ftile{position:relative;height:126px;border:1px solid var(--rule-2);background:var(--card);cursor:pointer;
+  padding:9px 3px;overflow:hidden;display:flex;align-items:center;justify-content:center;color:var(--ink)}
+.ftile .stack{display:block;text-align:center;line-height:1.04;white-space:nowrap}
+.ftile .stack span{display:block}
 .ftile:hover{border-color:var(--rose-soft)}
 .ftile[aria-pressed=true]{border-color:var(--rose);box-shadow:0 0 0 1px var(--rose)}
 .ftile[aria-pressed=true]::after{content:"✓";position:absolute;top:2px;right:4px;font-size:11px;color:var(--rose);line-height:1}
@@ -199,7 +210,9 @@ footer b{font-weight:400;font-family:"Cormorant Garamond",serif;font-size:10px;l
 }
 @media (max-width:520px){
   .field{grid-template-columns:1fr;gap:5px}
-  .fonts{grid-template-columns:repeat(3,1fr)}
+  .letterrow{grid-template-columns:1fr}
+  .cats{flex-direction:row;flex-wrap:wrap}
+  .cat{flex:1 1 28%}
   .shots{grid-template-columns:1fr 1fr}
   .shots img:last-child{display:none}
 }
@@ -242,11 +255,16 @@ footer b{font-weight:400;font-family:"Cormorant Garamond",serif;font-size:10px;l
       </div>
 
       <div class="field tall">
-        <span class="k">Lettering</span>
+        <span class="k">Lettering<em>Category</em></span>
         <span class="v">
-          <div class="fonts" id="fonts"></div>
-          <div class="thai" id="thai"></div>
-          <p class="fnote">The eight specimens are inked as drawn — Latin letters only. The three below set Thai.</p>
+          <div class="letterrow">
+            <div class="cats" id="cats"></div>
+            <div>
+              <div class="fonts" id="fonts"></div>
+              <div class="thai" id="thai"></div>
+              <p class="fnote">Pick the word on the left, then the cut of the letters. The eight are Latin only — the three below set Thai.</p>
+            </div>
+          </div>
         </span>
       </div>
 
@@ -344,20 +362,31 @@ const PETALS = [
   {name:"right",       a:[1004,645], rot:-13.5, len:340, tip: 1}
 ];
 
-/* The lettering the shop inks. The eight specimens are the shop's own
-   sheets; `css` is the nearest face we have on screen for the preview. */
+/* What goes on a petal. Add a university here and it shows up in the list,
+   set in all eight cuts. `word` is what gets written; leave it empty for the
+   customer's own letters. */
+const CATS = [
+  {id:"congrats",  label:"Congrats",   word:"CONGRATS"},
+  {id:"chula",     label:"Chula",      word:"CHULA"},
+  {id:"mahidol",   label:"Mahidol",    word:"MAHIDOL"},
+  {id:"thammasat", label:"Thammasat",  word:"THAMMASAT"},
+  {id:"alphabet",  label:"Alphabet",   word:"", note:"customize"}
+];
+
+/* The lettering the shop inks. The specimen sheets f1–f8.jpg are what the
+   shop works from; `css` is the nearest face we can set on screen. */
 const FONTS = [
-  {id:"f1", img:"f1.jpg", css:'"Bodoni Moda",serif',        weight:900, track:.04, thai:false},
-  {id:"f2", img:"f2.jpg", css:'"EB Garamond",serif',        weight:400, track:.10, thai:false},
-  {id:"f3", img:"f3.jpg", css:'"Cinzel Decorative",serif',  weight:700, track:.06, thai:false},
-  {id:"f4", img:"f4.jpg", css:'"Bodoni Moda",serif',        weight:700, track:.05, thai:false},
-  {id:"f5", img:"f5.jpg", css:'"Cormorant Garamond",serif', weight:300, track:.12, thai:false},
-  {id:"f6", img:"f6.jpg", css:'"Rye",serif',                weight:400, track:.04, thai:false},
-  {id:"f7", img:"f7.jpg", css:'"Playfair Display",serif',   weight:900, track:.05, thai:false},
-  {id:"f8", img:"f8.jpg", css:'"Playfair Display",serif',   weight:400, track:.08, thai:false},
-  {id:"t1", label:"ขอบคุณ", css:'"Noto Serif Thai",serif',  weight:400, track:.04, thai:true},
-  {id:"t2", label:"ขอบคุณ", css:'"Charmonman",cursive',     weight:400, track:.02, thai:true},
-  {id:"t3", label:"ขอบคุณ", css:'"Mitr",sans-serif',        weight:300, track:.04, thai:true}
+  {id:"f1", name:"Bodoni Black",    css:'"Bodoni Moda",serif',        weight:900, track:.04, thai:false},
+  {id:"f2", name:"Garamond",        css:'"EB Garamond",serif',        weight:400, track:.10, thai:false},
+  {id:"f3", name:"Engraved",        css:'"Cinzel Decorative",serif',  weight:700, track:.06, thai:false},
+  {id:"f4", name:"Bodoni Bold",     css:'"Bodoni Moda",serif',        weight:700, track:.05, thai:false},
+  {id:"f5", name:"Cormorant Light", css:'"Cormorant Garamond",serif', weight:300, track:.12, thai:false},
+  {id:"f6", name:"Western",         css:'"Rye",serif',                weight:400, track:.04, thai:false},
+  {id:"f7", name:"Playfair Black",  css:'"Playfair Display",serif',   weight:900, track:.05, thai:false},
+  {id:"f8", name:"Playfair",        css:'"Playfair Display",serif',   weight:400, track:.08, thai:false},
+  {id:"t1", name:"Thai serif",      label:"ขอบคุณ", css:'"Noto Serif Thai",serif', weight:400, track:.04, thai:true},
+  {id:"t2", name:"Thai hand",       label:"ขอบคุณ", css:'"Charmonman",cursive',    weight:400, track:.02, thai:true},
+  {id:"t3", name:"Thai sans",       label:"ขอบคุณ", css:'"Mitr",sans-serif',       weight:300, track:.04, thai:true}
 ];
 
 const INKS = [
@@ -372,6 +401,8 @@ const MAX_PICS = 3;
 const state = {
   qty: 1,
   bloom: "white",
+  category: "chula",
+  catPetal: 0,      /* the petal the category word was written to */
   font: "f7",
   ink: "rose",
   wantPhoto: false,
@@ -551,7 +582,10 @@ function openPetal(i){
   input.addEventListener("input", () => {
     state.petals[i].text = input.value;
     if (input.value.trim()) dropPic(i);
+    /* once they edit it themselves, the category stops owning this petal */
+    if (state.catPetal === i) state.catPetal = -1;
     paintPetals();
+    if (state.category === "alphabet") paintSpecimens();
   });
   input.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === "Escape") closePop(); });
 
@@ -698,6 +732,15 @@ function buildForm(){
     ink.appendChild(b);
   });
 
+  const ch = $("#cats");
+  CATS.forEach(c => {
+    const b = document.createElement("button");
+    b.type = "button"; b.className = "cat"; b.dataset.c = c.id;
+    b.innerHTML = c.label.toUpperCase() + (c.note ? '<em>' + c.note + '</em>' : "");
+    b.addEventListener("click", () => pickCategory(c));
+    ch.appendChild(b);
+  });
+
   const fh = $("#fonts"), th = $("#thai");
   FONTS.forEach(f => {
     const b = document.createElement("button");
@@ -708,12 +751,12 @@ function buildForm(){
       b.style.fontFamily = f.css;
       b.style.fontWeight = f.weight;
       b.textContent = f.label;
-      b.setAttribute("aria-label", "Thai lettering " + f.css.split('"')[1]);
+      b.setAttribute("aria-label", "Thai lettering, " + f.name);
       th.appendChild(b);
     } else {
       b.className = "ftile";
-      b.innerHTML = '<img src="' + f.img + '" alt="">';
-      b.setAttribute("aria-label", "Lettering specimen " + f.id.slice(1));
+      b.appendChild(document.createElement("span")).className = "stack";
+      b.setAttribute("aria-label", "Lettering " + f.name);
       fh.appendChild(b);
     }
     b.addEventListener("click", () => { state.font = f.id; render(); });
@@ -744,12 +787,66 @@ function buildForm(){
   $("#clear").addEventListener("click", () => {
     closePop();
     state.petals.forEach(p => { p.text = ""; });
+    state.catPetal = -1;
     state.pics = [];
     render();
   });
 }
 
+/* ---------- the category ---------- */
+function specimenWord(){
+  const c = CATS.find(x => x.id === state.category) || CATS[0];
+  if (c.word) return c.word;
+  const own = state.petals.find(p => p.text.trim());
+  return (own ? own.text.trim() : "Abc").toUpperCase().slice(0, 12);
+}
+
+function pickCategory(c){
+  state.category = c.id;
+  if (!c.word){
+    /* the customer sets their own letters — hand them a petal to type in */
+    const i = state.catPetal >= 0 ? state.catPetal : firstFreePetal();
+    state.catPetal = -1;
+    render();
+    if (i >= 0) openPetal(i);
+    return;
+  }
+  let i = state.catPetal;
+  if (i < 0) i = firstFreePetal();
+  if (i < 0){
+    render();
+    toast("Every petal is taken — clear one to put " + c.word + " on the flower.");
+    return;
+  }
+  dropPic(i);
+  state.petals[i].text = c.word;
+  state.catPetal = i;
+  closePop();
+  render();
+}
+
+function paintSpecimens(){
+  const word = [...specimenWord()];
+  const size = Math.max(8, Math.min(21, Math.floor(104 / Math.max(word.length, 1))));
+  document.querySelectorAll("#fonts .ftile").forEach(b => {
+    const f = FONTS.find(x => x.id === b.dataset.f);
+    const stack = b.querySelector(".stack");
+    stack.innerHTML = "";
+    stack.style.fontFamily = f.css;
+    stack.style.fontWeight = f.weight;
+    stack.style.fontSize = size + "px";
+    word.forEach(ch => {
+      const s = document.createElement("span");
+      s.textContent = ch === " " ? " " : ch;
+      stack.appendChild(s);
+    });
+  });
+}
+
 function render(){
+  document.querySelectorAll("#cats .cat").forEach(b =>
+    b.setAttribute("aria-pressed", b.dataset.c === state.category ? "true" : "false"));
+  paintSpecimens();
   document.querySelectorAll("#qty .box").forEach((b, i) =>
     b.setAttribute("aria-pressed", i < state.qty ? "true" : "false"));
   document.querySelectorAll("#bloom .dot").forEach((b, i) =>
@@ -776,7 +873,7 @@ function briefText(){
   L.push("Name: " + ($("#name").value.trim() || "—"));
   L.push("Quantity: " + state.qty + (state.qty > 1 ? " stems" : " stem"));
   L.push("Flower: " + theBloom().label);
-  L.push("Lettering: " + (f.thai ? "Thai · " + f.css.split('"')[1] : "specimen " + f.id.slice(1)) +
+  L.push("Lettering: " + f.name +
          " · " + theInk().label + " ink");
   L.push("");
   L.push("PETALS");
@@ -944,7 +1041,7 @@ function buildReceipt(){
   dottedRow(ctx, "Name", $("#name").value.trim() || "—", y); y += 52;
   dottedRow(ctx, "Quantity", state.qty + (state.qty > 1 ? " stems" : " stem"), y); y += 52;
   dottedRow(ctx, "Flower colour", theBloom().label, y); y += 52;
-  dottedRow(ctx, "Lettering", (f.thai ? "Thai" : "Specimen " + f.id.slice(1)) + " · " + theInk().label, y); y += 52;
+  dottedRow(ctx, "Lettering", f.name + " · " + theInk().label, y); y += 52;
   const req = $("#msg").value.trim();
   dottedRow(ctx, "Special request", req.length > 42 ? req.slice(0, 42) + "…" : (req || "—"), y); y += 52;
   dottedRow(ctx, "Photo", state.pics.length ? state.pics.length + (state.pics.length > 1 ? " pictures" : " picture") : "no", y); y += 52;
