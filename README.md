@@ -4,7 +4,7 @@ A single-page order slip for Maison Sablé's tattooed-lily bouquets, laid out as
 paper ticket. The customer clicks a petal on the lily, types into it, fills in the
 slip, and either copies an order brief or saves the whole thing as a picture.
 
-**Live site:** https://mixerrrrr.github.io/maison-sable/
+**Live site:** https://maisonsable.github.io/
 
 ## Editing the shop details
 
