@@ -15,7 +15,8 @@ Everything a shopkeeper needs is in one block at the top of the `<script>` in
 | --- | --- |
 | Prices (switched off for now) | `SHOW_PRICES` + the `PRICE` object |
 | The two blooms and their drawings | the `BLOOMS` array |
-| Lettering specimens and their Thai faces | the `FONTS` array |
+| Words offered on a petal (universities) | the `CATS` array |
+| Lettering cuts and their Thai faces | the `FONTS` array |
 | Ink colours | the `INKS` array |
 | Where each petal's writing sits | the `PETALS` array |
 | How many pictures a customer may place | `MAX_PICS` |
@@ -46,11 +47,23 @@ these six lines are the only thing that needs re-measuring.
 
 ## Lettering
 
-`f1.jpg`–`f8.jpg` are the shop's own specimen sheets — customers tick the one they
-want. Each is paired with the nearest face we can load on screen (`css`), so the
-preview approximates what gets inked; the sheet is what the shop works from. The
-three Thai entries set real Thai and are what Thai text should use — the eight
-specimens are Latin only.
+A customer picks a **category** first — Congrats, Chula, Mahidol, Thammasat, or
+Alphabet — and the eight specimens all set that word, so they compare cuts in the
+letters they are actually buying. Picking a category also writes the word onto a
+free petal, and picking it again swaps that same petal rather than filling another.
+**Alphabet** hands them the petal to type their own; from then on the specimens
+follow whatever they typed.
+
+To add a university, add a line to `CATS`:
+
+```js
+{id:"kasetsart", label:"Kasetsart", word:"KASETSART"}
+```
+
+`f1.jpg`–`f8.jpg` are the shop's own specimen sheets, kept here because they are
+what the shop inks from. On screen each cut is set in the nearest face we can load
+(`css` in `FONTS`), so the preview approximates the sheet rather than reproducing
+it. The three Thai entries set real Thai — the eight cuts are Latin only.
 
 ## Images
 
