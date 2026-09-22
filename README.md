@@ -17,7 +17,7 @@ Everything a shopkeeper needs is in one block at the top of the `<script>` in
 | The two blooms and their drawings | the `BLOOMS` array |
 | Words offered on a petal (universities) | the `CATS` array |
 | Ready-made lettering on a petal | the `DESIGNS` array |
-| Fallback cuts and the Thai faces | the `FONTS` array |
+| Fallback cuts for words with no sheet | the `FONTS` array |
 | Ink colours | the `INKS` array |
 | Where each petal's writing sits | the `PETALS` array |
 | How many pictures a customer may place | `MAX_PICS` |
@@ -48,12 +48,13 @@ these six lines are the only thing that needs re-measuring.
 
 ## Lettering
 
-A customer picks a **category** first — Congrats, Chula, C U, Mahidol, Thammasat or
-Alphabet — and the row below fills with the shop lettering for that word. Tapping
-one puts it on a free petal; picking another swaps that same petal rather than
-filling another.
-**Alphabet** hands them the petal to type their own; from then on the specimens
-follow whatever they typed.
+**Tap the petal you want, then tap the lettering.** The petal you tapped last stays
+marked and everything you choose lands there, so a customer fills the flower petal by
+petal. Tap nothing first and it goes to the next free petal.
+
+The **category** — Congrats, Chula, C U, Mahidol, Thammasat or Alphabet — decides what
+the row below shows. **Alphabet** opens the petal for their own words; from then on
+the row previews whatever they typed.
 
 To add a university, add a line to `CATS`:
 
@@ -80,9 +81,9 @@ To offer a new word, letter it in the shop's fonts, export one tall image per cu
 
 Mahidol and Thammasat have no artwork, so those categories fall back to typed
 letters set in the nearest faces we can load (`FONTS`), and the slip says so. That is
-a stand-in until the sheets exist — the six Latin cuts approximate the sheets rather
-than reproducing them. The three Thai entries set real Thai; the Latin cuts have no
-Thai glyphs.
+a stand-in until the sheets exist — the six cuts approximate the sheets rather than
+reproducing them. Each cut falls back to Noto Serif Thai, so typed Thai still sets
+properly in any of them.
 
 ## Images
 
@@ -100,9 +101,11 @@ small field that floats just beyond the petal so the bloom stays visible.
 - **↕ down the petal** draws each letter upright, stepping along the petal from the
   tip inwards, which is how the shop inks them.
 - **↔ along the petal** sets the word on the petal's axis and shrinks it to fit.
-- A **sheet** lies down the petal from the tip inwards, at whatever size the slider says.
-- A **picture** stands upright with its top toward the middle of the flower, and has
-  its own size slider. Up to three can be placed, one per petal.
+- A **sheet** lies along the petal at whatever size the slider says. Artwork takes a
+  quarter turn to follow the petal; `uprightTurn()` picks the direction that leaves it
+  readable, so nothing lands upside down on the lower petals.
+- A **picture** stands along the petal the same way, kept upright, with its own size
+  slider. Up to three can be placed, one per petal.
 
 **Save the slip** paints the whole order onto a canvas — the flower with its ink,
 then the filled-in fields — and offers it as a PNG. It is drawn by hand in
