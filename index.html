@@ -1,7 +1,7 @@
 <title>Maison Sablé</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300&family=Jost:wght@300;400&family=Playfair+Display:wght@900&family=Bodoni+Moda:wght@900&family=EB+Garamond:wght@400&family=Cinzel+Decorative:wght@700&family=Rye&family=Charmonman:wght@400&family=Mitr:wght@200;300&family=Noto+Serif+Thai:wght@300;400&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300&family=Jost:wght@300;400&family=Playfair+Display:wght@900&family=Bodoni+Moda:wght@900&family=EB+Garamond:wght@400&family=Cinzel+Decorative:wght@700&family=Rye&family=Noto+Serif+Thai:wght@300;400&display=swap">
 <style>
 /* A deliberately single-theme page: a printed paper order slip. */
 :root{
@@ -51,7 +51,8 @@ button,input,textarea,select{font:inherit;color:inherit}
 .guide{stroke:var(--rule-2);stroke-width:2.2;stroke-dasharray:7 11;stroke-linecap:round;opacity:0}
 .petal.empty .guide{opacity:.9}
 .petal:hover .guide,.petal:focus-visible .guide{opacity:1;stroke:var(--rose-soft)}
-.petal.on .guide{opacity:1;stroke:var(--rose)}
+.petal.act .guide{opacity:1;stroke:var(--rose-soft);stroke-dasharray:3 9}
+.petal.on .guide{opacity:1;stroke:var(--rose);stroke-dasharray:7 11}
 .ptext{dominant-baseline:middle;text-anchor:middle;pointer-events:none;white-space:pre}
 .phint{fill:var(--rule);font-family:"Jost",sans-serif;font-size:25px;letter-spacing:.26em;
   text-anchor:middle;dominant-baseline:middle;pointer-events:none;text-transform:uppercase}
@@ -124,12 +125,6 @@ button,input,textarea,select{font:inherit;color:inherit}
 .ftile:hover{border-color:var(--rose-soft)}
 .ftile[aria-pressed=true]{border-color:var(--rose);box-shadow:0 0 0 1px var(--rose)}
 .ftile[aria-pressed=true]::after{content:"✓";position:absolute;top:2px;right:4px;font-size:11px;color:var(--rose);line-height:1}
-.thai{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-top:7px}
-.thtile{position:relative;border:1px solid var(--rule-2);background:var(--card);cursor:pointer;padding:6px 4px;
-  font-family:"Noto Serif Thai",serif;font-size:14px;color:var(--ink);text-align:center;line-height:1.5}
-.thtile:hover{border-color:var(--rose-soft)}
-.thtile[aria-pressed=true]{border-color:var(--rose);box-shadow:0 0 0 1px var(--rose)}
-.thtile[aria-pressed=true]::after{content:"✓";position:absolute;top:1px;right:3px;font-size:10px;color:var(--rose);line-height:1}
 .fnote{font-size:10.5px;color:var(--ink-mute);margin:7px 0 0;line-height:1.45}
 
 .msg{width:100%;border:0;background:transparent;resize:none;font-size:15px;line-height:29px;padding:0;
@@ -224,8 +219,8 @@ footer b{font-weight:400;font-family:"Cormorant Garamond",serif;font-size:10px;l
 <div class="page">
   <div class="masthead">
     <h1>Maison Sablé</h1>
-    <p>Write on the petals. Click any petal below and type — a name, a date, a university — and we ink it by hand before the bouquet goes out.
-      <span class="th">คลิกที่กลีบแล้วพิมพ์ข้อความได้เลย</span></p>
+    <p>Tap a petal, then tap the lettering you want — or type your own words into it. We ink every petal by hand before the bouquet goes out.
+      <span class="th">แตะกลีบที่ต้องการ แล้วเลือกตัวอักษรด้านล่างได้เลย</span></p>
     <div class="rulewing"><i></i><span class="star">✦</span><i></i></div>
   </div>
 
@@ -237,7 +232,7 @@ footer b{font-weight:400;font-family:"Cormorant Garamond",serif;font-size:10px;l
         <img class="lineart" id="lineart" src="lily.webp" alt="Line drawing of a lily with six petals you can write on">
         <svg id="petals" viewBox="0 0 1254 1254" role="group" aria-label="Lily petals — click one to write on it"></svg>
       </div>
-      <p class="artnote">Six petals · about 12 letters each</p>
+      <p class="artnote">Tap a petal, then pick its lettering</p>
     </div>
 
     <div class="formcol">
@@ -266,7 +261,6 @@ footer b{font-weight:400;font-family:"Cormorant Garamond",serif;font-size:10px;l
             </div>
             <div>
               <div class="fonts" id="fonts"></div>
-              <div class="thai" id="thai"></div>
               <p class="fnote" id="fnote">Pick the word on the left, then the lettering. Tap one and it goes on a petal.</p>
             </div>
           </div>
@@ -396,15 +390,12 @@ const DESIGNS = [
 /* The lettering the shop inks. The specimen sheets f1–f8.jpg are what the
    shop works from; `css` is the nearest face we can set on screen. */
 const FONTS = [
-  {id:"f1", name:"Fat didone",  sheet:"f1",    css:'"Bodoni Moda",serif',        weight:900, track:.04, thai:false},
-  {id:"f4", name:"Heavy serif", sheet:"f4/f7", css:'"Playfair Display",serif',   weight:900, track:.05, thai:false},
-  {id:"f3", name:"Engraved",    sheet:"f3/f6", css:'"Rye",serif',                weight:400, track:.04, thai:false},
-  {id:"f8", name:"Roman caps",  sheet:"f8",    css:'"Cinzel Decorative",serif',  weight:700, track:.06, thai:false},
-  {id:"f2", name:"Book serif",  sheet:"f2",    css:'"EB Garamond",serif',        weight:400, track:.10, thai:false},
-  {id:"f5", name:"Light serif", sheet:"f5",    css:'"Cormorant Garamond",serif', weight:300, track:.12, thai:false},
-  {id:"t1", name:"Thai serif",  label:"ขอบคุณ", css:'"Noto Serif Thai",serif', weight:400, track:.04, thai:true},
-  {id:"t2", name:"Thai hand",   label:"ขอบคุณ", css:'"Charmonman",cursive',    weight:400, track:.02, thai:true},
-  {id:"t3", name:"Thai sans",   label:"ขอบคุณ", css:'"Mitr",sans-serif',       weight:300, track:.04, thai:true}
+  {id:"f1", name:"Fat didone",  sheet:"f1",    css:'"Bodoni Moda","Noto Serif Thai",serif',        weight:900, track:.04},
+  {id:"f4", name:"Heavy serif", sheet:"f4/f7", css:'"Playfair Display","Noto Serif Thai",serif',   weight:900, track:.05},
+  {id:"f3", name:"Engraved",    sheet:"f3/f6", css:'"Rye","Noto Serif Thai",serif',                weight:400, track:.04},
+  {id:"f8", name:"Roman caps",  sheet:"f8",    css:'"Cinzel Decorative","Noto Serif Thai",serif',  weight:700, track:.06},
+  {id:"f2", name:"Book serif",  sheet:"f2",    css:'"EB Garamond","Noto Serif Thai",serif',        weight:400, track:.10},
+  {id:"f5", name:"Light serif", sheet:"f5",    css:'"Cormorant Garamond","Noto Serif Thai",serif', weight:300, track:.12}
 ];
 
 const INKS = [
@@ -421,6 +412,7 @@ const state = {
   bloom: "white",
   category: "chula",
   catPetal: 0,      /* the petal the category word was written to */
+  active: -1,       /* the petal the customer last tapped — lettering lands here */
   font: "f4",
   ink: "rose",
   wantPhoto: false,
@@ -509,6 +501,7 @@ function paintPetals(){
     g.setAttribute("aria-label", "Petal " + (i + 1) + ", " + p.name +
       (sheet ? ", says " + sheet.word : words ? ", says " + words : pic ? ", holds a picture" : ", empty — click to write"));
     g.classList.toggle("empty", !words && !pic && !sheet);
+    g.classList.toggle("act", i === state.active);
 
     if (sheet){
       /* the shop's sheet, laid down the petal from the tip inwards */
@@ -589,6 +582,7 @@ function closePop(){
 function openPetal(i){
   closePop();
   state.open = i;
+  state.active = i;
   const g = svg.querySelector('.petal[data-i="' + i + '"]');
   g.classList.add("on");
 
@@ -797,18 +791,6 @@ function buildForm(){
     ch.appendChild(b);
   });
 
-  const th = $("#thai");
-  FONTS.filter(f => f.thai).forEach(f => {
-    const b = document.createElement("button");
-    b.type = "button"; b.className = "thtile"; b.dataset.f = f.id;
-    b.style.fontFamily = f.css;
-    b.style.fontWeight = f.weight;
-    b.textContent = f.label;
-    b.setAttribute("aria-label", "Thai lettering, " + f.name);
-    b.addEventListener("click", () => pickCut(f));
-    th.appendChild(b);
-  });
-
   $("#photo-yes").addEventListener("click", () => {
     state.wantPhoto = true; render();
     if (!state.pics.length){ state.pendingPetal = -1; $("#picfile").click(); }
@@ -835,6 +817,7 @@ function buildForm(){
     closePop();
     state.petals.forEach(p => { p.text = ""; p.sheet = null; });
     state.catPetal = -1;
+    state.active = -1;
     state.pics = [];
     render();
   });
@@ -850,7 +833,8 @@ function specimenWord(){
 
 const designsFor = word => DESIGNS.filter(d => d.word === word);
 const theCat = () => CATS.find(c => c.id === state.category) || CATS[0];
-const targetPetal = () => (state.catPetal >= 0 ? state.catPetal : firstFreePetal());
+const targetPetal = () =>
+  (state.active >= 0 ? state.active : state.catPetal >= 0 ? state.catPetal : firstFreePetal());
 
 function pickCategory(c){
   state.category = c.id;
@@ -916,11 +900,11 @@ function paintSpecimens(){
       b.addEventListener("click", () => pickSheet(d));
       host.appendChild(b);
     });
-    note.textContent = "The shop's own sheets — tap one and it goes on a petal exactly as drawn.";
+    note.textContent = "The shop's own lettering — tap one and it lands on the petal you picked.";
   } else {
     const word = [...specimenWord()];
     const size = Math.max(8, Math.min(21, Math.floor(104 / Math.max(word.length, 1))));
-    FONTS.filter(f => !f.thai).forEach(f => {
+    FONTS.forEach(f => {
       const b = document.createElement("button");
       b.type = "button"; b.className = "ftile"; b.dataset.f = f.id;
       b.setAttribute("aria-label", "Lettering " + f.name);
@@ -941,7 +925,7 @@ function paintSpecimens(){
     });
     note.textContent = c.word
       ? "No sheet for this word yet — shown in the nearest cut we can set on screen."
-      : "Your own letters, in the nearest cut we can set on screen. The three below set Thai.";
+      : "Your own letters, in the nearest cut we can set on screen.";
   }
 }
 
